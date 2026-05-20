@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="es"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso de Jardinería</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+    .heading-font { font-family: 'Playfair Display', serif; }
+    .quiz-overlay { display: none; }
+    .quiz-overlay.active { display: flex; }
+    .module-card:hover { transform: translateY(-4px); }
+    .module-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .tab-active { border-bottom: 3px solid #059669; color: #059669; font-weight: 600; }
+  </style>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root" class="w-full min-h-screen" style="background: rgb(240, 253, 244);">
+  <header class="relative w-full h-[400px] overflow-hidden"><img data-template-id="hero-img" class="canva-image w-full h-full object-cover" loading="lazy" src="https://images.pexels.com/photos/33752159/pexels-photo-33752159.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1280" alt="Un hermoso jardín con flores coloridas y vegetación exuberante en un día soleado">
+   <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black/70 flex flex-col items-center justify-center text-center px-4">
+    <h1 data-template-id="hero-title" class="canva-text heading-font text-white drop-shadow-lg" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 32px;">Curso de Jardinería</h1>
+    <p data-template-id="hero-subtitle" class="canva-text text-white/90 mt-3 max-w-2xl" style="color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 18px;">Aprende a cultivar, cuidar y transformar tu jardín con 8 módulos prácticos</p>
+   </div>
+  </header>
+  <main class="max-w-6xl mx-auto px-4 py-10">
+   <section class="mb-10">
+    <div class="flex items-center justify-between mb-2">
+     <h2 data-template-id="progress-label" class="canva-text font-medium" style="color: rgb(6, 95, 70); font-weight: 500; font-style: normal; font-size: 24px;">Tu progreso</h2><span id="progress-text" class="text-sm font-medium text-emerald-700">0/8</span>
+    </div>
+    <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+     <div id="progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width:0%"></div>
+    </div>
+   </section>
+   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="module-card rounded-xl overflow-hidden shadow-md bg-white relative" data-module="mod1"><img data-template-id="mod1-img" class="canva-image w-full h-40 object-cover" loading="lazy" src="https://images.pexels.com/photos/1301856/pexels-photo-1301856.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Pala de jardinería con tierra y flores">
+     <div class="p-4">
+      <h3 data-template-id="mod1-title" class="canva-text font-bold" style="color: rgb(17, 24, 39); font-weight: 700; font-style: normal; font-size: 19px;">Preparación del Suelo</h3>
+      <p data-template-id="mod1-desc" class="canva-text text-sm mt-1" style="color: rgb(107, 114, 128); font-weight: 400; font-style: normal; font-size: 16px;">Aprende a analizar y preparar el suelo ideal para tus plantas.</p><button data-template-id="mod1-btn" class="canva-button mt-3 w-full py-2 rounded-lg text-sm font-medium" onclick="openLesson('mod1')" style="background: rgb(5, 150, 105); color: rgb(255, 255, 255); font-weight: 500; font-style: normal; font-size: 16px;">Comenzar Lección</button>
+     </div>
+     <div class="completed-badge hidden absolute top-2 right-2 bg-emerald-500 text-white rounded-full p-1">
+      <i data-lucide="check" style="width:16px;height:16px"></i>
+     </div>
+    </div>
+    <div class="module-card rounded-xl overflow-hidden shadow-md bg-white relative" data-module="mod2"><img data-template-id="mod2-img" class="canva-image w-full h-40 object-cover" loading="lazy" src="https://images.pexels.com/photos/4870794/pexels-photo-4870794.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Mano regando plantas con manguera en un jardín">
+     <div class="p-4">
+      <h3 data-template-id="mod2-title" class="canva-text font-bold" style="color: rgb(17, 24, 39); font-weight: 700; font-style: normal; font-size: 19px;">Riego Eficiente</h3>
+      <p data-template-id="mod2-desc" class="canva-text text-sm mt-1" style="color: rgb(107, 114, 128); font-weight: 400; font-style: normal; font-size: 16px;">Técnicas de riego para ahorrar agua y mantener plantas sanas.</p><button data-template-id="mod2-btn" class="canva-button mt-3 w-full py-2 rounded-lg text-sm font-medium" onclick="openLesson('mod2')" style="background: rgb(5, 150, 105); color: rgb(255, 255, 255); font-weight: 500; font-style: normal; font-size: 16px;">Comenzar Lección</button>
+     </div>
+     <div class="completed-badge hidden absolute top-2 right-2 bg-emerald-500 text-white rounded-full p-1">
+      <i data-lucide="check" style="width:16px;height:16px"></i>
+     </div>
+    </div>
+    <div class="module-card rounded-xl overflow-hidden shadow-md bg-white relative" data-module="mod3"><img data-template-id="mod3-img" class="canva-image w-full h-40 object-cover" loading="lazy" src="https://images.pexels.com/photos/7854134/pexels-photo-7854134.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Manos podando plantas con tijeras en un jardín soleado">
+     <div class="p-4">
+      <h3 data-template-id="mod3-title" class="canva-text font-bold" style="color: rgb(17, 24, 39); font-weight: 700; font-style: normal; font-size: 19px;">Poda y Mantenimiento</h3>
+      <p data-template-id="mod3-desc" class="canva-text text-sm mt-1" style="color: rgb(107, 114, 128); font-weight: 400; font-style: normal; font-size: 16px;">Cuándo y cómo podar para un crecimiento saludable.</p><button data-template-id="mod3-btn" class="canva-button mt-3 w-full py-2 rounded-lg text-sm font-medium" onclick="openLesson('mod3')" style="background: rgb(5, 150, 105); color: rgb(255, 255, 255); font-weight: 500; font-style: normal; font-size: 16px;">Comenzar Lección</button>
+     </div>
+     <div class="completed-badge hidden absolute top-2 right-2 bg-emerald-500 text-white rounded-full p-1">
+      <i data-lucide="check" style="width:16px;height:16px"></i>
+     </div>
+    </div>
+    <div class="module-card rounded-xl overflow-hidden shadow-md bg-white relative" data-module="mod4"><img data-template-id="mod4-img" class="canva-image w-full h-40 object-cover" loading="lazy" src="https://images.pexels.com/photos/2858259/pexels-photo-2858259.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Tomates cherry maduros creciendo en la vid">
+     <div class="p-4">
+      <h3 data-template-id="mod4-title" class="canva-text font-bold" style="color: rgb(17, 24, 39); font-weight: 700; font-style: normal; font-size: 19px;">Huerto Urbano</h3>
+      <p data-template-id="mod4-desc" class="canva-text text-sm mt-1" style="color: rgb(107, 114, 128); font-weight: 400; font-style: normal; font-size: 16px;">Cultiva tus propias hortalizas en espacios reducidos.</p><button data-template-id="mod4-btn" class="canva-button mt-3 w-full py-2 rounded-lg text-sm font-medium" onclick="openLesson('mod4')" style="background: rgb(5, 150, 105); color: rgb(255, 255, 255); font-weight: 500; font-style: normal; font-size: 16px;">Comenzar Lección</button>
+     </div>
+     <div class="completed-badge hidden absolute top-2 right-2 bg-emerald-500 text-white rounded-full p-1">
+      <i data-lucide="check" style="width:16px;height:16px"></i>
+     </div>
+    </div>
+    <div class="module-card rounded-xl overflow-hidden shadow-md bg-white relative" data-module="mod5"><img data-template-id="mod5-img" class="canva-image w-full h-40 object-cover" loading="lazy" src="https://images.pexels.com/photos/19014379/pexels-photo-19014379.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Mariquita sobre flores amarillas">
+     <div class="p-4">
+      <h3 data-template-id="mod5-title" class="canva-text font-bold" style="color: rgb(17, 24, 39); font-weight: 700; font-style: normal; font-size: 19px;">Control de Plagas Natural</h3>
+      <p data-template-id="mod5-desc" class="canva-text text-sm mt-1" style="color: rgb(107, 114, 128); font-weight: 400; font-style: normal; font-size: 16px;">Métodos ecológicos para proteger tu jardín de plagas.</p><button data-template-id="mod5-btn" class="canva-button mt-3 w-full py-2 rounded-lg text-sm font-medium" onclick="openLesson('mod5')" style="background: rgb(5, 150, 105); color: rgb(255, 255, 255); font-weight: 500; font-style: normal; font-size: 16px;">Comenzar Lección</button>
+     </div>
+     <div class="completed-badge hidden absolute top-2 right-2 bg-emerald-500 text-white rounded-full p-1">
+      <i data-lucide="check" style="width:16px;height:16px"></i>
+     </div>
+    </div>
+    <div class="module-card rounded-xl overflow-hidden shadow-md bg-white relative" data-module="mod6"><img data-template-id="mod6-img" class="canva-image w-full h-40 object-cover" loading="lazy" src="https://images.pexels.com/photos/4336484/pexels-photo-4336484.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Plantas de romero verde vibrante">
+     <div class="p-4">
+      <h3 data-template-id="mod6-title" class="canva-text font-bold" style="color: rgb(17, 24, 39); font-weight: 700; font-style: normal; font-size: 19px;">Hierbas Aromáticas</h3>
+      <p data-template-id="mod6-desc" class="canva-text text-sm mt-1" style="color: rgb(107, 114, 128); font-weight: 400; font-style: normal; font-size: 16px;">Cultiva romero, lavanda, albahaca y más en casa.</p><button data-template-id="mod6-btn" class="canva-button mt-3 w-full py-2 rounded-lg text-sm font-medium" onclick="openLesson('mod6')" style="background: rgb(5, 150, 105); color: rgb(255, 255, 255); font-weight: 500; font-style: normal; font-size: 16px;">Comenzar Lección</button>
+     </div>
+     <div class="completed-badge hidden absolute top-2 right-2 bg-emerald-500 text-white rounded-full p-1">
+      <i data-lucide="check" style="width:16px;height:16px"></i>
+     </div>
+    </div>
+    <div class="module-card rounded-xl overflow-hidden shadow-md bg-white relative" data-module="mod7"><img data-template-id="mod7-img" class="canva-image w-full h-40 object-cover" loading="lazy" src="https://images.pexels.com/photos/27871856/pexels-photo-27871856.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Rosas coral en plena floración rodeadas de vegetación">
+     <div class="p-4">
+      <h3 data-template-id="mod7-title" class="canva-text font-bold" style="color: rgb(17, 24, 39); font-weight: 700; font-style: normal; font-size: 19px;">Flores Ornamentales</h3>
+      <p data-template-id="mod7-desc" class="canva-text text-sm mt-1" style="color: rgb(107, 114, 128); font-weight: 400; font-style: normal; font-size: 16px;">Diseña jardines con flores perennes y anuales.</p><button data-template-id="mod7-btn" class="canva-button mt-3 w-full py-2 rounded-lg text-sm font-medium" onclick="openLesson('mod7')" style="background: rgb(5, 150, 105); color: rgb(255, 255, 255); font-weight: 500; font-style: normal; font-size: 16px;">Comenzar Lección</button>
+     </div>
+     <div class="completed-badge hidden absolute top-2 right-2 bg-emerald-500 text-white rounded-full p-1">
+      <i data-lucide="check" style="width:16px;height:16px"></i>
+     </div>
+    </div>
+    <div class="module-card rounded-xl overflow-hidden shadow-md bg-white relative" data-module="mod8"><img data-template-id="mod8-img" class="canva-image w-full h-40 object-cover" loading="lazy" src="https://images.pexels.com/photos/5503338/pexels-photo-5503338.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Compostera de madera con residuos orgánicos en un jardín">
+     <div class="p-4">
+      <h3 data-template-id="mod8-title" class="canva-text font-bold" style="color: rgb(17, 24, 39); font-weight: 700; font-style: normal; font-size: 19px;">Compostaje</h3>
+      <p data-template-id="mod8-desc" class="canva-text text-sm mt-1" style="color: rgb(107, 114, 128); font-weight: 400; font-style: normal; font-size: 16px;">Transforma residuos orgánicos en abono natural.</p><button data-template-id="mod8-btn" class="canva-button mt-3 w-full py-2 rounded-lg text-sm font-medium" onclick="openLesson('mod8')" style="background: rgb(5, 150, 105); color: rgb(255, 255, 255); font-weight: 500; font-style: normal; font-size: 16px;">Comenzar Lección</button>
+     </div>
+     <div class="completed-badge hidden absolute top-2 right-2 bg-emerald-500 text-white rounded-full p-1">
+      <i data-lucide="check" style="width:16px;height:16px"></i>
+     </div>
+    </div>
+   </div>
+  </main><!-- Lesson Modal -->
+  <div id="lesson-overlay" class="quiz-overlay fixed inset-0 bg-black/60 z-50 items-center justify-center p-4">
+   <div class="bg-white rounded-2xl max-w-2xl w-full relative max-h-[90vh] flex flex-col"><button onclick="closeLesson()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 z-10"><i data-lucide="x" style="width:24px;height:24px"></i></button>
+    <div class="flex border-b px-6 pt-5"><button id="tab-study" onclick="showTab('study')" class="pb-3 px-4 text-sm tab-active">📖 Temario</button> <button id="tab-quiz" onclick="showTab('quiz')" class="pb-3 px-4 text-sm text-gray-500">✏️ Test</button>
+    </div>
+    <div id="lesson-content" class="flex-1 overflow-y-auto p-6">
+     <div id="study-view"></div>
+     <div id="quiz-view" class="hidden">
+      <div id="quiz-content"></div>
+      <div id="quiz-result" class="hidden text-center py-4">
+       <p id="quiz-score" class="text-2xl font-bold text-emerald-600"></p><button onclick="closeLesson()" class="mt-4 px-6 py-2 bg-emerald-600 text-white rounded-lg font-medium">Cerrar</button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <footer data-template-id="footer-section" class="canva-footer w-full py-6 mt-10 text-center" style="background: rgb(6, 95, 70);">
+   <p data-template-id="footer-text" class="canva-text text-sm" style="color: rgb(209, 250, 229); font-weight: 400; font-style: normal; font-size: 16px;">© 2026 Curso de Jardinería · Aprende a tu ritmo</p>
+  </footer>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+    const studyContent = {
+      mod1: {
+        title: 'Preparación del Suelo',
+        sections: [
+          { heading: '¿Por qué es importante el suelo?', body: 'El suelo es la base de toda planta. Su composición determina qué nutrientes están disponibles, cuánta agua retiene y cómo se desarrollan las raíces. Un suelo bien preparado puede marcar la diferencia entre una planta que sobrevive y una que prospera.' },
+          { heading: 'Tipos de suelo', body: '<strong>Arcilloso:</strong> retiene mucha agua pero drena mal. <strong>Arenoso:</strong> drena rápido pero retiene pocos nutrientes. <strong>Franco:</strong> el equilibrio ideal entre retención y drenaje. La mayoría de plantas prefieren suelo franco con pH entre 6.0 y 7.0.' },
+          { heading: 'Cómo mejorar tu suelo', body: 'Añade compost para aportar materia orgánica. Si tu suelo es arcilloso, mezcla arena y compost para mejorar el drenaje. Si es arenoso, añade turba o vermiculita. Trabaja el suelo antes de plantar, removiendo los primeros 20-30 cm.' },
+          { heading: 'Análisis del pH', body: 'Puedes medir el pH con tiras reactivas o un medidor electrónico. Si es demasiado ácido (< 6.0), añade cal agrícola. Si es demasiado alcalino (> 7.5), añade azufre o turba.' }
+        ]
+      },
+      mod2: {
+        title: 'Riego Eficiente',
+        sections: [
+          { heading: 'Principios del riego', body: 'Regar no es solo echar agua: es entender cuánta necesita cada planta, cuándo y cómo aplicarla. El exceso de agua es tan dañino como la sequía, ya que puede provocar pudrición de raíces.' },
+          { heading: 'Mejores horarios', body: 'Riega temprano por la mañana (6-9 h) para que las hojas se sequen antes del calor. Evita regar al mediodía (se evapora rápido) y por la noche (favorece hongos).' },
+          { heading: 'Sistemas de riego', body: '<strong>Goteo:</strong> el más eficiente, ahorra hasta un 50% de agua. <strong>Aspersión:</strong> cubre grandes áreas pero pierde agua por evaporación. <strong>Exudación:</strong> ideal para huertos, libera agua lentamente.' },
+          { heading: 'Señales de riego incorrecto', body: 'Hojas amarillas abajo → exceso de agua. Hojas secas en puntas → falta de agua. Suelo con moho blanco → demasiada humedad. Comprueba siempre la humedad introduciendo el dedo 3 cm en la tierra.' }
+        ]
+      },
+      mod3: {
+        title: 'Poda y Mantenimiento',
+        sections: [
+          { heading: 'Por qué podar', body: 'La poda estimula nuevo crecimiento, mejora la circulación del aire, elimina ramas enfermas y da forma estética. Una planta bien podada produce más flores y frutos.' },
+          { heading: 'Cuándo podar', body: 'La mayoría de arbustos se podan a finales del invierno, antes de la brotación primaveral. Las plantas que florecen en primavera se podan justo después de florecer. Nunca podes en plena helada.' },
+          { heading: 'Herramientas básicas', body: '<strong>Tijeras de podar:</strong> para ramas de hasta 2 cm. <strong>Podadoras de yunque:</strong> para ramas secas. <strong>Sierra de poda:</strong> para ramas gruesas (+3 cm). Desinfecta las herramientas entre plantas con alcohol.' },
+          { heading: 'Técnica correcta', body: 'Corta siempre en ángulo de 45° justo por encima de una yema orientada hacia fuera. No dejes muñones ni cortes demasiado cerca de la yema. Retira siempre la madera muerta primero.' }
+        ]
+      },
+      mod4: {
+        title: 'Huerto Urbano',
+        sections: [
+          { heading: 'Empezar con poco', body: 'No necesitas un gran terreno. Con macetas de 20-40 litros, jardineras en balcón o mesas de cultivo puedes producir tomates, lechugas, hierbas y pimientos. Empieza con 3-4 cultivos fáciles.' },
+          { heading: 'Cultivos para principiantes', body: '<strong>Tomate cherry:</strong> prolífico y resistente. <strong>Lechuga:</strong> cosecha en 30-45 días. <strong>Rabanitos:</strong> listos en 25 días. <strong>Albahaca:</strong> crece rápido y repele insectos.' },
+          { heading: 'Luz y ubicación', body: 'La mayoría de hortalizas necesitan 6-8 horas de sol directo. Orienta tu huerto al sur (en el hemisferio norte). Si no tienes suficiente luz, opta por hojas verdes que toleran semisombra.' },
+          { heading: 'Rotación de cultivos', body: 'No plantes la misma familia en el mismo sitio dos temporadas seguidas. Alterna entre hojas (lechuga), frutos (tomate), raíces (zanahoria) y leguminosas (judías) para mantener el suelo fértil.' }
+        ]
+      },
+      mod5: {
+        title: 'Control de Plagas Natural',
+        sections: [
+          { heading: 'Prevención ante todo', body: 'Plantas sanas resisten mejor las plagas. Mantén el suelo nutritivo, riega correctamente y evita el hacinamiento. La biodiversidad en el jardín atrae depredadores naturales.' },
+          { heading: 'Insectos beneficiosos', body: '<strong>Mariquitas:</strong> devoran pulgones (hasta 50 al día). <strong>Crisopas:</strong> sus larvas eliminan cochinillas. <strong>Avispas parasitarias:</strong> controlan orugas. Planta flores como caléndulas para atraerlos.' },
+          { heading: 'Remedios caseros', body: '<strong>Jabón potásico:</strong> diluido al 2% elimina pulgones y mosca blanca. <strong>Aceite de neem:</strong> insecticida natural de amplio espectro. <strong>Purín de ortiga:</strong> fortalece plantas y repele insectos.' },
+          { heading: 'Plantas repelentes', body: 'Albahaca repele mosquitos y moscas. Lavanda aleja polillas. Romero repele la mosca de la zanahoria. Intercala estas plantas entre tus cultivos como barrera natural.' }
+        ]
+      },
+      mod6: {
+        title: 'Hierbas Aromáticas',
+        sections: [
+          { heading: 'Las imprescindibles', body: '<strong>Romero:</strong> resistente a la sequía, pleno sol. <strong>Albahaca:</strong> anual, necesita calor y riego frecuente. <strong>Menta:</strong> invasiva, mejor en maceta. <strong>Perejil:</strong> bianual, tolera semisombra.' },
+          { heading: 'Condiciones de cultivo', body: 'La mayoría prefiere sol directo (6+ horas), suelo bien drenado y riego moderado. El romero y la lavanda toleran sequía; la albahaca y el cilantro necesitan humedad constante.' },
+          { heading: 'Propagación', body: '<strong>Por esquejes:</strong> romero, lavanda, menta — corta un tallo de 10 cm, retira hojas inferiores y coloca en agua o sustrato húmedo. <strong>Por semilla:</strong> albahaca, perejil, cilantro — siembra directa en primavera.' },
+          { heading: 'Cosecha y conservación', body: 'Cosecha por la mañana cuando los aceites esenciales están concentrados. Corta solo un tercio de la planta. Seca colgando en manojos boca abajo o congela en aceite de oliva en cubiteras.' }
+        ]
+      },
+      mod7: {
+        title: 'Flores Ornamentales',
+        sections: [
+          { heading: 'Perennes vs. Anuales', body: '<strong>Perennes:</strong> vuelven cada año (rosas, lavanda, hortensias). <strong>Anuales:</strong> completan su ciclo en una temporada (petunias, caléndulas, zinnias). Combina ambas para color todo el año.' },
+          { heading: 'Diseño del jardín de flores', body: 'Coloca las más altas atrás y las bajas delante. Agrupa en números impares (3, 5, 7) para aspecto natural. Combina colores complementarios: morado con amarillo, naranja con azul.' },
+          { heading: 'Abonado para floración', body: 'Usa fertilizante rico en fósforo (el segundo número NPK) para estimular flores. Aplica cada 2-3 semanas durante la temporada de crecimiento. Evita exceso de nitrógeno que favorece hojas sobre flores.' },
+          { heading: 'Mantenimiento estacional', body: 'Retira flores marchitas (deadheading) para estimular nuevas. Divide las perennes cada 3-4 años. Acolcha con corteza para mantener humedad y suprimir malas hierbas.' }
+        ]
+      },
+      mod8: {
+        title: 'Compostaje',
+        sections: [
+          { heading: 'Qué es el compost', body: 'El compost es materia orgánica descompuesta que se convierte en un abono rico en nutrientes. Es el mejor aliado del jardinero: mejora la estructura del suelo, aporta nutrientes y retiene humedad.' },
+          { heading: 'Materiales verdes y marrones', body: '<strong>Verdes (nitrógeno):</strong> restos de cocina, césped fresco, posos de café. <strong>Marrones (carbono):</strong> hojas secas, cartón, ramas trituradas. La proporción ideal es 3 partes marrón por 1 parte verde.' },
+          { heading: 'Qué NO compostar', body: 'Nunca añadas carne, pescado, lácteos, aceites, heces de mascotas carnívoras ni plantas enfermas. Estos atraen plagas, generan malos olores o propagan enfermedades.' },
+          { heading: 'El proceso', body: 'Voltea la pila cada 1-2 semanas para oxigenar. Mantén la humedad como una esponja escurrida. En 2-6 meses tendrás compost maduro: oscuro, con olor a tierra húmeda y textura desmenuzable.' }
+        ]
+      }
+    };
+
+    const quizData = {
+      mod1: { title: 'Test: Preparación del Suelo', questions: [
+        { q: '¿Cuál es el pH ideal para la mayoría de plantas?', opts: ['4.0-5.0','6.0-7.0','8.0-9.0'], ans: 1 },
+        { q: '¿Qué mejora la estructura del suelo arcilloso?', opts: ['Arena y compost','Más arcilla','Sal'], ans: 0 },
+        { q: '¿Cuándo es mejor preparar el suelo?', opts: ['En verano seco','Antes de plantar','Después de cosechar'], ans: 1 }
+      ]},
+      mod2: { title: 'Test: Riego Eficiente', questions: [
+        { q: '¿Cuál es el mejor momento para regar?', opts: ['Mediodía','Temprano en la mañana','Medianoche'], ans: 1 },
+        { q: '¿Qué sistema ahorra más agua?', opts: ['Aspersión','Riego por goteo','Manguera'], ans: 1 },
+        { q: '¿Cómo saber si una planta necesita agua?', opts: ['Las hojas brillan','El suelo está seco al tacto','Las flores se abren'], ans: 1 }
+      ]},
+      mod3: { title: 'Test: Poda y Mantenimiento', questions: [
+        { q: '¿En qué época se poda la mayoría de arbustos?', opts: ['Final del invierno','Pleno verano','Otoño'], ans: 0 },
+        { q: '¿Qué herramienta se usa para ramas gruesas?', opts: ['Tijeras de podar','Sierra de poda','Cuchillo'], ans: 1 },
+        { q: '¿En qué ángulo se debe cortar?', opts: ['90°','45°','30°'], ans: 1 }
+      ]},
+      mod4: { title: 'Test: Huerto Urbano', questions: [
+        { q: '¿Qué hortaliza es ideal para principiantes?', opts: ['Tomate cherry','Alcachofa','Espárrago'], ans: 0 },
+        { q: '¿Cuántas horas de sol necesita un huerto?', opts: ['1-2 horas','6-8 horas','12 horas'], ans: 1 },
+        { q: '¿Qué es la rotación de cultivos?', opts: ['Girar las macetas','Cambiar cultivos de lugar cada temporada','Plantar en círculo'], ans: 1 }
+      ]},
+      mod5: { title: 'Test: Control de Plagas', questions: [
+        { q: '¿Qué insecto es beneficioso contra pulgones?', opts: ['Mosquito','Mariquita','Avispa'], ans: 1 },
+        { q: '¿Qué planta repele mosquitos?', opts: ['Rosa','Albahaca','Tulipán'], ans: 1 },
+        { q: '¿Qué es un insecticida orgánico común?', opts: ['Jabón potásico','Lejía','Gasolina'], ans: 0 }
+      ]},
+      mod6: { title: 'Test: Hierbas Aromáticas', questions: [
+        { q: '¿Qué hierba necesita muy poco riego?', opts: ['Menta','Romero','Albahaca'], ans: 1 },
+        { q: '¿Cuál se propaga mejor por esquejes?', opts: ['Perejil','Lavanda','Cilantro'], ans: 1 },
+        { q: '¿Cuándo cosechar hierbas aromáticas?', opts: ['Por la noche','Por la mañana','Al mediodía'], ans: 1 }
+      ]},
+      mod7: { title: 'Test: Flores Ornamentales', questions: [
+        { q: '¿Qué flor es perenne?', opts: ['Petunia','Rosa','Girasol'], ans: 1 },
+        { q: '¿Qué significa "flor anual"?', opts: ['Florece una vez al año','Completa su ciclo en un año','Dura muchos años'], ans: 1 },
+        { q: '¿Qué abono favorece la floración?', opts: ['Rico en nitrógeno','Rico en fósforo','Rico en hierro'], ans: 1 }
+      ]},
+      mod8: { title: 'Test: Compostaje', questions: [
+        { q: '¿Qué NO se debe compostar?', opts: ['Cáscaras de fruta','Carne y lácteos','Hojas secas'], ans: 1 },
+        { q: '¿Cuánto tarda el compost en estar listo?', opts: ['1 semana','2-6 meses','3 años'], ans: 1 },
+        { q: '¿Cuál es la proporción ideal marrón/verde?', opts: ['1:1','3:1','1:3'], ans: 1 }
+      ]}
+    };
+
+    let currentMod = null;
+    let currentQuestion = 0;
+    let currentScore = 0;
+    let completedModules = [];
+    let allData = [];
+
+    const dataHandler = {
+      onDataChanged(data) {
+        allData = data;
+        completedModules = data.filter(d => d.completed).map(d => d.lesson_id);
+        updateProgress();
+      }
+    };
+
+    async function initApp() {
+      const r = await window.dataSdk.init(dataHandler);
+      if (!r.isOk) {
+        // Show inline error
+        const main = document.querySelector('main');
+        const msg = document.createElement('p');
+        msg.className = 'text-red-600 text-center mt-4';
+        msg.textContent = 'Error al inicializar. Recarga la página.';
+        main.prepend(msg);
+      }
+    }
+
+    function updateProgress() {
+      const count = completedModules.length;
+      document.getElementById('progress-text').textContent = `${count}/8`;
+      document.getElementById('progress-bar').style.width = `${(count/8)*100}%`;
+      document.querySelectorAll('.module-card').forEach(card => {
+        const mod = card.dataset.module;
+        const badge = card.querySelector('.completed-badge');
+        if (completedModules.includes(mod)) badge.classList.remove('hidden');
+        else badge.classList.add('hidden');
+      });
+    }
+
+    function openLesson(modId) {
+      currentMod = modId;
+      document.getElementById('lesson-overlay').classList.add('active');
+      showTab('study');
+    }
+
+    function showTab(tab) {
+      const tabStudy = document.getElementById('tab-study');
+      const tabQuiz = document.getElementById('tab-quiz');
+      const studyView = document.getElementById('study-view');
+      const quizView = document.getElementById('quiz-view');
+
+      if (tab === 'study') {
+        tabStudy.classList.add('tab-active');
+        tabStudy.classList.remove('text-gray-500');
+        tabQuiz.classList.remove('tab-active');
+        tabQuiz.classList.add('text-gray-500');
+        studyView.classList.remove('hidden');
+        quizView.classList.add('hidden');
+        renderStudy();
+      } else {
+        tabQuiz.classList.add('tab-active');
+        tabQuiz.classList.remove('text-gray-500');
+        tabStudy.classList.remove('tab-active');
+        tabStudy.classList.add('text-gray-500');
+        quizView.classList.remove('hidden');
+        studyView.classList.add('hidden');
+        startQuiz();
+      }
+    }
+
+    function renderStudy() {
+      const data = studyContent[currentMod];
+      const html = `<h3 class="text-xl font-bold text-gray-900 mb-4">${data.title}</h3>` +
+        data.sections.map(s => `<div class="mb-5"><h4 class="font-semibold text-emerald-800 mb-1">${s.heading}</h4><p class="text-gray-700 text-sm leading-relaxed">${s.body}</p></div>`).join('') +
+        `<div class="mt-6 pt-4 border-t text-center"><button onclick="showTab('quiz')" class="px-6 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition">Hacer Test ✏️</button></div>`;
+      document.getElementById('study-view').innerHTML = html;
+    }
+
+    function startQuiz() {
+      currentQuestion = 0;
+      currentScore = 0;
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-content').classList.remove('hidden');
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const qData = quizData[currentMod].questions[currentQuestion];
+      const container = document.getElementById('quiz-content');
+      container.innerHTML = `
+        <h3 class="text-lg font-bold text-gray-900 mb-3">${quizData[currentMod].title}</h3>
+        <p class="text-sm text-gray-500 mb-2">Pregunta ${currentQuestion+1} de 3</p>
+        <p class="font-medium text-gray-800 mb-4">${qData.q}</p>
+        <div class="space-y-2">
+          ${qData.opts.map((o,i) => `<button onclick="answer(${i})" class="w-full text-left px-4 py-3 border rounded-lg hover:bg-emerald-50 hover:border-emerald-400 transition">${o}</button>`).join('')}
+        </div>`;
+    }
+
+    async function answer(idx) {
+      const qData = quizData[currentMod].questions[currentQuestion];
+      if (idx === qData.ans) currentScore++;
+      currentQuestion++;
+      if (currentQuestion < 3) {
+        renderQuestion();
+      } else {
+        document.getElementById('quiz-content').classList.add('hidden');
+        document.getElementById('quiz-score').textContent = `Puntuación: ${currentScore}/3`;
+        document.getElementById('quiz-result').classList.remove('hidden');
+        const existing = allData.find(d => d.lesson_id === currentMod);
+        if (existing) {
+          const result = await window.dataSdk.update({...existing, completed: true, score: currentScore});
+          if (result.isError) {
+            document.getElementById('quiz-score').textContent += ' (error al guardar)';
+          }
+        } else {
+          if (allData.length >= 999) return;
+          const result = await window.dataSdk.create({ lesson_id: currentMod, completed: true, score: currentScore });
+          if (result.isError) {
+            document.getElementById('quiz-score').textContent += ' (error al guardar)';
+          }
+        }
+      }
+    }
+
+    function closeLesson() {
+      document.getElementById('lesson-overlay').classList.remove('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      initApp();
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fea662a83792178',t:'MTc3OTI3MDIyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body></html>
