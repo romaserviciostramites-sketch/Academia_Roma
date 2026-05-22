@@ -379,12 +379,49 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
   .proceso-grid{grid-template-columns:1fr!important;}
   .sobre-grid{grid-template-columns:1fr!important;}
   .footer-grid{grid-template-columns:1fr!important;}
+  #practicas > div{grid-template-columns:1fr!important;gap:30px!important;}
   .hero-btns{flex-direction:column;}
   .btn-hp, .btn-hs{width:100%;text-align:center;}
   #packGrid > div:first-child{order:2;}
   #packGrid > div:last-child{order:1;position:static;}
 }
+
+/* BANNER COOKIES */
+#cookieBanner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#111;border-top:1px solid #2a2a2a;padding:18px 24px;display:none;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;box-shadow:0 -4px 24px rgba(0,0,0,0.3);}
+#cookieBanner p{font-size:13px;color:rgba(247,244,239,0.7);line-height:1.6;margin:0;flex:1;min-width:200px;}
+#cookieBanner p a{color:var(--oro);text-decoration:underline;cursor:pointer;}
+.cookie-btns{display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0;}
+.cb-accept{background:var(--oro);color:var(--noir);border:none;border-radius:6px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;}
+.cb-accept:hover{opacity:.85;}
+.cb-basic{background:transparent;color:var(--crema);border:1px solid #444;border-radius:6px;padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.cb-basic:hover{border-color:var(--oro);color:var(--oro);}
+.cb-custom{background:transparent;color:rgba(247,244,239,0.5);border:1px solid #333;border-radius:6px;padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.cb-custom:hover{border-color:#666;color:var(--crema);}
+
+/* MODAL PERSONALIZAR COOKIES */
+#cookieModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:10000;align-items:center;justify-content:center;padding:20px;}
+#cookieModal.active{display:flex;}
+#cookieModalBox{background:#111;border:1px solid #2a2a2a;border-radius:12px;max-width:480px;width:100%;padding:32px;position:relative;}
+#cookieModalBox h3{font-family:'Cormorant Garamond',serif;color:var(--crema);font-size:22px;margin-bottom:6px;}
+#cookieModalBox p{font-size:13px;color:rgba(247,244,239,0.55);margin-bottom:20px;line-height:1.6;}
+.cookie-item{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #1e1e1e;}
+.cookie-item:last-of-type{border-bottom:none;}
+.cookie-item-info h4{font-size:14px;color:var(--crema);font-weight:600;margin-bottom:3px;}
+.cookie-item-info p{font-size:12px;color:rgba(247,244,239,0.4);margin:0;line-height:1.5;}
+.cookie-toggle{position:relative;width:42px;height:24px;flex-shrink:0;}
+.cookie-toggle input{opacity:0;width:0;height:0;}
+.cookie-slider{position:absolute;inset:0;background:#333;border-radius:24px;cursor:pointer;transition:.3s;}
+.cookie-slider:before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:white;border-radius:50%;transition:.3s;}
+.cookie-toggle input:checked + .cookie-slider{background:var(--oro);}
+.cookie-toggle input:checked + .cookie-slider:before{transform:translateX(18px);}
+.cookie-toggle input:disabled + .cookie-slider{opacity:0.6;cursor:not-allowed;}
+@media(max-width:768px){
+  #cookieBanner{flex-direction:column;align-items:flex-start;}
+  .cookie-btns{width:100%;}
+  .cb-accept,.cb-basic,.cb-custom{flex:1;text-align:center;}
+}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -410,6 +447,7 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
     <a href="#cursos" onclick="closeNav()">Cursos</a>
     <a href="#academia" onclick="closeNav()">Academia</a>
     <a href="#proceso" onclick="closeNav()">Cómo funciona</a>
+    <a href="#practicas" onclick="closeNav()">Prácticas</a>
   </div>
 </nav>
 
@@ -455,7 +493,7 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
     <div class="cursos-filter">
       <button class="filter-btn active" onclick="filterCursos('todos',this)">Todos</button>
       <button class="filter-btn" onclick="filterCursos('gratis',this)">Gratis</button>
-      <button class="filter-btn" onclick="filterCursos('tramites',this)">Trámites</button>
+      <button class="filter-btn" onclick="filterCursos('tramites',this)">Básico</button>
       <button class="filter-btn" onclick="filterCursos('fp',this)">Intensivo</button>
       <button class="filter-btn" onclick="filterCursos('presencial',this)">📍 Presencial</button>
     </div>
@@ -473,34 +511,34 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
 <section id="pack3x1" style="background:var(--noir);padding:80px 20px;">
   <div style="max-width:1100px;margin:0 auto;">
     <div style="text-align:center;margin-bottom:50px;">
-      <span style="display:inline-block;background:var(--gold);color:var(--noir);font-size:11px;font-weight:700;letter-spacing:2px;padding:6px 18px;border-radius:2px;margin-bottom:18px;text-transform:uppercase;">Oferta exclusiva</span>
-      <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(28px,4vw,48px);color:var(--cream);font-weight:600;margin:0 0 16px;">Pack 3×1 — Elige 3, paga 1</h2>
-      <p style="color:var(--muted);font-size:16px;max-width:580px;margin:0 auto;line-height:1.7;">Selecciona tres cursos de nuestro catálogo y paga únicamente el precio del más caro. Los otros dos, completamente incluidos sin coste adicional.</p>
+      <span style="display:inline-block;background:var(--oro);color:var(--noir);font-size:11px;font-weight:700;letter-spacing:2px;padding:6px 18px;border-radius:2px;margin-bottom:18px;text-transform:uppercase;">Oferta exclusiva</span>
+      <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(28px,4vw,48px);color:var(--crema);font-weight:600;margin:0 0 16px;">Pack 3×1 — Elige 3, paga 1</h2>
+      <p style="color:rgba(247,244,239,0.65);font-size:16px;max-width:580px;margin:0 auto;line-height:1.7;">Selecciona tres cursos de nuestro catálogo y paga únicamente el precio del más caro. Los otros dos, completamente incluidos sin coste adicional.</p>
     </div>
 
     <div style="display:grid;grid-template-columns:1fr 340px;gap:32px;align-items:start;" id="packGrid">
       <!-- Lista de cursos seleccionables -->
       <div>
-        <p style="color:var(--gold);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;margin-bottom:20px;">Selecciona exactamente 3 cursos</p>
+        <p style="color:var(--oro);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;margin-bottom:20px;">Selecciona exactamente 3 cursos</p>
         <div id="packCursosList" style="display:grid;gap:10px;"></div>
       </div>
 
       <!-- Panel resumen -->
       <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:28px;position:sticky;top:20px;">
-        <h3 style="font-family:'Cormorant Garamond',Georgia,serif;color:var(--cream);font-size:20px;margin:0 0 24px;font-weight:600;">Tu pack</h3>
+        <h3 style="font-family:'Cormorant Garamond',Georgia,serif;color:var(--crema);font-size:20px;margin:0 0 24px;font-weight:600;">Tu pack</h3>
 
         <div id="packResumen" style="min-height:120px;margin-bottom:24px;">
-          <p style="color:var(--muted);font-size:14px;text-align:center;padding:30px 0;">Selecciona 3 cursos para ver el resumen</p>
+          <p style="color:rgba(247,244,239,0.5);font-size:14px;text-align:center;padding:30px 0;">Selecciona 3 cursos para ver el resumen</p>
         </div>
 
         <div style="border-top:1px solid #2a2a2a;padding-top:20px;margin-bottom:20px;" id="packPrecioBox" style="display:none;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-            <span style="color:var(--muted);font-size:13px;">Precio sin pack</span>
+            <span style="color:rgba(247,244,239,0.55);font-size:13px;">Precio sin pack</span>
             <span id="packPrecioTotal" style="color:var(--muted);font-size:14px;text-decoration:line-through;"></span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-            <span style="color:var(--gold);font-size:13px;font-weight:600;">Solo pagas</span>
-            <span id="packPrecioFinal" style="color:var(--gold);font-size:24px;font-weight:700;font-family:'Cormorant Garamond',Georgia,serif;"></span>
+            <span style="color:var(--oro);font-size:13px;font-weight:600;">Solo pagas</span>
+            <span id="packPrecioFinal" style="color:var(--oro);font-size:24px;font-weight:700;font-family:'Cormorant Garamond',Georgia,serif;"></span>
           </div>
           <div style="background:rgba(45,106,79,0.15);border:1px solid rgba(45,106,79,0.3);border-radius:4px;padding:8px 12px;margin-top:12px;text-align:center;">
             <span style="color:#5dba8a;font-size:13px;font-weight:600;">Ahorro: <span id="packAhorro"></span></span>
@@ -508,10 +546,10 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
         </div>
 
         <button id="packBtn" onclick="solicitarPack()" disabled
-          style="width:100%;padding:14px;background:var(--gold);color:var(--noir);border:none;border-radius:4px;font-size:14px;font-weight:700;letter-spacing:1px;cursor:pointer;opacity:0.4;transition:all .3s;text-transform:uppercase;">
+          style="width:100%;padding:14px;background:var(--oro);color:var(--noir);border:none;border-radius:4px;font-size:14px;font-weight:700;letter-spacing:1px;cursor:pointer;opacity:0.4;transition:all .3s;text-transform:uppercase;">
           Contactar para activar
         </button>
-        <p style="color:var(--muted);font-size:11px;text-align:center;margin:12px 0 0;line-height:1.5;">Te contactamos en menos de 24h para activar tu pack</p>
+        <p style="color:rgba(247,244,239,0.45);font-size:11px;text-align:center;margin:12px 0 0;line-height:1.5;">Te contactamos en menos de 24h para activar tu pack</p>
       </div>
     </div>
   </div>
@@ -525,10 +563,10 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
     <h2 class="section-title">Cómo <em>funciona</em></h2>
     <p class="section-sub">Un proceso claro y ordenado para que aprendas de verdad.</p>
     <div class="proceso-grid">
-      <div class="paso"><div class="paso-ico">📋</div><div class="paso-n">01</div><div class="paso-t">Elige tu curso</div><div class="paso-d">Explora el catálogo y selecciona el curso que mejor se adapta a tus objetivos.</div></div>
-      <div class="paso"><div class="paso-ico">📚</div><div class="paso-n">02</div><div class="paso-t">Estudia los módulos</div><div class="paso-d">Avanza por los temarios a tu ritmo. Cada módulo incluye dos temas extensos y completos.</div></div>
-      <div class="paso"><div class="paso-ico">✏️</div><div class="paso-n">03</div><div class="paso-t">Practica y examínate</div><div class="paso-d">Cada tema tiene ejercicios y examen propio. Al final, supera el examen final del curso.</div></div>
-      <div class="paso"><div class="paso-ico">🎓</div><div class="paso-n">04</div><div class="paso-t">Descarga tu diploma</div><div class="paso-d">Obtén tu diploma PDF acreditado y firmado por el director de Roma Servicios y Trámites.</div></div>
+      <div class="paso"><div class="paso-ico">🔍</div><div class="paso-n">01</div><div class="paso-t">Elige tu curso</div><div class="paso-d">Explora el catálogo. Los cursos <strong>Gratis</strong> son de acceso directo online. Los cursos <strong>Básico</strong>, <strong>Intensivo</strong> y <strong>Presencial</strong> se gestionan con nosotros.</div></div>
+      <div class="paso"><div class="paso-ico">📲</div><div class="paso-n">02</div><div class="paso-t">Contáctanos</div><div class="paso-d">Escríbenos por WhatsApp o email indicando el curso que te interesa. Te respondemos en menos de 24 horas con toda la información.</div></div>
+      <div class="paso"><div class="paso-ico">💳</div><div class="paso-n">03</div><div class="paso-t">Confirma el pago</div><div class="paso-d">Una vez confirmado el pago, te enviamos el material completo del curso directamente a tu correo. Sin esperas.</div></div>
+      <div class="paso"><div class="paso-ico">🎓</div><div class="paso-n">04</div><div class="paso-t">Aprende y certifícate</div><div class="paso-d">Estudia a tu ritmo desde cualquier dispositivo. Al terminar, solicítanos tu diploma acreditado gratuito por WhatsApp o email.</div></div>
     </div>
   </div>
 </section>
@@ -553,20 +591,60 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
       <div class="about-quote">"La formación es la inversión que nadie te puede quitar."</div>
       <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;margin-bottom:20px;">
         <div style="font-size:13px;font-weight:600;color:var(--crema);">Roma Servicios y Trámites</div>
-        <div style="font-size:12px;color:rgba(247,244,239,0.35);margin-top:2px;">Albacete · Desde 2014</div>
+        <div style="font-size:12px;color:rgba(247,244,239,0.35);margin-top:2px;">Albacete</div>
       </div>
-      <div class="about-check"><span>✓</span>Primera consulta siempre gratuita</div>
+      <div class="about-check"><span>✓</span>Cursos gratuitos disponibles sin registro</div>
       <div class="about-check"><span>✓</span>Atención personalizada en cada caso</div>
       <div class="about-check"><span>✓</span>Profesionales activos como docentes</div>
-      <div class="about-check"><span>✓</span>Diploma descargable en PDF al terminar</div>
+      <div class="about-check"><span>✓</span>Diploma acreditado gratuito al terminar</div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
+
+<!-- PRÁCTICAS Y EMPLEO -->
+<section id="practicas" style="background:var(--crema2);padding:80px 40px;">
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;">
+    <div>
+      <div class="section-tag">Oportunidad laboral</div>
+      <h2 class="section-title">Aprende, practica y <em>trabaja con nosotros</em></h2>
+      <p style="font-size:15px;color:var(--gris2);line-height:1.8;margin-bottom:16px;">Los alumnos de los cursos <strong>Intensivos</strong> y <strong>Presenciales</strong> tienen la posibilidad de realizar prácticas reales directamente con Rafael Ochoa en la oficina de Roma Servicios y Trámites en Albacete.</p>
+      <p style="font-size:15px;color:var(--gris2);line-height:1.8;margin-bottom:24px;">No es teoría vacía: trabajarás en casos reales de gestión administrativa, trámites de extranjería y atención al cliente. Y si encajas con el equipo, puede abrirse la puerta a incorporarte.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:var(--gris);">
+          <span style="color:var(--verde);font-size:16px;">✓</span> Prácticas reales en oficina, no simulaciones
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:var(--gris);">
+          <span style="color:var(--verde);font-size:16px;">✓</span> Tutorizadas directamente por el director
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:var(--gris);">
+          <span style="color:var(--verde);font-size:16px;">✓</span> Posibilidad de incorporación al equipo
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:var(--gris);">
+          <span style="color:var(--verde);font-size:16px;">✓</span> Solo disponible para alumnos de cursos Intensivos y Presenciales
+        </div>
+      </div>
+      <a href="https://wa.me/34611175080?text=${encodeURIComponent('Hola, me interesan las prácticas en Roma Servicios y Trámites. ¿Podéis darme más información?')}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;font-size:14px;font-weight:700;padding:13px 24px;border-radius:8px;text-decoration:none;">📲 Preguntar por las prácticas</a>
+    </div>
+    <div style="background:var(--noir);border-radius:16px;padding:36px;color:var(--crema);">
+      <div style="font-size:42px;margin-bottom:16px;">🏢</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;margin-bottom:6px;">Roma Servicios y Trámites</div>
+      <div style="font-size:12px;color:rgba(247,244,239,0.4);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:20px;">Albacete · C. de Dulce Chacón 6</div>
+      <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;">
+        <div style="font-size:13px;color:rgba(247,244,239,0.6);line-height:1.8;margin-bottom:6px;">📋 Gestión administrativa</div>
+        <div style="font-size:13px;color:rgba(247,244,239,0.6);line-height:1.8;margin-bottom:6px;">🌍 Extranjería y residencia</div>
+        <div style="font-size:13px;color:rgba(247,244,239,0.6);line-height:1.8;margin-bottom:6px;">📄 Trámites con la administración</div>
+        <div style="font-size:13px;color:rgba(247,244,239,0.6);line-height:1.8;">👥 Atención personalizada al cliente</div>
+      </div>
+      <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.08);font-size:12px;color:rgba(247,244,239,0.35);font-style:italic;">"Busco personas con ganas de aprender y crecer. Si eres alumno y tienes iniciativa, hablemos."<br><span style="color:var(--oro);margin-top:6px;display:block;">— Rafael Ochoa, Director y Fundador</span></div>
+    </div>
+  </div>
+</section>
+
 <div class="cta-band">
   <h2>¿Listo para empezar?</h2>
-  <p>Empieza hoy con el curso de Jardinería completamente gratis. Sin tarjeta, sin registro.</p>
+  <p>Tenemos 3 cursos completamente gratuitos: Jardinería, Empadronamiento e Informática. Sin tarjeta, sin registro.</p>
   <a href="#cursos" class="btn-cta">Ver cursos gratuitos</a>
 </div>
 
@@ -581,16 +659,17 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
       </div>
       <div class="footer-col">
         <h5>Cursos</h5>
-        <a href="#cursos">Jardinería (Gratis)</a>
-        <a href="#cursos">Gestión Administrativa FP</a>
-        <a href="#cursos">Tramitación Pública FP</a>
-        <a href="#cursos">Extranjería y Residencia FP</a>
-        <a href="#cursos">Ver todos →</a>
+        <a href="#cursos">🟢 Cursos gratuitos</a>
+        <a href="#cursos">📘 Cursos básicos</a>
+        <a href="#cursos">🎓 Cursos intensivos</a>
+        <a href="#cursos">📍 Cursos presenciales</a>
+        <a href="#cursos">Ver catálogo completo →</a>
       </div>
       <div class="footer-col">
         <h5>Academia</h5>
         <a href="#academia">Sobre Roma Formación</a>
         <a href="#proceso">Cómo funciona</a>
+        <a href="#practicas">Prácticas y empleo</a>
       </div>
       <div class="footer-col">
         <h5>Legal</h5>
@@ -670,7 +749,7 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
     </div>
   </div>
   <div class="dip-actions">
-    <button class="btn-da btn-da-p" onclick="window.print()">⬇ Descargar diploma (PDF)</button>
+    <button class="btn-da btn-da-p" onclick="descargarDiplomaPDF()">⬇ Descargar diploma (PDF)</button>
     <button class="btn-da btn-da-c" onclick="closeDip()">Cerrar</button>
   </div>
 </div>
@@ -1318,9 +1397,9 @@ examenFinal:[
 {preg:'¿Qué necesitas para hacer trámites online con la sede electrónica?',opts:['Solo un ordenador','Identificación digital: certificado, DNI-e o Cl@ve','Una cita previa presencial','Un abogado'],ok:1}
 ]
 }},
-{id:'fiscalidad',titulo:'Fiscalidad Básica para Particulares',categoria:'Trámites',cat:'tramites',icono:'💰',colorBg:'linear-gradient(135deg,#4d4000,#7d6608)',precio:'19 €',tipoPrecio:'pay',duracion:'10 h',modulos:6,nivel:'Principiante',desc:'Declaración de la renta, deducciones, IRPF para asalariados y autónomos. Sin tecnicismos innecesarios.',activo:true},
-{id:'tramites-online',titulo:'Trámites Online: Sede Electrónica',categoria:'Trámites',cat:'tramites',icono:'💻',colorBg:'linear-gradient(135deg,#0d2b3f,#154360)',precio:'15 €',tipoPrecio:'pay',duracion:'8 h',modulos:5,nivel:'Principiante',desc:'Certificado digital, Cl@ve, DNI electrónico y cómo hacer cualquier trámite desde casa sin colas.',activo:true},
-{id:'laboral',titulo:'Orientación Laboral y Contratos',categoria:'Trámites',cat:'tramites',icono:'👔',colorBg:'linear-gradient(135deg,#0e4d2a,#1e8449)',precio:'15 €',tipoPrecio:'pay',duracion:'8 h',modulos:5,nivel:'Principiante',desc:'Tipos de contrato, derechos laborales, cómo leer una nómina y gestionar la situación de desempleo.',activo:true},
+{id:'fiscalidad',titulo:'Fiscalidad Básica para Particulares',categoria:'Básico',cat:'tramites',icono:'💰',colorBg:'linear-gradient(135deg,#4d4000,#7d6608)',precio:'19 €',tipoPrecio:'pay',duracion:'10 h',modulos:6,nivel:'Principiante',desc:'Declaración de la renta, deducciones, IRPF para asalariados y autónomos. Sin tecnicismos innecesarios.',activo:true},
+{id:'tramites-online',titulo:'Trámites Online: Sede Electrónica',categoria:'Básico',cat:'tramites',icono:'💻',colorBg:'linear-gradient(135deg,#0d2b3f,#154360)',precio:'15 €',tipoPrecio:'pay',duracion:'8 h',modulos:5,nivel:'Principiante',desc:'Certificado digital, Cl@ve, DNI electrónico y cómo hacer cualquier trámite desde casa sin colas.',activo:true},
+{id:'laboral',titulo:'Orientación Laboral y Contratos',categoria:'Básico',cat:'tramites',icono:'👔',colorBg:'linear-gradient(135deg,#0e4d2a,#1e8449)',precio:'15 €',tipoPrecio:'pay',duracion:'8 h',modulos:5,nivel:'Principiante',desc:'Tipos de contrato, derechos laborales, cómo leer una nómina y gestionar la situación de desempleo.',activo:true},
 {id:'autonomos',titulo:'Emprendimiento y Autónomos',categoria:'Negocios',cat:'pay',icono:'🚀',colorBg:'linear-gradient(135deg,#5b1410,#922b21)',precio:'19 €',tipoPrecio:'pay',duracion:'12 h',modulos:7,nivel:'Principiante',desc:'Alta como autónomo, modelos tributarios, facturación, deducciones y primeros pasos para crear tu negocio.',activo:true},
 {id:'diseno-grafico',titulo:'Diseño Gráfico para No Diseñadores',categoria:'Diseño',cat:'pay',icono:'🎨',colorBg:'linear-gradient(135deg,#4a1a5c,#7d3c98)',precio:'19 €',tipoPrecio:'pay',duracion:'10 h',modulos:6,nivel:'Principiante',desc:'Canva, herramientas gratuitas y fundamentos de diseño para crear logos, carteles y contenido para redes.',activo:true},
 {id:'fotografia',titulo:'Fotografía Básica con el Móvil',categoria:'Creatividad',cat:'pay',icono:'📸',colorBg:'linear-gradient(135deg,#0d1257,#1a237e)',precio:'12 €',tipoPrecio:'pay',duracion:'7 h',modulos:4,nivel:'Principiante',desc:'Composición, luz, edición y trucos para hacer fotos profesionales solo con tu smartphone.',activo:true},
@@ -1608,7 +1687,7 @@ function renderCursos(f='todos'){
   const g=document.getElementById('cursosGrid');g.innerHTML='';
   CURSOS.filter(c=>f==='todos'||c.cat===f).forEach(c=>{
     const pct=getPct(c.id);
-    const bM={gratis:'<span class="badge b-free">Gratis</span>',pay:'<span class="badge b-pay">De pago</span>',fp:'<span class="badge b-fp">Curso Intensivo</span>',proximamente:'<span class="badge b-soon">Próximamente</span>',presencial:'<span class="badge b-presencial">📍 Presencial</span>'};
+    const bM={gratis:'<span class="badge b-free">Gratis</span>',pay:'<span class="badge b-pay">Online</span>',fp:'<span class="badge b-fp">Curso Intensivo</span>',proximamente:'<span class="badge b-soon">Próximamente</span>',presencial:'<span class="badge b-presencial">📍 Presencial</span>'};
     const waMsg=encodeURIComponent('Hola, me interesa el curso: '+c.titulo+' ('+c.precio+'). ¿Podéis darme más información?');
     const waLink='https://wa.me/34611175080?text='+waMsg;
     const emLink='mailto:roma.servicios.tramites@gmail.com?subject='+encodeURIComponent('Información curso: '+c.titulo)+'&body='+encodeURIComponent('Hola,\n\nMe interesa el curso '+c.titulo+' ('+c.precio+').\n\nPor favor, indíquenme cómo proceder para matricularme.\n\nGracias.');
@@ -1648,7 +1727,7 @@ function openCurso(id){
   CC=CURSOS.find(c=>c.id===id);if(!CC)return;
   document.getElementById('modalHero').style.background=CC.colorBg;
   document.getElementById('modalIcon').textContent=CC.icono;
-  const bM={gratis:'<span class="badge b-free">Gratis</span>',pay:'<span class="badge b-pay">De pago</span>',fp:'<span class="badge b-fp">Curso Intensivo</span>',presencial:'<span class="badge b-presencial">📍 Presencial</span>'};
+  const bM={gratis:'<span class="badge b-free">Gratis</span>',pay:'<span class="badge b-pay">Online</span>',fp:'<span class="badge b-fp">Curso Intensivo</span>',presencial:'<span class="badge b-presencial">📍 Presencial</span>'};
   document.getElementById('modalBadges').innerHTML=(bM[CC.cat]||'')+`<span class="badge" style="background:var(--crema2);color:var(--gris);">${CC.nivel}</span>`;
   document.getElementById('modalTitle').textContent=CC.titulo;
   document.getElementById('modalDesc').textContent=CC.desc;
@@ -1811,7 +1890,7 @@ function corregirFinal(){
     <div class="ex-score">${ok}/${ef.length}</div>
     <div class="ex-score-l">${pct}% · ${ap?'APROBADO ✓':'NO APROBADO ✗'}</div>
     <div class="ex-msg">${ap?'🎓 ¡Felicidades! Ya puedes descargar tu diploma.':'📖 Necesitas un 70% para aprobar. Repasa el material.'}</div>
-    ${ap?`<button class="btn-ex" style="margin-top:12px;" onclick="switchTab('diploma',document.querySelectorAll('.tab-btn')[3])">Ver mi diploma →</button>`:''}
+    ${ap?`<button class="btn-ex" style="margin-top:12px;" onclick="switchTab('diploma',document.querySelectorAll('.tab-btn')[3])">🎓 Solicitar mi diploma →</button>`:''}
   </div>`;
 }
 
@@ -1826,15 +1905,23 @@ function renderDiplomaTab(){
       <div style="font-size:13px;color:var(--gris3);margin-top:6px;">Progreso actual: ${pct}%</div>
     </div>`;return;
   }
-  document.getElementById('diplomaCont').innerHTML=`<div style="text-align:center;padding:26px 20px;background:linear-gradient(135deg,#fef9f0,#f7f0de);border-radius:12px;border:1px solid var(--crema2);">
-    <div style="font-size:48px;margin-bottom:10px;">🎓</div>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--noir);margin-bottom:5px;">¡Curso completado con éxito!</div>
-    <div style="font-size:14px;color:var(--gris2);margin-bottom:18px;">Tu diploma acreditado por Roma Formación está listo.</div>
-    <div class="nombre-wrap" style="text-align:left;max-width:360px;margin:0 auto 18px;">
-      <label>Confirma tu nombre para el diploma</label>
-      <input type="text" id="dipNomInput" placeholder="Tu nombre completo" value="${localStorage.getItem('rf_nom_'+CC.id)||''}"/>
+  const nom = localStorage.getItem('rf_nom_'+CC.id)||'';
+  const waMsg = encodeURIComponent('Hola, he completado el curso "'+CC.titulo+'" en Roma Formación y me gustaría recibir mi diploma. Mi nombre completo es: '+(nom||'[escribe tu nombre]')+'. ¡Gracias!');
+  const waLink = 'https://wa.me/34611175080?text='+waMsg;
+  const emLink = 'mailto:roma.servicios.tramites@gmail.com?subject='+encodeURIComponent('Solicitud de diploma — '+CC.titulo)+'&body='+encodeURIComponent('Hola,\n\nHe completado el curso "'+CC.titulo+'" en Roma Formación y me gustaría recibir mi diploma acreditado.\n\nMi nombre completo es: '+(nom||'[escribe tu nombre]')+'\n\n¡Muchas gracias!');
+  document.getElementById('diplomaCont').innerHTML=`<div style="background:linear-gradient(135deg,#fef9f0,#f7f0de);border-radius:12px;border:1px solid var(--crema2);padding:28px 24px;text-align:center;">
+    <div style="font-size:52px;margin-bottom:12px;">🎓</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--noir);margin-bottom:6px;">¡Enhorabuena!</div>
+    <div style="font-size:15px;color:var(--gris2);margin-bottom:6px;">Has completado el curso <strong>${CC.titulo}</strong> con éxito.</div>
+    <div style="display:inline-block;background:var(--verde3);color:var(--verde);font-size:13px;font-weight:700;padding:5px 16px;border-radius:20px;margin-bottom:22px;border:1px solid rgba(45,106,79,0.2);">✓ APTO</div>
+    <div style="background:white;border-radius:8px;border:1px solid var(--crema2);padding:16px 20px;margin-bottom:22px;text-align:left;">
+      <p style="font-size:13px;color:var(--gris2);line-height:1.7;margin:0;">📜 Tu diploma acreditado por <strong>Roma Formación</strong> es completamente <strong>gratuito</strong>. Contáctanos por WhatsApp o email con tu nombre completo y te lo enviamos personalmente.</p>
     </div>
-    <button class="btn-diploma" onclick="abrirDiploma()">⬇ Generar mi diploma</button>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <a href="${waLink}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;font-size:14px;font-weight:700;padding:13px 22px;border-radius:8px;text-decoration:none;">📲 Pedir diploma por WhatsApp</a>
+      <a href="${emLink}" style="display:inline-flex;align-items:center;gap:8px;background:var(--noir);color:var(--crema);font-size:14px;font-weight:600;padding:13px 22px;border-radius:8px;text-decoration:none;">✉️ Pedir diploma por Email</a>
+    </div>
+    <p style="font-size:11px;color:var(--gris3);margin-top:14px;">Te respondemos en menos de 24 horas · Diploma PDF acreditado y firmado</p>
   </div>`;
 }
 function saveNombre(){const n=document.getElementById('alumnoNombre').value;if(CC)localStorage.setItem('rf_nom_'+CC.id,n);}
@@ -1909,6 +1996,116 @@ document.addEventListener('click', function(e){
   }
 });
 
+// ── DIPLOMA PDF ────────────────────────────────────────────────────────────────
+function descargarDiplomaPDF(){
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+    const W = 297, H = 210;
+    const nombre = document.getElementById('dipName')?.textContent || 'Alumno/a';
+    const curso  = document.getElementById('dipCourse')?.textContent || '';
+    const fecha  = document.getElementById('dipDate')?.textContent || '';
+
+    // Fondo crema
+    doc.setFillColor(254, 252, 245);
+    doc.rect(0, 0, W, H, 'F');
+
+    // Borde exterior dorado
+    doc.setDrawColor(200, 169, 110);
+    doc.setLineWidth(1.5);
+    doc.rect(10, 10, W-20, H-20);
+    // Borde interior
+    doc.setLineWidth(0.4);
+    doc.rect(13, 13, W-26, H-26);
+
+    // Ornamento superior
+    doc.setFontSize(16);
+    doc.setTextColor(168, 133, 74);
+    doc.text('✦  ✦  ✦', W/2, 28, {align:'center'});
+
+    // Empresa
+    doc.setFontSize(10);
+    doc.setTextColor(100, 100, 100);
+    doc.text('ROMA SERVICIOS Y TRÁMITES', W/2, 38, {align:'center'});
+    doc.setFontSize(15);
+    doc.setTextColor(15, 15, 15);
+    doc.text('Roma Formación', W/2, 47, {align:'center'});
+
+    // Línea separadora
+    doc.setDrawColor(200, 169, 110);
+    doc.setLineWidth(0.5);
+    doc.line(60, 52, W-60, 52);
+
+    // Texto acredita
+    doc.setFontSize(9);
+    doc.setTextColor(130, 130, 130);
+    doc.text('ACREDITA HABER COMPLETADO CON ÉXITO EL CURSO', W/2, 62, {align:'center'});
+
+    // Nombre del curso
+    doc.setFontSize(26);
+    doc.setTextColor(15, 15, 15);
+    doc.text(curso, W/2, 80, {align:'center', maxWidth: W-60});
+
+    // Otorgado a
+    doc.setFontSize(9);
+    doc.setTextColor(130, 130, 130);
+    doc.text('OTORGADO A', W/2, 96, {align:'center'});
+
+    // Nombre del alumno
+    doc.setFontSize(22);
+    doc.setTextColor(168, 133, 74);
+    doc.text(nombre, W/2, 110, {align:'center'});
+
+    // Línea bajo nombre
+    doc.setDrawColor(220, 210, 190);
+    doc.setLineWidth(0.4);
+    doc.line(W/2-50, 114, W/2+50, 114);
+
+    // Fecha
+    doc.setFontSize(9);
+    doc.setTextColor(150, 150, 150);
+    doc.text(fecha, W/2, 122, {align:'center'});
+
+    // Línea separadora inferior
+    doc.setDrawColor(200, 169, 110);
+    doc.setLineWidth(0.5);
+    doc.line(40, 148, W-40, 148);
+
+    // Firma izquierda
+    doc.setFontSize(9);
+    doc.setTextColor(15, 15, 15);
+    doc.text('Director/a · Roma Servicios y Trámites', 70, 158, {align:'center'});
+    doc.setFontSize(8);
+    doc.setTextColor(130,130,130);
+    doc.text('Director · Roma Formación', 70, 164, {align:'center'});
+
+    // Sello central
+    doc.setDrawColor(168, 133, 74);
+    doc.setLineWidth(0.8);
+    doc.circle(W/2, 158, 14);
+    doc.setFontSize(6);
+    doc.setTextColor(168, 133, 74);
+    doc.text('ROMA FORM.', W/2, 155, {align:'center'});
+    doc.text('★', W/2, 160, {align:'center'});
+    doc.text('ACREDITADO', W/2, 165, {align:'center'});
+
+    // Firma derecha (alumno)
+    doc.setFontSize(9);
+    doc.setTextColor(15, 15, 15);
+    doc.text(nombre, W-70, 158, {align:'center'});
+    doc.setFontSize(8);
+    doc.setTextColor(130,130,130);
+    doc.text('Alumno/a', W-70, 164, {align:'center'});
+
+    doc.save('Diploma_' + curso.replace(/[^a-zA-Z0-9]/g,'_') + '_RomaFormacion.pdf');
+  } catch(e) {
+    console.error('Error generando PDF:', e);
+    // Fallback: imprimir
+    window.print();
+  }
+}
+
+
 // ── INIT ───────────────────────────────────────────────────────────────────────
 // ── PACK 3×1 ─────────────────────────────────────────────────────────────────
 // ── PACK 3×1 LOGIC ────────────────────────────────────────────────────────────
@@ -1940,8 +2137,8 @@ function renderPackCursos(){
         display:flex;align-items:center;justify-content:center;
       ">${sel?'<svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4L4 7L10 1" stroke="#0f0f0f" stroke-width="2" stroke-linecap="round"/></svg>':''}</div>
       <div style="flex:1;min-width:0;">
-        <div style="color:${sel?'var(--cream)':'#ccc'};font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.titulo}</div>
-        <div style="color:${sel?'var(--gold)':'#999'};font-size:12px;margin-top:2px;">${c.precio}</div>
+        <div style="color:${sel?'var(--crema)':'#ddd'};font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.titulo}</div>
+        <div style="color:${sel?'var(--oro)':'#aaa'};font-size:12px;margin-top:2px;">${c.precio}</div>
       </div>
       ${sel?'<div style="color:var(--gold);font-size:18px;">✓</div>':''}
     </div>`;
@@ -1960,7 +2157,7 @@ function renderResumen(){
   const cursos = seleccionados.map(id => CURSOS.find(c=>c.id===id)).filter(Boolean);
 
   if(cursos.length === 0){
-    box.innerHTML = '<p style="color:var(--muted);font-size:14px;text-align:center;padding:30px 0;">Selecciona 3 cursos para ver el resumen</p>';
+    box.innerHTML = '<p style="color:rgba(247,244,239,0.5);font-size:14px;text-align:center;padding:30px 0;">Selecciona 3 cursos para ver el resumen</p>';
     if(pBox) pBox.style.display='none';
     if(btn)  { btn.disabled=true; btn.style.opacity='0.4'; }
     return;
@@ -1968,10 +2165,10 @@ function renderResumen(){
 
   box.innerHTML = cursos.map((c,i) => `
     <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #1e1e1e;">
-      <span style="color:${i===0?'var(--cream)':'var(--muted)'};font-size:13px;flex:1;margin-right:8px;">${c.titulo}</span>
-      <span style="color:${i===0?'var(--gold)':'#999'};font-size:13px;white-space:nowrap;">${i===0?c.precio:'Incluido'}</span>
+      <span style="color:${i===0?'var(--crema)':'rgba(247,244,239,0.5)'};font-size:13px;flex:1;margin-right:8px;">${c.titulo}</span>
+      <span style="color:${i===0?'var(--oro)':'#aaa'};font-size:13px;white-space:nowrap;">${i===0?c.precio:'Incluido'}</span>
     </div>
-  `).join('') + (cursos.length < 3 ? `<p style="color:var(--muted);font-size:12px;margin-top:12px;text-align:center;">${3-cursos.length} más por seleccionar</p>` : '');
+  `).join('') + (cursos.length < 3 ? `<p style="color:rgba(247,244,239,0.5);font-size:12px;margin-top:12px;text-align:center;">${3-cursos.length} más por seleccionar</p>` : '');
 
   if(cursos.length === 3){
     const precios = cursos.map(c=>precioNum(c.precio)).sort((a,b)=>b-a);
@@ -2053,12 +2250,144 @@ window.enviarPackEmail = function(){
 
 
 
+// ── DIPLOMA PDF ────────────────────────────────────────────────────────────────
+function descargarDiplomaPDF(){
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+    const W = 297, H = 210;
+    const nombre = document.getElementById('dipName')?.textContent || 'Alumno/a';
+    const curso  = document.getElementById('dipCourse')?.textContent || '';
+    const fecha  = document.getElementById('dipDate')?.textContent || '';
+
+    // Fondo crema
+    doc.setFillColor(254, 252, 245);
+    doc.rect(0, 0, W, H, 'F');
+
+    // Borde exterior dorado
+    doc.setDrawColor(200, 169, 110);
+    doc.setLineWidth(1.5);
+    doc.rect(10, 10, W-20, H-20);
+    // Borde interior
+    doc.setLineWidth(0.4);
+    doc.rect(13, 13, W-26, H-26);
+
+    // Ornamento superior
+    doc.setFontSize(16);
+    doc.setTextColor(168, 133, 74);
+    doc.text('✦  ✦  ✦', W/2, 28, {align:'center'});
+
+    // Empresa
+    doc.setFontSize(10);
+    doc.setTextColor(100, 100, 100);
+    doc.text('ROMA SERVICIOS Y TRÁMITES', W/2, 38, {align:'center'});
+    doc.setFontSize(15);
+    doc.setTextColor(15, 15, 15);
+    doc.text('Roma Formación', W/2, 47, {align:'center'});
+
+    // Línea separadora
+    doc.setDrawColor(200, 169, 110);
+    doc.setLineWidth(0.5);
+    doc.line(60, 52, W-60, 52);
+
+    // Texto acredita
+    doc.setFontSize(9);
+    doc.setTextColor(130, 130, 130);
+    doc.text('ACREDITA HABER COMPLETADO CON ÉXITO EL CURSO', W/2, 62, {align:'center'});
+
+    // Nombre del curso
+    doc.setFontSize(26);
+    doc.setTextColor(15, 15, 15);
+    doc.text(curso, W/2, 80, {align:'center', maxWidth: W-60});
+
+    // Otorgado a
+    doc.setFontSize(9);
+    doc.setTextColor(130, 130, 130);
+    doc.text('OTORGADO A', W/2, 96, {align:'center'});
+
+    // Nombre del alumno
+    doc.setFontSize(22);
+    doc.setTextColor(168, 133, 74);
+    doc.text(nombre, W/2, 110, {align:'center'});
+
+    // Línea bajo nombre
+    doc.setDrawColor(220, 210, 190);
+    doc.setLineWidth(0.4);
+    doc.line(W/2-50, 114, W/2+50, 114);
+
+    // Fecha
+    doc.setFontSize(9);
+    doc.setTextColor(150, 150, 150);
+    doc.text(fecha, W/2, 122, {align:'center'});
+
+    // Línea separadora inferior
+    doc.setDrawColor(200, 169, 110);
+    doc.setLineWidth(0.5);
+    doc.line(40, 148, W-40, 148);
+
+    // Firma izquierda
+    doc.setFontSize(9);
+    doc.setTextColor(15, 15, 15);
+    doc.text('Director/a · Roma Servicios y Trámites', 70, 158, {align:'center'});
+    doc.setFontSize(8);
+    doc.setTextColor(130,130,130);
+    doc.text('Director · Roma Formación', 70, 164, {align:'center'});
+
+    // Sello central
+    doc.setDrawColor(168, 133, 74);
+    doc.setLineWidth(0.8);
+    doc.circle(W/2, 158, 14);
+    doc.setFontSize(6);
+    doc.setTextColor(168, 133, 74);
+    doc.text('ROMA FORM.', W/2, 155, {align:'center'});
+    doc.text('★', W/2, 160, {align:'center'});
+    doc.text('ACREDITADO', W/2, 165, {align:'center'});
+
+    // Firma derecha (alumno)
+    doc.setFontSize(9);
+    doc.setTextColor(15, 15, 15);
+    doc.text(nombre, W-70, 158, {align:'center'});
+    doc.setFontSize(8);
+    doc.setTextColor(130,130,130);
+    doc.text('Alumno/a', W-70, 164, {align:'center'});
+
+    doc.save('Diploma_' + curso.replace(/[^a-zA-Z0-9]/g,'_') + '_RomaFormacion.pdf');
+  } catch(e) {
+    console.error('Error generando PDF:', e);
+    // Fallback: imprimir
+    window.print();
+  }
+}
+
+// ── COOKIES ────────────────────────────────────────────────────────────────────
+function initCookies(){
+  if(!localStorage.getItem('rf_cookies')){
+    document.getElementById('cookieBanner').style.display='flex';
+  }
+}
+function aceptarCookies(tipo){
+  localStorage.setItem('rf_cookies', tipo);
+  document.getElementById('cookieBanner').style.display='none';
+  document.getElementById('cookieModal').classList.remove('active');
+}
+function guardarPreferencias(){
+  const analisis = document.getElementById('ckAnalisis').checked;
+  const fuentes  = document.getElementById('ckFuentes').checked;
+  const tipo = (analisis && fuentes) ? 'todas' : 'personalizado';
+  localStorage.setItem('rf_cookies', tipo);
+  localStorage.setItem('rf_cookies_analisis', analisis);
+  localStorage.setItem('rf_cookies_fuentes', fuentes);
+  document.getElementById('cookieBanner').style.display='none';
+  document.getElementById('cookieModal').classList.remove('active');
+}
+
 // ── INIT ──────────────────────────────────────────────────────────────────────
 if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded', function(){ renderCursos(); renderPackCursos(); });
 } else {
   renderCursos();
   renderPackCursos();
+  initCookies();
 }
 </script>
 
@@ -2113,6 +2442,41 @@ if(document.readyState==='loading'){
     <div class="pm-btns">
       <button class="pm-btn-wa" onclick="enviarPackWA()">📲 WhatsApp</button>
       <button class="pm-btn-em" onclick="enviarPackEmail()">✉️ Email</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- BANNER COOKIES -->
+<div id="cookieBanner">
+  <p>Usamos cookies esenciales para el funcionamiento de la plataforma y cookies de análisis para mejorar tu experiencia. <a onclick="openLegal('cookies')">Política de Cookies</a></p>
+  <div class="cookie-btns">
+    <button class="cb-accept" onclick="aceptarCookies('todas')">✓ Aceptar todas</button>
+    <button class="cb-basic" onclick="aceptarCookies('esenciales')">Solo esenciales</button>
+    <button class="cb-custom" onclick="document.getElementById('cookieModal').classList.add('active')">⚙ Personalizar</button>
+  </div>
+</div>
+
+<!-- MODAL PERSONALIZAR COOKIES -->
+<div id="cookieModal" onclick="if(event.target===this)this.classList.remove('active')">
+  <div id="cookieModalBox">
+    <h3>Personalizar cookies</h3>
+    <p>Elige qué tipos de cookies quieres permitir. Las esenciales son necesarias para que la plataforma funcione y no se pueden desactivar.</p>
+    <div class="cookie-item">
+      <div class="cookie-item-info"><h4>Cookies esenciales</h4><p>Necesarias para el funcionamiento básico: guardar tu progreso del curso y preferencias.</p></div>
+      <label class="cookie-toggle"><input type="checkbox" checked disabled><span class="cookie-slider"></span></label>
+    </div>
+    <div class="cookie-item">
+      <div class="cookie-item-info"><h4>Cookies de análisis</h4><p>Nos ayudan a entender cómo se usa la plataforma para mejorarla.</p></div>
+      <label class="cookie-toggle"><input type="checkbox" id="ckAnalisis" checked><span class="cookie-slider"></span></label>
+    </div>
+    <div class="cookie-item">
+      <div class="cookie-item-info"><h4>Cookies de fuentes externas</h4><p>Google Fonts para mostrar los tipos de letra de la plataforma.</p></div>
+      <label class="cookie-toggle"><input type="checkbox" id="ckFuentes" checked><span class="cookie-slider"></span></label>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:22px;">
+      <button class="cb-accept" style="flex:1;" onclick="guardarPreferencias()">Guardar preferencias</button>
+      <button class="cb-basic" onclick="document.getElementById('cookieModal').classList.remove('active')">Cancelar</button>
     </div>
   </div>
 </div>
