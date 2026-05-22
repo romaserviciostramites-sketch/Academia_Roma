@@ -2053,23 +2053,6 @@ window.enviarPackEmail = function(){
 
 
 
-// ── NAV MÓVIL ──────────────────────────────────────────────────────────────────
-function toggleNav(){
-  document.getElementById('navLinks').classList.toggle('open');
-  document.getElementById('navHam').classList.toggle('open');
-}
-function closeNav(){
-  document.getElementById('navLinks').classList.remove('open');
-  document.getElementById('navHam').classList.remove('open');
-}
-// Cerrar al hacer clic fuera
-document.addEventListener('click', function(e){
-  const nav = document.querySelector('nav');
-  if(!nav.contains(e.target)){
-    closeNav();
-  }
-});
-
 // ── INIT ──────────────────────────────────────────────────────────────────────
 if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded', function(){ renderCursos(); renderPackCursos(); });
