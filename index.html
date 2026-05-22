@@ -329,6 +329,61 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
 .pm-btn-em:hover{border-color:var(--oro);color:var(--oro);}
 #packModal .pm-close{position:absolute;top:14px;right:14px;background:transparent;border:none;color:var(--gris3);font-size:20px;cursor:pointer;line-height:1;padding:4px;}
 #packModal .pm-close:hover{color:var(--crema);}
+
+.btn-wa{background:#25D366;color:#fff!important;border:none;border-radius:6px;padding:9px 10px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:opacity .2s;}
+.btn-wa:hover{opacity:.85;}
+.btn-em{background:transparent;color:var(--noir)!important;border:1.5px solid var(--gris4);border-radius:6px;padding:9px 10px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+.btn-em:hover{border-color:var(--oro);color:var(--oro)!important;}
+
+.b-presencial{background:#ffe8cc;color:#7a3b00;}
+.b-gratis-info{background:#d8f3dc;color:#1b5e35;}
+.aviso-material{background:linear-gradient(135deg,#1a2a1a,#0f1f0f);border:1px solid rgba(45,106,79,0.4);border-radius:8px;padding:14px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px;}
+.aviso-material span{font-size:20px;}
+.aviso-material p{font-size:13px;color:#a8d5b5;line-height:1.5;margin:0;}
+.aviso-material strong{color:#5dba8a;}
+.cupo-bar{height:4px;background:#222;border-radius:2px;margin:8px 0 4px;}
+.cupo-fill{height:100%;background:linear-gradient(90deg,#2d6a4f,#52b788);border-radius:2px;transition:width .4s;}
+.cupo-label{font-size:11px;color:var(--gris3);}
+
+/* NAV MOBILE */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--noir);border-radius:2px;transition:all .3s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+@media(max-width:768px){
+  nav{padding:0 20px;height:60px;}
+  .nav-hamburger{display:flex;}
+  .nav-links{
+    display:none;flex-direction:column;gap:0;
+    position:fixed;top:60px;left:0;right:0;
+    background:rgba(247,244,239,0.98);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--crema2);
+    padding:12px 0 20px;
+    z-index:999;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+  }
+  .nav-links.open{display:flex;}
+  .nav-links a{padding:14px 24px;font-size:15px;border-bottom:1px solid rgba(0,0,0,0.05);}
+  .nav-links a:last-child{border-bottom:none;}
+  .hero{padding:60px 20px;}
+  .hero h1{font-size:clamp(36px,10vw,60px);}
+  .hero-sub{font-size:15px;}
+  .cursos-grid{grid-template-columns:1fr!important;}
+  #packGrid{grid-template-columns:1fr!important;}
+  .pm-btns{grid-template-columns:1fr!important;}
+  .aviso-material{flex-direction:column;text-align:center;}
+  .stat-grid{grid-template-columns:1fr 1fr!important;}
+  .proceso-grid{grid-template-columns:1fr!important;}
+  .sobre-grid{grid-template-columns:1fr!important;}
+  .footer-grid{grid-template-columns:1fr!important;}
+  .hero-btns{flex-direction:column;}
+  .btn-hp, .btn-hs{width:100%;text-align:center;}
+  #packGrid > div:first-child{order:2;}
+  #packGrid > div:last-child{order:1;position:static;}
+}
 </style>
 </head>
 <body>
@@ -348,12 +403,13 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
       <span>Academia Oficial</span>
     </div>
   </a>
-  <div class="nav-links">
-    <a href="#cursos">Cursos</a>
-    <a href="#academia">Academia</a>
-    <a href="#proceso">Cómo funciona</a>
-    <a href="https://romaserviciostramites-sketch.github.io/Roma-Servicios-Tramites/#contacto" target="_blank">Contacto</a>
-    <a href="#cursos" class="nav-cta">Ver cursos</a>
+  <button class="nav-hamburger" id="navHam" onclick="toggleNav()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="#cursos" onclick="closeNav()">Cursos</a>
+    <a href="#academia" onclick="closeNav()">Academia</a>
+    <a href="#proceso" onclick="closeNav()">Cómo funciona</a>
   </div>
 </nav>
 
@@ -394,15 +450,19 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
     <div>
       <div class="section-tag">Catálogo</div>
       <h2 class="section-title">Nuestros <em>cursos</em></h2>
-      <p class="section-sub">Formación práctica y acreditada. Desde gratuitos hasta títulos estilo FP con certificación Roma.</p>
+      <p class="section-sub">Formación práctica y acreditada. Cursos online, presenciales en Albacete y material enviado directamente a ti.</p>
     </div>
     <div class="cursos-filter">
       <button class="filter-btn active" onclick="filterCursos('todos',this)">Todos</button>
       <button class="filter-btn" onclick="filterCursos('gratis',this)">Gratis</button>
       <button class="filter-btn" onclick="filterCursos('tramites',this)">Trámites</button>
       <button class="filter-btn" onclick="filterCursos('fp',this)">Intensivo</button>
-      <button class="filter-btn" onclick="filterCursos('proximamente',this)">Próximamente</button>
+      <button class="filter-btn" onclick="filterCursos('presencial',this)">📍 Presencial</button>
     </div>
+  </div>
+  <div class="aviso-material">
+    <span>📦</span>
+    <p><strong>¿Cómo funciona?</strong> Contacta con nosotros por WhatsApp o email, confirma tu plaza y te enviamos el material completo directamente. Sin plataformas complicadas.</p>
   </div>
   <div class="cursos-grid" id="cursosGrid"></div>
 </section>
@@ -531,7 +591,6 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
         <h5>Academia</h5>
         <a href="#academia">Sobre Roma Formación</a>
         <a href="#proceso">Cómo funciona</a>
-        <a href="https://romaserviciostramites-sketch.github.io/Roma-Servicios-Tramites/#contacto" target="_blank">Contacto</a>
       </div>
       <div class="footer-col">
         <h5>Legal</h5>
@@ -1026,20 +1085,516 @@ examenFinal:[
 {preg:'¿Cuánto ahorra el riego por goteo?',opts:['20%','40%','70%','90%'],ok:2}
 ]}},
 // ── PRÓXIMAMENTE / PAGO ──────────────────────────────────────────────────────
-{id:'gestion-fp',titulo:'Gestión Administrativa',categoria:'Curso Intensivo',cat:'fp',icono:'📋',colorBg:'linear-gradient(135deg,#0a2342,#1b4f72)',precio:'99 €',tipoPrecio:'pay',duracion:'60 h',modulos:12,nivel:'Intermedio',desc:'Curso estilo FP de gestión documental, archivo, organización de oficina y administración pública. Certificación Roma.',activo:false},
-{id:'tramitacion-fp',titulo:'Tramitación con Admin. Pública',categoria:'Curso Intensivo',cat:'fp',icono:'🏛️',colorBg:'linear-gradient(135deg,#1a252f,#2c3e50)',precio:'129 €',tipoPrecio:'pay',duracion:'70 h',modulos:14,nivel:'Intermedio',desc:'Tramita expedientes ante el SEPE, AEAT, Seguridad Social y ayuntamientos. Incluye prácticas con casos reales.',activo:false},
-{id:'extranjeria-fp',titulo:'Extranjería y Residencia Legal',categoria:'Curso Intensivo',cat:'fp',icono:'🌍',colorBg:'linear-gradient(135deg,#0f2d3d,#1a5276)',precio:'149 €',tipoPrecio:'pay',duracion:'65 h',modulos:13,nivel:'Avanzado',desc:'Especialización en extranjería: NIE, residencias, reagrupación familiar, nacionalidad y recursos.',activo:false},
-{id:'empadronamiento',titulo:'Empadronamiento y Documentación',categoria:'Trámites',cat:'tramites',icono:'📄',colorBg:'linear-gradient(135deg,#2d3436,#636e72)',precio:'9 €',tipoPrecio:'pay',duracion:'6 h',modulos:4,nivel:'Principiante',desc:'Todo sobre el empadronamiento, DNI, pasaporte y certificados más habituales en la administración española.',activo:false},
-{id:'fiscalidad',titulo:'Fiscalidad Básica para Particulares',categoria:'Trámites',cat:'tramites',icono:'💰',colorBg:'linear-gradient(135deg,#4d4000,#7d6608)',precio:'19 €',tipoPrecio:'pay',duracion:'10 h',modulos:6,nivel:'Principiante',desc:'Declaración de la renta, deducciones, IRPF para asalariados y autónomos. Sin tecnicismos innecesarios.',activo:false},
-{id:'tramites-online',titulo:'Trámites Online: Sede Electrónica',categoria:'Trámites',cat:'tramites',icono:'💻',colorBg:'linear-gradient(135deg,#0d2b3f,#154360)',precio:'15 €',tipoPrecio:'pay',duracion:'8 h',modulos:5,nivel:'Principiante',desc:'Certificado digital, Cl@ve, DNI electrónico y cómo hacer cualquier trámite desde casa sin colas.',activo:false},
-{id:'laboral',titulo:'Orientación Laboral y Contratos',categoria:'Trámites',cat:'tramites',icono:'👔',colorBg:'linear-gradient(135deg,#0e4d2a,#1e8449)',precio:'15 €',tipoPrecio:'pay',duracion:'8 h',modulos:5,nivel:'Principiante',desc:'Tipos de contrato, derechos laborales, cómo leer una nómina y gestionar la situación de desempleo.',activo:false},
-{id:'autonomos',titulo:'Emprendimiento y Autónomos',categoria:'Negocios',cat:'proximamente',icono:'🚀',colorBg:'linear-gradient(135deg,#5b1410,#922b21)',precio:'19 €',tipoPrecio:'pay',duracion:'12 h',modulos:7,nivel:'Principiante',desc:'Alta como autónomo, modelos tributarios, facturación, deducciones y primeros pasos para crear tu negocio.',activo:false},
-{id:'diseno-grafico',titulo:'Diseño Gráfico para No Diseñadores',categoria:'Diseño',cat:'proximamente',icono:'🎨',colorBg:'linear-gradient(135deg,#4a1a5c,#7d3c98)',precio:'19 €',tipoPrecio:'pay',duracion:'10 h',modulos:6,nivel:'Principiante',desc:'Canva, herramientas gratuitas y fundamentos de diseño para crear logos, carteles y contenido para redes.',activo:false},
-{id:'fotografia',titulo:'Fotografía Básica con el Móvil',categoria:'Creatividad',cat:'proximamente',icono:'📸',colorBg:'linear-gradient(135deg,#0d1257,#1a237e)',precio:'12 €',tipoPrecio:'pay',duracion:'7 h',modulos:4,nivel:'Principiante',desc:'Composición, luz, edición y trucos para hacer fotos profesionales solo con tu smartphone.',activo:false},
-{id:'informatica',titulo:'Informática para el Día a Día',categoria:'Tecnología',cat:'proximamente',icono:'⌨️',colorBg:'linear-gradient(135deg,#212121,#424949)',precio:'9 €',tipoPrecio:'pay',duracion:'8 h',modulos:5,nivel:'Principiante',desc:'Word, Excel, correo electrónico, almacenamiento en la nube y seguridad básica. Para empezar desde cero.',activo:false},
-{id:'idiomas',titulo:'Comunicación Profesional en Inglés',categoria:'Idiomas',cat:'proximamente',icono:'🗣️',colorBg:'linear-gradient(135deg,#063d33,#0e6655)',precio:'19 €',tipoPrecio:'pay',duracion:'15 h',modulos:8,nivel:'Principiante',desc:'Inglés funcional para el entorno laboral: correos, reuniones, vocabulario administrativo y atención al cliente.',activo:false},
-{id:'primeros-auxilios',titulo:'Primeros Auxilios Básicos',categoria:'Salud',cat:'proximamente',icono:'🩺',colorBg:'linear-gradient(135deg,#7b0f0f,#c0392b)',precio:'12 €',tipoPrecio:'pay',duracion:'6 h',modulos:4,nivel:'Principiante',desc:'RCP, atragantamiento, heridas, quemaduras y cómo actuar en emergencias. Formación que puede salvar vidas.',activo:false},
-{id:'bienestar',titulo:'Mindfulness y Bienestar Personal',categoria:'Bienestar',cat:'proximamente',icono:'🧘',colorBg:'linear-gradient(135deg,#3d1f4e,#6c3483)',precio:'15 €',tipoPrecio:'pay',duracion:'8 h',modulos:5,nivel:'Principiante',desc:'Técnicas de meditación, gestión del estrés, hábitos saludables y equilibrio personal y profesional.',activo:false}
+{id:'gestion-fp',titulo:'Gestión Administrativa',categoria:'Presencial · Albacete',cat:'presencial',icono:'📋',colorBg:'linear-gradient(135deg,#0a2342,#1b4f72)',precio:'99 €',tipoPrecio:'pay',duracion:'60 h',modulos:12,nivel:'Intermedio',desc:'Formación presencial en Albacete. Gestión documental, archivo, organización de oficina y administración pública. Certificación Roma.',activo:true,cupo:8},
+{id:'tramitacion-fp',titulo:'Tramitación con Admin. Pública',categoria:'Curso Intensivo',cat:'fp',icono:'🏛️',colorBg:'linear-gradient(135deg,#1a252f,#2c3e50)',precio:'129 €',tipoPrecio:'pay',duracion:'70 h',modulos:14,nivel:'Intermedio',desc:'Tramita expedientes ante el SEPE, AEAT, Seguridad Social y ayuntamientos. Incluye prácticas con casos reales.',activo:true},
+{id:'extranjeria-fp',titulo:'Extranjería y Residencia Legal',categoria:'Presencial · Albacete',cat:'presencial',icono:'🌍',colorBg:'linear-gradient(135deg,#0f2d3d,#1a5276)',precio:'149 €',tipoPrecio:'pay',duracion:'65 h',modulos:13,nivel:'Avanzado',desc:'Formación presencial en Albacete. NIE, residencias, reagrupación familiar, nacionalidad y recursos. Plazas limitadas.',activo:true,cupo:8},
+{id:'empadronamiento',titulo:'Empadronamiento y Documentación',categoria:'Trámites',cat:'gratis',icono:'📄',colorBg:'linear-gradient(135deg,#2d3436,#636e72)',precio:'Gratis',tipoPrecio:'free',duracion:'6 h',modulos:4,nivel:'Principiante',desc:'Todo sobre el empadronamiento, DNI, pasaporte y certificados más habituales en la administración española.',activo:true,cupo:null,
+data:{
+modulos:[
+{id:1,titulo:'El padrón municipal',duracion:'60 min',temas:[
+{id:'E1.1',titulo:'Qué es el padrón y para qué sirve',duracion:'30 min',
+contenido:`<h3>El padrón municipal: tu primera gestión administrativa</h3>
+<p>El padrón municipal es el registro administrativo donde constan los vecinos de un municipio. Es, en pocas palabras, el documento que acredita que vives donde dices que vives. Parece algo sencillo, pero el empadronamiento es la llave que abre una cantidad enorme de servicios y trámites en España: desde matricular a tus hijos en el colegio hasta pedir la tarjeta sanitaria, solicitar ayudas sociales, votar en las elecciones municipales o acceder a ciertos servicios del ayuntamiento.</p>
+<p>El padrón lo gestiona cada ayuntamiento de forma individual. Esto significa que cuando te mudas de municipio, no basta con ir al ayuntamiento nuevo: debes darte de alta en el nuevo y, en la práctica, el ayuntamiento nuevo se encarga de comunicar la baja al anterior. Sin embargo, es recomendable comprobarlo para evitar que figures empadronado en dos sitios a la vez, lo que puede causar problemas con Hacienda y con otros trámites.</p>
+<h4>Para qué necesitas estar empadronado</h4>
+<p><strong>Sanidad:</strong> para obtener la tarjeta sanitaria individual (TSI) y acceder a tu médico de cabecera en el centro de salud que te corresponde por zona, es imprescindible estar empadronado en ese municipio. Sin padrón, solo tienes derecho a atención urgente.</p>
+<p><strong>Educación:</strong> la escolarización en colegios públicos y concertados se asigna por zonas de influencia que dependen directamente del domicilio del padrón. Si el domicilio que figura en el padrón no corresponde a la zona del colegio solicitado, la plaza puede denegarse.</p>
+<p><strong>Ayudas y prestaciones:</strong> la práctica totalidad de las ayudas sociales municipales, autonómicas y estatales exigen un certificado de empadronamiento como requisito. La prestación por desempleo, el ingreso mínimo vital, las ayudas al alquiler o las becas escolares requieren este documento.</p>
+<p><strong>Trámites con la administración:</strong> renovar el DNI, solicitar el pasaporte, votar en elecciones municipales, inscribirse en el registro de demandantes de vivienda pública, o acceder a servicios municipales como polideportivos, bibliotecas o transporte bonificado.</p>
+<p><strong>Para extranjeros:</strong> el empadronamiento es especialmente importante para los ciudadanos extranjeros. Es necesario para tramitar el NIE, la tarjeta de residencia, la reagrupación familiar y para acceder a los mismos servicios que los nacionales. Empadronarse no tiene ningún efecto negativo sobre la situación legal en España: es un derecho independiente de la situación administrativa.</p>
+<h4>Documentación necesaria para empadronarse</h4>
+<p>La documentación varía según tu situación, pero en general necesitas:</p>
+<p><strong>Nacionales españoles:</strong> DNI en vigor (o pasaporte si no tienes DNI) y documento que acredite el domicilio (contrato de alquiler, escritura de propiedad, o autorización firmada del propietario o arrendatario si vives en casa de otra persona).</p>
+<p><strong>Ciudadanos de la UE:</strong> pasaporte o documento de identidad del país de origen en vigor, NIE (si ya lo tienes) y documentación del domicilio.</p>
+<p><strong>Ciudadanos de fuera de la UE:</strong> pasaporte en vigor y documentación del domicilio. No se exige permiso de residencia para empadronarse: cualquier persona que resida en España, independientemente de su situación administrativa, tiene derecho a empadronarse.</p>
+<p><strong>Menores de edad:</strong> deben empadronarse junto a sus padres o tutores legales. Se necesita el libro de familia o certificado de nacimiento y la documentación de identidad del representante legal.</p>
+<div class="lesson-tip">💡 <strong>¿Puedo empadronarme sin contrato de alquiler?</strong> Sí. Si vives en casa de un familiar o amigo, el titular del domicilio puede firmar una autorización de empadronamiento. El ayuntamiento puede exigir que el autorizante acredite su domicilio con su propia documentación. En casos de vulnerabilidad extrema (personas sin hogar o en situaciones de infravivienda), muchos ayuntamientos tienen protocolos especiales de empadronamiento.</div>`,
+ejercicios:[
+{preg:'¿Para qué necesitarías el certificado de empadronamiento en tu vida cotidiana? Escribe al menos 3 situaciones concretas en las que lo necesitarías tú o tu familia.',tipo:'texto'},
+{preg:'Un amigo extranjero lleva 6 meses viviendo en España sin papeles y no quiere empadronarse por miedo a las consecuencias. ¿Qué le explicarías?',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué es el padrón municipal?',opts:['Un impuesto local','El registro de vecinos de un municipio','Un documento de identidad','Un permiso de residencia'],ok:1},
+{preg:'¿Es necesario tener permiso de residencia para empadronarse?',opts:['Sí, siempre','No, cualquier residente puede empadronarse','Solo los ciudadanos de la UE','Solo los nacionales españoles'],ok:1},
+{preg:'¿Qué documento acredita el domicilio para empadronarse?',opts:['Solo el DNI','Solo el pasaporte','Contrato de alquiler, escritura o autorización del titular','La nómina del trabajo'],ok:2},
+{preg:'¿Qué pasa si te mudas a otro municipio?',opts:['Nada, el padrón se actualiza solo','Debes darte de alta en el nuevo municipio','Pierdes el padrón automáticamente','Solo debes avisar a Hacienda'],ok:1},
+{preg:'¿Para qué NO necesitas el padrón?',opts:['Matricular a tus hijos en el colegio','Obtener la tarjeta sanitaria','Comprar un billete de tren','Acceder a ayudas sociales'],ok:2}
+]},
+{id:'E1.2',titulo:'Cómo empadronarse: presencial y online',duracion:'30 min',
+contenido:`<h3>Cómo empadronarse paso a paso</h3>
+<p>El trámite de empadronamiento se puede realizar de dos formas: de manera presencial en las oficinas del ayuntamiento o, en muchos municipios, de forma completamente online a través de la sede electrónica municipal. Vamos a ver ambas opciones en detalle.</p>
+<h4>Empadronamiento presencial</h4>
+<p>Es la opción más común y accesible para la mayoría de personas, especialmente si no tienes certificado digital o si tu municipio no ofrece el trámite online. El proceso es sencillo:</p>
+<p><strong>Paso 1 — Pide cita previa:</strong> la mayoría de ayuntamientos grandes exigen cita previa para el empadronamiento. Puedes pedirla por teléfono, en la web del ayuntamiento o en persona. En municipios pequeños suele admitirse sin cita.</p>
+<p><strong>Paso 2 — Rellena el formulario:</strong> en la oficina te darán una hoja de inscripción padronal (o puedes descargarla previamente de la web del ayuntamiento). Necesitas rellenar los datos de todos los miembros de la unidad familiar que se van a empadronar.</p>
+<p><strong>Paso 3 — Presenta la documentación:</strong> entrega el formulario rellenado junto con los documentos de identidad y el justificante del domicilio. El funcionario verificará los datos y registrará la inscripción.</p>
+<p><strong>Paso 4 — Recibe el justificante:</strong> en el momento o en pocos días (según el municipio) recibirás el volante de empadronamiento, que acredita tu inscripción. El certificado oficial, que incluye la firma y el sello del ayuntamiento, se solicita por separado cuando lo necesites.</p>
+<h4>Empadronamiento online</h4>
+<p>Cada vez más ayuntamientos permiten empadronarse a través de su sede electrónica. Para ello necesitas identificarte digitalmente, con certificado electrónico, DNI electrónico activado o mediante el sistema Cl@ve. El proceso suele ser:</p>
+<p>Accede a la sede electrónica de tu ayuntamiento → busca el trámite "Alta en el padrón municipal" → identifícate con tu certificado digital → rellena el formulario online → adjunta los documentos escaneados → envía la solicitud → recibirás la confirmación por email o en tu carpeta ciudadana.</p>
+<h4>Volante vs Certificado: ¿cuál necesito?</h4>
+<p>Muchas personas confunden estos dos documentos. La diferencia es importante:</p>
+<p><strong>Volante de empadronamiento:</strong> documento informativo que acredita tu inscripción en el padrón. Se obtiene en el momento, normalmente de forma gratuita, y sirve para la mayoría de trámites cotidianos (matrícula escolar, tarjeta sanitaria, ayudas municipales). Tiene una validez de 3 meses generalmente.</p>
+<p><strong>Certificado de empadronamiento:</strong> documento oficial con firma y sello del secretario municipal. Tiene mayor validez legal y se exige para trámites más formales (notaría, juzgados, trámites de extranjería, herencias). Puede tener una pequeña tasa municipal asociada (generalmente menos de 3 euros).</p>
+<div class="lesson-tip">💡 <strong>Cuándo caduca:</strong> Los volantes y certificados de empadronamiento tienen una validez de 3 meses desde su expedición para la mayoría de trámites. Si el documento que pides es para extranjería o para notaría, comprueba si te exigen que tenga menos de 3 meses en el momento de presentarlo, porque a veces los plazos son más estrictos.</div>`,
+ejercicios:[
+{preg:'Describe los pasos que darías para empadronarte en tu municipio actual. ¿Qué documentos necesitarías y dónde irías?',tipo:'texto'},
+{preg:'¿Cuándo pedirías un volante y cuándo un certificado de empadronamiento? Pon un ejemplo de cada caso.',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué diferencia hay entre volante y certificado de empadronamiento?',opts:['Son exactamente lo mismo','El certificado tiene firma y sello oficial y tiene mayor validez legal','El volante es más formal que el certificado','Solo existe el certificado'],ok:1},
+{preg:'¿Para qué trámite necesitarías el certificado en lugar del volante?',opts:['Matricular al colegio','Pedir la tarjeta sanitaria','Trámite en notaría o extranjería','Apuntarse a la biblioteca'],ok:2},
+{preg:'¿Cuánto suele durar la validez de un volante de empadronamiento?',opts:['1 mes','3 meses','1 año','No caduca'],ok:1},
+{preg:'¿Qué necesitas para empadronarte online?',opts:['Solo el DNI físico','Certificado digital o DNI electrónico activado','Nada, es automático','Un abogado'],ok:1},
+{preg:'Al mudarte de municipio, ¿qué ocurre con el padrón antiguo?',opts:['Debes ir a darte de baja en persona','El nuevo ayuntamiento comunica la baja al anterior automáticamente','Pierdes el padrón para siempre','Nada, puede seguir activo indefinidamente'],ok:1}
+]}
+]},
+{id:2,titulo:'DNI y pasaporte',duracion:'70 min',temas:[
+{id:'E2.1',titulo:'El DNI: todo lo que necesitas saber',duracion:'35 min',
+contenido:`<h3>El DNI: tu documento de identidad para toda la vida</h3>
+<p>El Documento Nacional de Identidad (DNI) es el documento oficial que acredita la identidad y nacionalidad de los ciudadanos españoles. Es obligatorio para los mayores de 14 años residentes en España, aunque se recomienda obtenerlo desde el nacimiento ya que facilita muchos trámites. El DNI actual (conocido como DNIe o DNI electrónico) incluye un chip que permite identificarse digitalmente y firmar documentos de forma electrónica.</p>
+<h4>¿Cuándo hay que renovarlo?</h4>
+<p>El DNI tiene diferentes períodos de validez según la edad del titular:</p>
+<p><strong>Menores de 5 años:</strong> validez de 2 años. Los bebés y niños pequeños cambian mucho físicamente, por eso la renovación es más frecuente.</p>
+<p><strong>Entre 5 y 30 años:</strong> validez de 5 años.</p>
+<p><strong>Entre 30 y 70 años:</strong> validez de 10 años. Es el caso más habitual.</p>
+<p><strong>Mayores de 70 años:</strong> validez permanente, no necesita renovarse.</p>
+<p>Puedes renovar el DNI aunque no haya caducado si hay cambio de domicilio, cambio de estado civil, deterioro, robo o extravío. No es obligatorio renovarlo solo por cambio de domicilio, pero sí es recomendable para evitar discrepancias.</p>
+<h4>Cómo pedir o renovar el DNI</h4>
+<p><strong>Paso 1 — Pide cita previa:</strong> es obligatoria en la Comisaría de Policía Nacional más cercana. Puedes pedirla en citapreviadnie.es o por teléfono (902 247 364 o 060). También en el portal web del Ministerio del Interior.</p>
+<p><strong>Paso 2 — Prepara la documentación:</strong> para la primera obtención necesitas certificado de nacimiento literal del Registro Civil, certificado de empadronamiento, fotografía reciente en color con fondo blanco (tamaño carné, 32x26 mm), y si eres menor de edad, presencia del padre/madre/tutor con su propio DNI. Para renovación: el DNI anterior (aunque esté caducado), fotografía y el pago de la tasa (actualmente 12 euros, aunque es gratuito para víctimas de violencia doméstica o terrorismo y para personas con discapacidad reconocida).</p>
+<p><strong>Paso 3 — Acude a la cita:</strong> en la Comisaría tomarán tu fotografía, tus huellas dactilares y tu firma digitalmente. La entrega suele ser en el momento o en pocos días.</p>
+<h4>El DNI electrónico: qué puedes hacer con él</h4>
+<p>El chip del DNIe contiene tus datos biométricos (huella dactilar) y dos certificados digitales: uno para autenticación (identificarte) y otro para firma electrónica. Para usarlos necesitas un lector de tarjetas inteligentes (algunos ordenadores y teléfonos Android ya lo incorporan) y tener activados los certificados (se activan en la misma Comisaría al expedir el DNI). Con el DNI electrónico activado puedes: presentar declaraciones a Hacienda, hacer trámites en la Seguridad Social, firmar contratos electrónicamente, acceder a la carpeta ciudadana y realizar cualquier trámite en la Sede Electrónica del Gobierno.</p>
+<div class="lesson-tip">💡 <strong>Robo o extravío del DNI:</strong> si pierdes el DNI o te lo roban, debes denunciarlo en comisaría (la denuncia es gratuita) antes de solicitar el nuevo. Esto bloquea el documento anterior y te protege de posibles usos fraudulentos. Guarda siempre fotocopia del DNI en casa por si acaso.</div>`,
+ejercicios:[
+{preg:'Comprueba cuándo caduca tu DNI actual. ¿Necesitas renovarlo pronto? ¿Qué documentos necesitarías llevar?',tipo:'texto'},
+{preg:'¿Has usado alguna vez el DNI electrónico para un trámite online? Si no lo has hecho, ¿para qué trámite te gustaría usarlo? Explica los pasos que darías.',tipo:'texto'}
+],
+examen:[
+{preg:'¿A qué edad es obligatorio tener DNI en España?',opts:['Al nacer','A los 14 años','A los 16 años','A los 18 años'],ok:1},
+{preg:'¿Cuánto tiempo dura el DNI de una persona de 40 años?',opts:['2 años','5 años','10 años','Es permanente'],ok:2},
+{preg:'¿Qué tasa se paga por renovar el DNI (2024)?',opts:['Gratis siempre','6 euros','12 euros','25 euros'],ok:2},
+{preg:'¿Qué debes hacer si te roban el DNI?',opts:['Nada, se cancela solo','Denunciarlo en comisaría antes de pedir el nuevo','Ir directamente a pedir el nuevo sin denunciar','Esperar 30 días y luego ir a comisaría'],ok:1},
+{preg:'¿Para qué sirve el chip del DNI electrónico?',opts:['Solo para almacenar la fotografía','Para identificarte digitalmente y firmar documentos electrónicos','Para acceder al transporte público','Para pagar con el móvil'],ok:1}
+]},
+{id:'E2.2',titulo:'El pasaporte y otros documentos',duracion:'35 min',
+contenido:`<h3>El pasaporte: tu documento para el mundo</h3>
+<p>El pasaporte es el documento de viaje internacional que acredita la identidad y la nacionalidad española ante las autoridades extranjeras. A diferencia del DNI, que solo es válido para viajar dentro de la Unión Europea y algunos otros países con acuerdos específicos, el pasaporte es reconocido en prácticamente todos los países del mundo.</p>
+<h4>¿Cuándo necesitas pasaporte?</h4>
+<p>Necesitas pasaporte para viajar fuera del espacio Schengen y de la UE: a Estados Unidos, Latinoamérica, Asia, África, Oceanía y otros destinos fuera del área comunitaria. También lo necesitan los menores de edad para viajar al extranjero aunque sea dentro de la UE en ciertos países que no aceptan el DNI de menores. Consulta siempre los requisitos del país de destino antes de viajar.</p>
+<h4>Cómo solicitar o renovar el pasaporte</h4>
+<p>El trámite es muy similar al del DNI: cita previa obligatoria en la Comisaría de Policía Nacional (misma plataforma: citapreviadnie.es o llamando al 060). La documentación necesaria es: DNI en vigor, fotografía reciente con fondo blanco (tamaño carné, 32x26 mm), y el pasaporte anterior si lo tienes. La tasa actual es de 30 euros aproximadamente (puede variar). El pasaporte tiene una validez de 5 años para mayores de 30 años y de 2 años para menores de 5 años.</p>
+<h4>Otros documentos importantes</h4>
+<p><strong>Libro de familia:</strong> documento que registra la constitución de una familia y los hechos relacionados con ella (matrimonio, nacimiento de hijos, defunciones). Ya no se expide de forma obligatoria desde 2021 en los nuevos matrimonios, pero sigue siendo válido para quienes ya lo tenían. Se solicita en el Registro Civil.</p>
+<p><strong>Certificado de nacimiento:</strong> documento que acredita el nacimiento de una persona. Se expide en el Registro Civil del municipio donde se produjo el nacimiento. Es necesario para obtener el DNI por primera vez, para trámites de extranjería, herencias, matrimonios, etc. Se puede solicitar presencialmente, por correo o desde 2021 también online en registrocivil.gob.es.</p>
+<p><strong>Certificado de matrimonio:</strong> acredita que dos personas están legalmente casadas. Se obtiene en el Registro Civil donde se inscribió el matrimonio. Necesario para trámites de herencias, reagrupación familiar, cambio de apellidos, etc.</p>
+<p><strong>Certificado de defunción:</strong> acredita el fallecimiento de una persona. Se expide por el médico que certifica la muerte y se inscribe en el Registro Civil. Necesario para iniciar los trámites sucesorios, cobrar seguros de vida, cancelar cuentas bancarias del fallecido, etc.</p>
+<div class="lesson-tip">💡 <strong>Registro Civil online:</strong> desde 2021 puedes solicitar certificados de nacimiento, matrimonio y defunción completamente online en registrocivil.gob.es sin necesidad de desplazarte. El certificado llega por correo ordinario a tu domicilio en pocos días o puedes descargarlo digitalmente si tienes certificado electrónico.</div>`,
+ejercicios:[
+{preg:'¿Tienes pasaporte en vigor? Si tienes que pedir uno o renovarlo, describe los pasos que seguirías y los documentos que necesitarías.',tipo:'texto'},
+{preg:'¿En qué situaciones necesitarías un certificado de nacimiento? Describe al menos dos situaciones concretas.',tipo:'texto'}
+],
+examen:[
+{preg:'¿Para qué países necesitas pasaporte en lugar del DNI?',opts:['Para todos los países','Para los países fuera de la UE y del espacio Schengen','Solo para América','Solo para Asia y África'],ok:1},
+{preg:'¿Cuánto cuesta aproximadamente el pasaporte en España?',opts:['Es gratuito','12 euros','30 euros','60 euros'],ok:2},
+{preg:'¿Dónde se solicitan los certificados de nacimiento, matrimonio y defunción?',opts:['En el ayuntamiento','En la Policía Nacional','En el Registro Civil','En la Seguridad Social'],ok:2},
+{preg:'¿Cuántos años tiene de validez el pasaporte de un adulto mayor de 30 años?',opts:['2 años','5 años','10 años','Es permanente'],ok:1},
+{preg:'¿Qué documento necesitas para obtener el DNI por primera vez?',opts:['Solo el pasaporte','Certificado de nacimiento del Registro Civil','Solo el libro de familia','Una foto y ya está'],ok:1}
+]}
+]},
+{id:3,titulo:'Certificados y trámites online',duracion:'50 min',temas:[
+{id:'E3.1',titulo:'Certificados más habituales y cómo pedirlos',duracion:'25 min',
+contenido:`<h3>Los certificados más útiles y cómo conseguirlos</h3>
+<p>En la administración española existen decenas de certificados y documentos oficiales. Sin embargo, en la vida cotidiana hay un puñado de ellos que se necesitan con mucha más frecuencia que el resto. Conocerlos de antemano, saber dónde se piden y qué documentación se necesita te ahorrará tiempo, desplazamientos innecesarios y frustraciones.</p>
+<h4>Certificado de vida laboral</h4>
+<p>Es el documento emitido por la Tesorería General de la Seguridad Social que recoge todos los periodos en los que has estado dado de alta en el sistema de la Seguridad Social: cada trabajo por cuenta ajena, cada periodo como autónomo, las cotizaciones, el régimen en el que estabas dado de alta, etc. Es imprescindible para solicitar la pensión de jubilación, para calcular la prestación por desempleo, para tramitar ciertas ayudas o para acreditar experiencia laboral. Se puede pedir de forma muy sencilla: por SMS al 605 50 30 52 (recibes el informe en tu móvil), en la web de la Seguridad Social (seg-social.es), en la app "Import@SS" o en cualquier oficina de la Seguridad Social.</p>
+<h4>Certificado de la Agencia Tributaria (AEAT)</h4>
+<p>La Agencia Tributaria emite varios certificados útiles: el certificado de estar al corriente de las obligaciones tributarias (necesario para muchas subvenciones y concursos públicos), el certificado de imputaciones (resumen de los ingresos que terceros han declarado a tu nombre, útil para la renta), y el número de referencia para hacer la declaración. Todos se obtienen en la sede electrónica de la AEAT (agenciatributaria.gob.es) con certificado digital, DNI electrónico o Cl@ve.</p>
+<h4>Informe de vida laboral del SEPE</h4>
+<p>Diferente al de la Seguridad Social, el SEPE (antiguo INEM) emite un informe de las prestaciones por desempleo que has recibido. Es necesario para ciertos trámites de extranjería y para solicitar algunas ayudas. Se pide en sepe.es con certificado digital.</p>
+<h4>Nota simple del Registro de la Propiedad</h4>
+<p>Documento que indica quién es el propietario de un inmueble y si tiene cargas (hipotecas, embargos, servidumbres). Es muy útil antes de comprar o alquilar una propiedad para verificar que el vendedor es realmente el propietario y que el inmueble está libre de cargas. Se puede pedir online en registradores.org.</p>
+<div class="lesson-tip">💡 <strong>Cl@ve: el sistema que lo facilita todo:</strong> Cl@ve es el sistema de identificación digital del Gobierno español que permite acceder a la mayoría de servicios de la administración sin necesidad de certificado digital. Solo necesitas registrarte una vez (en la web clave.gob.es o en cualquier oficina de registro) y después puedes usar tu usuario y contraseña o recibir un código por SMS para identificarte en Hacienda, Seguridad Social, SEPE y muchos más.</div>`,
+ejercicios:[
+{preg:'Pide tu vida laboral por SMS (605 50 30 52) si puedes, o describe los pasos que darías para pedirla online. ¿Qué información encuentras en ella?',tipo:'texto'},
+{preg:'¿Para qué trámites necesitarías un certificado de estar al corriente con Hacienda? Describe una situación en la que lo necesitarías.',tipo:'texto'}
+],
+examen:[
+{preg:'¿Cómo puedes pedir la vida laboral de la Seguridad Social de forma más rápida?',opts:['Solo presencialmente','Por SMS al 605 50 30 52','Solo con certificado digital','Llamando al 112'],ok:1},
+{preg:'¿Qué es Cl@ve?',opts:['Una aplicación de música','El sistema de identificación digital del Gobierno','Un tipo de certificado notarial','El nombre del DNI electrónico'],ok:1},
+{preg:'¿Para qué sirve la nota simple del Registro de la Propiedad?',opts:['Para empadronarse','Para ver quién es propietario de un inmueble y sus cargas','Para pedir la pensión','Para renovar el DNI'],ok:1},
+{preg:'¿Qué emite el SEPE?',opts:['Certificados de nacimiento','Informe de prestaciones por desempleo recibidas','La vida laboral completa','El DNI'],ok:1},
+{preg:'¿Dónde se piden los certificados de la Agencia Tributaria?',opts:['En el ayuntamiento','En la Seguridad Social','En agenciatributaria.gob.es','En la Policía Nacional'],ok:2}
+]},
+{id:'E3.2',titulo:'Trámites online con la administración',duracion:'25 min',
+contenido:`<h3>Hacer trámites con la administración desde casa</h3>
+<p>La administración electrónica española ha avanzado muchísimo en los últimos años. Hoy es posible realizar desde casa prácticamente cualquier trámite que antes obligaba a desplazarse en persona, coger cita previa, esperar en filas y volver varias veces. La sede electrónica es la oficina virtual de cada administración, disponible 24 horas al día, 365 días al año.</p>
+<h4>Qué necesitas para hacer trámites online</h4>
+<p>Para la mayoría de trámites con la administración necesitas identificarte digitalmente. Las opciones disponibles son:</p>
+<p><strong>Certificado electrónico:</strong> archivo digital que se instala en tu ordenador y te identifica de forma segura. El más habitual es el de la FNMT (Fábrica Nacional de Moneda y Timbre), gratuito, que se obtiene en fnmt.es solicitándolo online y luego acreditando tu identidad presencialmente en una oficina de registro (muchos ayuntamientos y oficinas de la AEAT o Seguridad Social son puntos de registro).</p>
+<p><strong>DNI electrónico activado:</strong> el chip del DNI incluye un certificado digital. Para usarlo necesitas un lector de tarjetas y el PIN que te dan al expedir el DNI (si no lo recuerdas, puedes reactivarlo en cualquier Comisaría en segundos).</p>
+<p><strong>Sistema Cl@ve:</strong> la opción más accesible. Te registras una sola vez y puedes identificarte con usuario/contraseña o con un código SMS sin necesidad de instalar nada.</p>
+<h4>Las sedes electrónicas más importantes</h4>
+<p><strong>sede.agenciatributaria.gob.es</strong> — Hacienda: declaración de la renta, consulta de datos fiscales, pagos de impuestos, certificados tributarios.</p>
+<p><strong>sede.seg-social.gob.es</strong> — Seguridad Social: vida laboral, bases de cotización, informe de pensión, cambio de datos personales, solicitud de prestaciones.</p>
+<p><strong>sepe.es</strong> — SEPE/INEM: solicitar el paro, consultar el estado de la prestación, renovar la demanda de empleo (el famoso "sellar el paro").</p>
+<p><strong>carpetaciudadana.gob.es</strong> — la carpeta ciudadana es el espacio personal donde se reúnen todos tus trámites, notificaciones y documentos con la administración general del Estado en un solo lugar.</p>
+<p><strong>sede electrónica de tu ayuntamiento</strong> — empadronamiento, licencias, pagos de tasas municipales, solicitud de cita para servicios municipales.</p>
+<div class="lesson-tip">💡 <strong>Notificaciones electrónicas obligatorias:</strong> desde 2017, las empresas y autónomos están obligados a relacionarse con la administración por medios electrónicos. Para los particulares es voluntario, pero si aceptas las notificaciones electrónicas (a través de la Dirección Electrónica Habilitada, DEH), Hacienda y otras administraciones te notificarán digitalmente. Comprueba periódicamente tu carpeta ciudadana o la DEH para no perderte notificaciones importantes.</div>`,
+ejercicios:[
+{preg:'Entra en sede.seg-social.gob.es (si tienes certificado o Cl@ve) o describe paso a paso cómo conseguirías tu vida laboral online. ¿Qué otras gestiones podrías hacer desde esa sede?',tipo:'texto'},
+{preg:'¿Qué método de identificación digital usarías tú y por qué? ¿Certificado electrónico, DNI electrónico o Cl@ve?',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué es la sede electrónica?',opts:['Una red social del gobierno','La oficina virtual de la administración, disponible 24h online','Un programa de televisión','El nombre del DNI digital'],ok:1},
+{preg:'¿Cómo se obtiene el certificado de la FNMT?',opts:['Se compra en tiendas','Se solicita online y se acredita identidad presencialmente en una oficina de registro','Lo da la Policía Nacional','Se descarga directamente sin ningún trámite'],ok:1},
+{preg:'¿Qué es la Carpeta Ciudadana?',opts:['Una aplicación de notas','El espacio donde se reúnen todos tus trámites y notificaciones con la administración del Estado','Un servicio de correo privado','El registro del padrón municipal'],ok:1},
+{preg:'¿En qué sede puedes renovar el paro online?',opts:['agenciatributaria.gob.es','seg-social.gob.es','sepe.es','registrocivil.gob.es'],ok:2},
+{preg:'¿Es obligatorio para los particulares tener notificaciones electrónicas?',opts:['Sí, desde 2020','No, es voluntario para los particulares','Solo para mayores de 65 años','Solo en las grandes ciudades'],ok:1}
+]}
+]},
+{id:4,titulo:'Casos especiales y situaciones frecuentes',duracion:'60 min',temas:[
+{id:'E4.1',titulo:'Documentación para extranjeros',duracion:'30 min',
+contenido:`<h3>Documentación esencial para ciudadanos extranjeros en España</h3>
+<p>España tiene una de las comunidades de inmigrantes más diversas de Europa. Si eres ciudadano extranjero o tienes familiares o clientes en esa situación, entender el sistema documental español es imprescindible para acceder a los derechos y servicios a los que legalmente se tiene derecho.</p>
+<h4>El NIE: Número de Identificación de Extranjero</h4>
+<p>El NIE es el número que identifica a todos los extranjeros que tienen relaciones de naturaleza económica, profesional o social en España. Tiene el formato X-0000000-X (una letra, siete dígitos y otra letra). Es imprescindible para trabajar por cuenta ajena o propia, abrir una cuenta bancaria, comprar un coche o un inmueble, declarar impuestos, y para muchos trámites administrativos. Hay dos tipos: el NIE provisional (un papel sin foto, suficiente para muchos trámites) y la Tarjeta de Identidad de Extranjero (TIE), que es el documento físico con foto que acredita la residencia legal.</p>
+<p>El NIE se solicita en la Oficina de Extranjería o en la Comisaría de Policía Nacional con competencias en extranjería. La documentación necesaria incluye pasaporte en vigor, formulario de solicitud (EX-15 para el NIE sin residencia, EX-01 para la tarjeta de residencia), y justificación de la necesidad (contrato de trabajo, escritura de compraventa, etc.). El coste es de unos 10-12 euros en tasas.</p>
+<h4>Ciudadanos de la UE en España</h4>
+<p>Los ciudadanos de la Unión Europea tienen derecho a vivir y trabajar en España sin necesidad de visado ni permiso de residencia. Si van a residir más de 3 meses, deben inscribirse en el Registro Central de Extranjeros, lo que genera un certificado de registro con su NIE. Este trámite se hace en la Comisaría de Policía y es relativamente sencillo: pasaporte o documento de identidad del país de origen, empadronamiento, y justificación de medios económicos o contrato de trabajo.</p>
+<h4>Ciudadanos de fuera de la UE</h4>
+<p>Para residir legalmente en España, los nacionales de países no comunitarios necesitan una autorización de residencia o de residencia y trabajo. Los tipos más habituales son: la autorización de residencia por reagrupación familiar, la autorización de residencia y trabajo por cuenta ajena, la residencia por arraigo (social, familiar o laboral), y la residencia de larga duración (para quienes llevan 5 años residiendo legalmente). Cada tipo tiene sus requisitos específicos, que se tramitan ante la Delegación o Subdelegación del Gobierno.</p>
+<div class="lesson-tip">💡 <strong>Empadronarse antes de todo:</strong> para cualquier trámite de extranjería, lo primero que debes hacer es empadronarte en el municipio donde vives. El certificado de empadronamiento es un requisito en casi todos los procedimientos de extranjería y acredita el tiempo de residencia en España, lo que puede ser determinante para solicitar el arraigo.</div>`,
+ejercicios:[
+{preg:'Un familiar tuyo de fuera de la UE acaba de llegar a España con intención de quedarse. ¿Cuáles serían los primeros tres trámites que debería hacer y en qué orden?',tipo:'texto'},
+{preg:'¿Para qué situaciones concretas necesitaría el NIE un ciudadano extranjero en España?',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué es el NIE?',opts:['El pasaporte europeo','El número que identifica a los extranjeros con relaciones en España','La tarjeta sanitaria para extranjeros','Un visado de turismo'],ok:1},
+{preg:'¿Cuánto tiempo puede residir un ciudadano de la UE en España sin inscribirse en el Registro de Extranjeros?',opts:['1 mes','3 meses','6 meses','Indefinidamente sin trámites'],ok:1},
+{preg:'¿Qué es el arraigo en extranjería?',opts:['Un tipo de visa de turismo','Una modalidad de residencia para quienes llevan tiempo viviendo en España','El nombre del NIE','Un certificado de nacimiento'],ok:1},
+{preg:'¿Para qué NO necesita el NIE un extranjero?',opts:['Trabajar en España','Abrir una cuenta bancaria','Hacer turismo por unos días','Comprar un inmueble'],ok:2},
+{preg:'¿Cuál debe ser el primer trámite de un extranjero al llegar a España?',opts:['Pedir el pasaporte español','Empadronarse en el municipio','Ir a la embajada','Abrir una cuenta bancaria'],ok:1}
+]},
+{id:'E4.2',titulo:'Documentación para menores y cambios vitales',duracion:'30 min',
+contenido:`<h3>Documentación para menores y situaciones de cambio</h3>
+<p>A lo largo de la vida hay momentos en los que los trámites documentales se acumulan: el nacimiento de un hijo, un matrimonio, una separación, un fallecimiento en la familia o un cambio de nombre. Conocer los pasos a seguir en cada caso evita retrasos y complicaciones innecesarias.</p>
+<h4>Al nacer un hijo</h4>
+<p>El nacimiento de un hijo genera una cadena de trámites que conviene hacer en orden y sin demora:</p>
+<p><strong>1. Registro Civil:</strong> inscribir al bebé en el Registro Civil en los 8 días hábiles siguientes al nacimiento (plazo legal). Normalmente el propio hospital facilita este trámite con el "parte de nacimiento". Los padres deben presentar sus DNI, el libro de familia si lo tienen, y el parte del médico.</p>
+<p><strong>2. Libro de familia o inscripción en el existente:</strong> si los padres no tienen libro de familia, se crea al inscribir el primer hijo. Si ya existe, se añade al menor. Desde 2021 los nuevos nacimientos se pueden registrar sin libro de familia físico, todo queda en el sistema digital.</p>
+<p><strong>3. Empadronamiento del menor:</strong> una vez inscrito en el Registro Civil, hay que empadronar al bebé junto a sus progenitores. Es necesario para la tarjeta sanitaria del menor.</p>
+<p><strong>4. Tarjeta sanitaria del menor:</strong> con el certificado de nacimiento y el empadronamiento, se solicita en el centro de salud o en la mutualidad correspondiente.</p>
+<p><strong>5. Prestación por nacimiento:</strong> solicitar la baja por maternidad/paternidad en la Seguridad Social (se puede hacer online) y, si corresponde, la prestación económica por hijo a cargo.</p>
+<h4>Cambio de nombre o apellidos</h4>
+<p>Cambiar el nombre o el orden de los apellidos es posible en España en determinadas circunstancias: al cumplir la mayoría de edad se puede solicitar el cambio de orden de apellidos (un trámite sencillo en el Registro Civil), o cambiar el nombre por causas justificadas (nombre que cause perjuicios, adaptación del nombre extranjero, etc.). Desde 2023, la Ley de Paridad también facilita el cambio del orden de apellidos de los hijos.</p>
+<h4>Matrimonio y separación</h4>
+<p>El matrimonio civil se inscribe en el Registro Civil y genera el certificado de matrimonio. La separación o divorcio, una vez resuelto judicialmente, también genera documentación que hay que inscribir y que afecta a muchos trámites posteriores (pensiones, herencias, custodia de hijos, impuestos). Es importante mantener actualizada la documentación del Registro Civil tras estos cambios vitales.</p>
+<div class="lesson-tip">💡 <strong>Registro Civil online:</strong> muchos de estos trámites ya se pueden iniciar online en registrocivil.gob.es. La modernización del Registro Civil en España ha simplificado enormemente estos procesos: ya no es necesario desplazarse al registro del municipio de nacimiento para pedir un certificado, puedes hacerlo desde casa en pocos minutos.</div>`,
+ejercicios:[
+{preg:'Si tuvieras un hijo mañana, describe los 5 primeros trámites documentales que tendrías que hacer y en qué orden.',tipo:'texto'},
+{preg:'¿Qué documentación necesitarías reunir para actualizar el empadronamiento de toda tu familia tras una mudanza?',tipo:'texto'}
+],
+examen:[
+{preg:'¿En cuántos días hay que inscribir a un bebé en el Registro Civil?',opts:['3 días','8 días hábiles','30 días','1 mes'],ok:1},
+{preg:'¿Qué necesitas para sacar la tarjeta sanitaria de un recién nacido?',opts:['Solo el DNI de los padres','Certificado de nacimiento y empadronamiento del menor','Solo el libro de familia','El pasaporte del bebé'],ok:1},
+{preg:'¿Dónde se solicitan los certificados del Registro Civil online?',opts:['En el ayuntamiento','En registrocivil.gob.es','En la Seguridad Social','En la Policía Nacional'],ok:1},
+{preg:'¿Qué ocurre con el libro de familia desde 2021?',opts:['Es obligatorio para todos','Los nuevos nacimientos pueden registrarse sin libro físico','Se ha eliminado completamente','Solo existe en papel'],ok:1},
+{preg:'¿Qué trámite es necesario hacer tras un divorcio para que quede inscrito oficialmente?',opts:['Nada, el juez lo hace todo','Inscribir la resolución judicial en el Registro Civil','Ir al ayuntamiento','Comunicárselo a Hacienda'],ok:1}
+]}
+]},
+],
+examenFinal:[
+{preg:'¿Qué documento acredita que vives en un municipio?',opts:['El DNI','El volante de empadronamiento','El pasaporte','La nómina'],ok:1},
+{preg:'¿Cuánto cuesta renovar el DNI?',opts:['Gratis','6 euros','12 euros','30 euros'],ok:2},
+{preg:'¿Qué sistema permite hacer trámites con la administración sin certificado digital instalado?',opts:['Solo el DNI electrónico','Cl@ve','El libro de familia','El NIE'],ok:1},
+{preg:'¿Cuál es la sede para solicitar la vida laboral online?',opts:['agenciatributaria.gob.es','sepe.es','sede.seg-social.gob.es','registrocivil.gob.es'],ok:2},
+{preg:'¿Qué es el NIE?',opts:['El DNI para extranjeros','El número que identifica a los extranjeros con relaciones en España','La tarjeta sanitaria europea','Un visado de trabajo'],ok:1},
+{preg:'¿Qué diferencia hay entre volante y certificado de empadronamiento?',opts:['Son lo mismo','El certificado tiene mayor validez legal con firma y sello oficial','El volante es más formal','Solo existe el certificado'],ok:1},
+{preg:'¿Cuánto dura el DNI de una persona de 35 años?',opts:['5 años','10 años','15 años','Es permanente'],ok:1},
+{preg:'¿Cuántos días hábiles hay para inscribir un nacimiento en el Registro Civil?',opts:['3 días','8 días','15 días','30 días'],ok:1},
+{preg:'Para ciudadanos de la UE, ¿cuándo deben inscribirse en el Registro de Extranjeros?',opts:['Nada más llegar','Si van a residir más de 3 meses','Al año de residencia','Nunca es necesario'],ok:1},
+{preg:'¿Qué necesitas para hacer trámites online con la sede electrónica?',opts:['Solo un ordenador','Identificación digital: certificado, DNI-e o Cl@ve','Una cita previa presencial','Un abogado'],ok:1}
+]
+}},
+{id:'fiscalidad',titulo:'Fiscalidad Básica para Particulares',categoria:'Trámites',cat:'tramites',icono:'💰',colorBg:'linear-gradient(135deg,#4d4000,#7d6608)',precio:'19 €',tipoPrecio:'pay',duracion:'10 h',modulos:6,nivel:'Principiante',desc:'Declaración de la renta, deducciones, IRPF para asalariados y autónomos. Sin tecnicismos innecesarios.',activo:true},
+{id:'tramites-online',titulo:'Trámites Online: Sede Electrónica',categoria:'Trámites',cat:'tramites',icono:'💻',colorBg:'linear-gradient(135deg,#0d2b3f,#154360)',precio:'15 €',tipoPrecio:'pay',duracion:'8 h',modulos:5,nivel:'Principiante',desc:'Certificado digital, Cl@ve, DNI electrónico y cómo hacer cualquier trámite desde casa sin colas.',activo:true},
+{id:'laboral',titulo:'Orientación Laboral y Contratos',categoria:'Trámites',cat:'tramites',icono:'👔',colorBg:'linear-gradient(135deg,#0e4d2a,#1e8449)',precio:'15 €',tipoPrecio:'pay',duracion:'8 h',modulos:5,nivel:'Principiante',desc:'Tipos de contrato, derechos laborales, cómo leer una nómina y gestionar la situación de desempleo.',activo:true},
+{id:'autonomos',titulo:'Emprendimiento y Autónomos',categoria:'Negocios',cat:'pay',icono:'🚀',colorBg:'linear-gradient(135deg,#5b1410,#922b21)',precio:'19 €',tipoPrecio:'pay',duracion:'12 h',modulos:7,nivel:'Principiante',desc:'Alta como autónomo, modelos tributarios, facturación, deducciones y primeros pasos para crear tu negocio.',activo:true},
+{id:'diseno-grafico',titulo:'Diseño Gráfico para No Diseñadores',categoria:'Diseño',cat:'pay',icono:'🎨',colorBg:'linear-gradient(135deg,#4a1a5c,#7d3c98)',precio:'19 €',tipoPrecio:'pay',duracion:'10 h',modulos:6,nivel:'Principiante',desc:'Canva, herramientas gratuitas y fundamentos de diseño para crear logos, carteles y contenido para redes.',activo:true},
+{id:'fotografia',titulo:'Fotografía Básica con el Móvil',categoria:'Creatividad',cat:'pay',icono:'📸',colorBg:'linear-gradient(135deg,#0d1257,#1a237e)',precio:'12 €',tipoPrecio:'pay',duracion:'7 h',modulos:4,nivel:'Principiante',desc:'Composición, luz, edición y trucos para hacer fotos profesionales solo con tu smartphone.',activo:true},
+{id:'informatica',titulo:'Informática para el Día a Día',categoria:'Tecnología',cat:'gratis',icono:'⌨️',colorBg:'linear-gradient(135deg,#212121,#424949)',precio:'Gratis',tipoPrecio:'free',duracion:'8 h',modulos:5,nivel:'Principiante',desc:'Word, Excel, correo electrónico, almacenamiento en la nube y seguridad básica. Para empezar desde cero.',activo:true,cupo:null,
+data:{
+modulos:[
+{id:1,titulo:'El ordenador desde cero',duracion:'80 min',temas:[
+{id:'I1.1',titulo:'Manejo básico del ordenador',duracion:'40 min',
+contenido:`<h3>El ordenador desde cero: sin miedos</h3>
+<p>El ordenador es hoy en día una herramienta imprescindible para la vida cotidiana, el trabajo y la comunicación. Sin embargo, muchas personas siguen sintiéndose intimidadas ante él, ya sea porque no aprendieron a usarlo de jóvenes o porque los cambios tecnológicos constantes les generan inseguridad. Este curso está diseñado para ti: aprenderás paso a paso, sin tecnicismos innecesarios, con ejemplos prácticos de la vida real.</p>
+<p>Lo primero que hay que entender es que el ordenador no es difícil: es diferente. Tiene su propia lógica, sus propias reglas, y una vez que las entiendes, todo lo demás fluye. No importa si tienes un ordenador de sobremesa o un portátil, si usas Windows o Mac: los conceptos básicos son los mismos.</p>
+<h4>Las partes del ordenador</h4>
+<p><strong>El hardware</strong> es la parte física, lo que puedes tocar: la pantalla, el teclado, el ratón, el disco duro donde se guardan los archivos, el procesador (el "cerebro" que ejecuta los programas) y la memoria RAM (que determina cuántas cosas puede hacer el ordenador a la vez sin volverse lento).</p>
+<p><strong>El software</strong> es la parte lógica, los programas: el sistema operativo (Windows, macOS, Linux), las aplicaciones (Word, Chrome, Spotify) y los archivos que tú creas (documentos, fotos, vídeos).</p>
+<p><strong>El sistema operativo</strong> es el programa más importante: es el que arranca cuando enciendes el ordenador y el que permite que todos los demás programas funcionen. En España el más habitual es Windows (Microsoft), seguido de macOS (Apple, solo en ordenadores Mac).</p>
+<h4>El escritorio y la barra de tareas</h4>
+<p>Cuando enciendes el ordenador y te identificas con tu contraseña, aparece el escritorio: la pantalla principal con un fondo de pantalla y, posiblemente, algunos iconos de acceso directo a programas o carpetas. En la parte inferior (en Windows) o superior (en Mac) está la barra de tareas, donde aparecen los programas abiertos y el reloj del sistema.</p>
+<p>El botón de inicio (el logo de Windows en la esquina inferior izquierda) abre el menú principal desde donde puedes acceder a todos los programas instalados, a la configuración del sistema, al buscador y al botón de apagado.</p>
+<h4>El ratón y el teclado: los dos controles básicos</h4>
+<p><strong>El ratón:</strong> el clic izquierdo selecciona o abre. El doble clic abre archivos o programas. El clic derecho abre un menú de opciones contextual (muy útil para ver qué puedes hacer con un archivo o carpeta). La rueda central sirve para hacer scroll (desplazarte arriba y abajo en una página).</p>
+<p><strong>El teclado:</strong> además de las letras y números, hay teclas especiales muy útiles. Ctrl+C copia lo seleccionado. Ctrl+V pega. Ctrl+Z deshace la última acción (¡muy útil!). Ctrl+S guarda el documento. Alt+F4 cierra el programa activo. La tecla Windows abre el menú inicio. Suprimir (Del o Supr) borra el carácter a la derecha del cursor o el archivo seleccionado moviéndolo a la papelera.</p>
+<div class="lesson-tip">💡 <strong>El atajo más importante:</strong> Ctrl+Z es el "botón de arrepentirse". Si haces algo por accidente (borras texto, mueves un archivo sin querer, cambias algo que no debías), pulsa Ctrl+Z inmediatamente y el ordenador deshará la última acción. En muchos programas puedes pulsarlo varias veces seguidas para deshacer múltiples acciones.</div>`,
+ejercicios:[
+{preg:'Identifica las partes de tu ordenador: ¿cuánta memoria RAM tiene? ¿Qué sistema operativo usa? ¿Cuánto espacio libre hay en el disco duro? (Puedes buscarlo en Configuración > Sistema > Acerca de en Windows)',tipo:'texto'},
+{preg:'Practica los atajos de teclado: abre el Bloc de notas, escribe un párrafo, copia una frase con Ctrl+C, pégala con Ctrl+V y deshaz la acción con Ctrl+Z. Describe qué ha pasado.',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué es el sistema operativo?',opts:['Un antivirus','El programa que permite que todos los demás programas funcionen','Un procesador de texto','El disco duro del ordenador'],ok:1},
+{preg:'¿Para qué sirve el clic derecho del ratón?',opts:['Para abrir programas','Para escribir','Para abrir un menú de opciones contextual','Para apagar el ordenador'],ok:2},
+{preg:'¿Qué hace el atajo Ctrl+Z?',opts:['Guardar el documento','Cerrar el programa','Deshacer la última acción','Copiar el texto'],ok:2},
+{preg:'¿Dónde está el botón de inicio en Windows?',opts:['Arriba a la derecha','Arriba a la izquierda','Abajo a la izquierda','En el teclado'],ok:2},
+{preg:'¿Qué es el hardware?',opts:['Los programas instalados','La parte física del ordenador que puedes tocar','El sistema operativo','Los archivos que creas'],ok:1}
+]},
+{id:'I1.2',titulo:'Archivos, carpetas y organización',duracion:'40 min',
+contenido:`<h3>Archivos y carpetas: cómo organizarte para no perder nada</h3>
+<p>Uno de los problemas más comunes de los usuarios de ordenador con poca experiencia es no encontrar los archivos cuando los necesitan. "¿Dónde guardé esa foto?", "¿En qué carpeta estaba ese documento?" Son preguntas que se repiten constantemente. La solución es aprender a organizar los archivos desde el principio, igual que organizas los papeles en un archivador físico.</p>
+<h4>¿Qué es un archivo y qué es una carpeta?</h4>
+<p>Un <strong>archivo</strong> es cualquier elemento guardado en el ordenador: un documento de Word, una fotografía, un vídeo, una canción, un PDF, un programa. Cada archivo tiene un nombre y una extensión que indica de qué tipo es: .docx (documento Word), .pdf (documento PDF), .jpg o .png (imágenes), .mp4 (vídeo), .mp3 (audio).</p>
+<p>Una <strong>carpeta</strong> (también llamada directorio) es un contenedor donde se agrupan archivos relacionados. Las carpetas pueden contener otras carpetas (subcarpetas), creando una estructura de árbol. Es exactamente como un archivador físico: tienes una carpeta "Trabajo", dentro otra "Facturas 2024", y dentro los archivos de cada factura.</p>
+<h4>El Explorador de archivos</h4>
+<p>En Windows, el Explorador de archivos (el icono de la carpeta amarilla en la barra de tareas) es la herramienta para navegar por todos tus archivos y carpetas. En la parte izquierda tienes el árbol de carpetas (Escritorio, Descargas, Documentos, Imágenes, etc.) y en la parte derecha el contenido de la carpeta seleccionada.</p>
+<p><strong>Operaciones básicas con archivos:</strong> para crear una carpeta nueva, haz clic derecho en un espacio vacío y selecciona "Nueva carpeta". Para renombrar un archivo o carpeta, haz clic lento dos veces sobre el nombre (no doble clic rápido) o selecciónalo y pulsa F2. Para mover un archivo, arrástralo a la carpeta destino o usa cortar (Ctrl+X) y pegar (Ctrl+V). Para copiarlo, usa Ctrl+C y Ctrl+V. Para borrarlo, selecciónalo y pulsa la tecla Suprimir (va a la Papelera de reciclaje). Para borrarlo definitivamente, vacía la Papelera de reciclaje.</p>
+<h4>Sistema de organización recomendado</h4>
+<p>Una estructura sencilla y eficaz para organizar tus documentos personales es crear en la carpeta "Documentos" las siguientes subcarpetas: Trabajo (con subcarpetas por año o cliente), Personal (DNI, empadronamiento, contratos personales), Fotos (con subcarpetas por año o evento), Facturas (con subcarpetas por año), y Cursos o Formación. Con esta estructura siempre sabrás dónde buscar.</p>
+<div class="lesson-tip">💡 <strong>La Papelera de reciclaje es tu red de seguridad:</strong> cuando borras un archivo pulsando Suprimir, no se elimina definitivamente: va a la Papelera de reciclaje y puede recuperarse haciendo clic derecho sobre él y seleccionando "Restaurar". Solo se elimina definitivamente cuando vacías la Papelera. Si borras algo sin querer, ¡ve a la Papelera antes de vaciarla!</div>`,
+ejercicios:[
+{preg:'Crea en tu carpeta Documentos una estructura de carpetas para organizar tus cosas personales. Describe qué carpetas has creado y qué pondrías en cada una.',tipo:'texto'},
+{preg:'Busca en tu ordenador 3 archivos que no sabes bien dónde están. Usa el buscador del Explorador de archivos para encontrarlos y luego organízalos en la carpeta correcta según el sistema que has creado.',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué extensión tienen normalmente los documentos de Word?',opts:['.pdf','.docx','.jpg','.mp4'],ok:1},
+{preg:'¿Qué pasa cuando borras un archivo con la tecla Suprimir?',opts:['Se borra definitivamente','Va a la Papelera de reciclaje y puede recuperarse','Se guarda en otro lugar','Se comprime'],ok:1},
+{preg:'¿Qué atajo de teclado sirve para mover (cortar) un archivo?',opts:['Ctrl+C','Ctrl+V','Ctrl+X','Ctrl+Z'],ok:2},
+{preg:'¿Cómo se crea una carpeta nueva en el Explorador de archivos?',opts:['Con doble clic','Clic derecho en espacio vacío y "Nueva carpeta"','Con Ctrl+N siempre','Desde el menú Archivo'],ok:1},
+{preg:'¿Para qué sirve la tecla F2 en el Explorador de archivos?',opts:['Para abrir el archivo','Para renombrarlo','Para borrarlo','Para copiarlo'],ok:1}
+]}
+]},
+{id:2,titulo:'Internet y correo electrónico',duracion:'80 min',temas:[
+{id:'I2.1',titulo:'Navegar por Internet de forma segura',duracion:'40 min',
+contenido:`<h3>Internet: navegar con confianza y seguridad</h3>
+<p>Internet es la red global que conecta ordenadores de todo el mundo y permite acceder a una cantidad casi infinita de información, comunicarse, comprar, trabajar y aprender. El navegador web (Chrome, Firefox, Edge, Safari) es el programa que usas para acceder a Internet: muestra las páginas web y te permite interactuar con ellas.</p>
+<h4>Conceptos básicos de navegación</h4>
+<p>La <strong>barra de direcciones</strong> (la franja larga en la parte superior del navegador) sirve tanto para escribir una dirección web (URL) directamente (ej: www.google.es) como para buscar términos directamente en Google. Las páginas web tienen direcciones que empiezan por http:// o https:// (la "s" de https significa "seguro": la comunicación está cifrada).</p>
+<p>Los <strong>marcadores o favoritos</strong> (Ctrl+D en la mayoría de navegadores) guardan la dirección de una página para acceder a ella rápidamente sin tener que buscarla de nuevo. Organiza tus favoritos en carpetas para encontrarlos fácilmente.</p>
+<p>Las <strong>pestañas</strong> (Ctrl+T abre una nueva) permiten tener varias páginas web abiertas simultáneamente en la misma ventana del navegador. Ctrl+W cierra la pestaña actual.</p>
+<h4>Buscadores: cómo encontrar lo que necesitas</h4>
+<p>Google es el buscador más utilizado del mundo, pero no el único (Bing, DuckDuckGo, Yahoo). Para buscar de forma eficaz, usa palabras clave concretas en lugar de frases completas. Por ejemplo, en vez de "¿cómo puedo renovar mi DNI en Albacete?" busca "renovar DNI Albacete cita previa". Añade comillas para buscar una frase exacta: "gestión administrativa" te dará resultados con esa frase exacta.</p>
+<h4>Seguridad en Internet: lo básico que debes saber</h4>
+<p><strong>Contraseñas seguras:</strong> usa contraseñas diferentes para cada servicio importante. Una contraseña segura combina letras mayúsculas y minúsculas, números y símbolos, y tiene al menos 8 caracteres. Nunca uses fechas de nacimiento, nombres o palabras del diccionario.</p>
+<p><strong>Phishing:</strong> son correos o páginas web falsas que imitan a bancos, Hacienda o empresas conocidas para robar tus datos. Señales de alerta: errores ortográficos, dirección de correo extraña, urgencia exagerada ("su cuenta será bloqueada en 24h"), enlace que no corresponde a la web oficial. Ante la duda, no hagas clic: ve directamente a la web oficial escribiendo la dirección en el navegador.</p>
+<p><strong>Compras seguras online:</strong> compra solo en webs con https (el candado en la barra de direcciones). Desconfía de precios ridículamente bajos. Verifica que la empresa tiene dirección física y teléfono de contacto. Paga con tarjeta o PayPal (nunca con transferencia bancaria a desconocidos).</p>
+<div class="lesson-tip">💡 <strong>El candado verde/gris en el navegador:</strong> antes de introducir cualquier dato personal (contraseña, número de tarjeta, DNI), comprueba que hay un candado en la barra de direcciones y que la URL empieza por https://. Si no hay candado o la URL empieza por http://, no introduzcas datos personales: la conexión no es segura.</div>`,
+ejercicios:[
+{preg:'Busca en Google "sede electrónica Seguridad Social" y explica qué trámites puedes hacer desde esa web. ¿Es segura la conexión (https)?',tipo:'texto'},
+{preg:'Recibe un correo de "Hacienda" diciéndote que tienes una devolución pendiente y que debes hacer clic en un enlace para cobrarla. ¿Cómo sabrías si es legítimo o es phishing? ¿Qué harías?',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué indica la "s" en https://?',opts:['Que la página es de España','Que la conexión es segura y cifrada','Que es una página del gobierno','Que es gratis'],ok:1},
+{preg:'¿Qué es el phishing?',opts:['Un tipo de antivirus','Correos o páginas falsas que imitan webs legítimas para robar datos','Un buscador de Internet','Un tipo de contraseña'],ok:1},
+{preg:'¿Qué atajo abre una nueva pestaña en el navegador?',opts:['Ctrl+N','Ctrl+T','Ctrl+P','Ctrl+A'],ok:1},
+{preg:'¿Cómo guardar una página web en favoritos?',opts:['Ctrl+S','Ctrl+D','Ctrl+F','Ctrl+B'],ok:1},
+{preg:'¿Cuál es la forma más segura de pagar en una tienda online?',opts:['Transferencia bancaria','Bizum a un desconocido','Tarjeta o PayPal en web con https','Efectivo por correo'],ok:2}
+]},
+{id:'I2.2',titulo:'El correo electrónico paso a paso',duracion:'40 min',
+contenido:`<h3>El correo electrónico: tu oficina de comunicación digital</h3>
+<p>El correo electrónico (email) es la herramienta de comunicación digital más utilizada en el mundo profesional y cada vez más también en las gestiones con la administración. Tener una cuenta de correo electrónico es prácticamente imprescindible hoy en día para registrarte en cualquier servicio, recibir facturas, comunicarte con empresas y hacer trámites online.</p>
+<h4>Crear una cuenta de correo gratuita</h4>
+<p>Los servicios de correo gratuitos más populares son Gmail (Google), Outlook (Microsoft) y Yahoo Mail. Gmail es el más recomendable por su integración con Google Drive, Google Calendar y otras herramientas útiles. Para crear una cuenta de Gmail: ve a gmail.com, haz clic en "Crear cuenta", rellena tus datos (nombre, nombre de usuario —que será tu dirección de correo—, contraseña) y sigue los pasos. En pocos minutos tendrás tu correo.</p>
+<p>El nombre de usuario de tu correo debe ser sencillo y profesional, especialmente si lo vas a usar para trabajo o trámites. Evita nombres con números aleatorios o apodos: usa tu nombre y apellido (juangarcia@gmail.com es mejor que superjuanito1985@gmail.com).</p>
+<h4>Enviar, responder y organizar correos</h4>
+<p><strong>Redactar un correo:</strong> haz clic en "Redactar" o "Nuevo mensaje". El campo <strong>Para:</strong> es la dirección del destinatario. El campo <strong>Asunto:</strong> es el título del correo (sé descriptivo: "Solicitud de información curso Gestión Administrativa" es mejor que "Hola"). El cuerpo es donde escribes el mensaje. Haz clic en "Enviar" cuando esté listo.</p>
+<p><strong>CC y CCO:</strong> CC (con copia) añade otros destinatarios que verán el correo y que todos saben que lo reciben. CCO (con copia oculta) añade destinatarios que no son visibles para los demás. Útil para comunicaciones grupales donde no quieres revelar las direcciones de todos.</p>
+<p><strong>Adjuntar archivos:</strong> haz clic en el icono del clip para adjuntar documentos, fotos u otros archivos. En Gmail, también puedes arrastrar el archivo directamente al cuerpo del correo.</p>
+<p><strong>Organizar la bandeja de entrada:</strong> usa etiquetas o carpetas para clasificar los correos (Trabajo, Personal, Administración, Facturas). Archiva los correos que ya no necesitas ver pero no quieres borrar. Activa los filtros automáticos para que ciertos correos vayan directamente a su carpeta.</p>
+<h4>Seguridad en el correo</h4>
+<p>Nunca envíes contraseñas, números de tarjeta bancaria completos o datos muy sensibles por correo electrónico. El correo no es un canal completamente seguro. Para documentos sensibles, usa servicios cifrados o el correo solo para acordar una llamada o reunión. Activa la verificación en dos pasos (2FA) en tu cuenta de correo: añade una capa de seguridad extra que pide un código de tu móvil además de la contraseña.</p>
+<div class="lesson-tip">💡 <strong>El asunto del correo importa mucho:</strong> un correo sin asunto o con un asunto vago ("Consulta", "Hola") puede ser ignorado o filtrado como spam. Escribe siempre un asunto claro y descriptivo que indique el tema y, si es posible, la acción esperada: "Solicitud información matrícula curso extranjería" o "Presupuesto limpieza oficina Albacete". Aumenta mucho la probabilidad de que te respondan rápido.</div>`,
+ejercicios:[
+{preg:'Si no tienes cuenta de Gmail, crea una. Si ya la tienes, envíate un correo de prueba con un archivo adjunto (puede ser cualquier documento). Describe el proceso.',tipo:'texto'},
+{preg:'Organiza tu bandeja de entrada creando al menos 3 etiquetas o carpetas. ¿Cómo las has llamado y qué tipo de correos pondrías en cada una?',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué es el campo "Asunto" en un correo electrónico?',opts:['La dirección del destinatario','El título descriptivo del correo','El cuerpo del mensaje','La firma del remitente'],ok:1},
+{preg:'¿Qué diferencia hay entre CC y CCO?',opts:['Son exactamente lo mismo','CC muestra los destinatarios a todos, CCO los oculta','CCO es para adjuntos','CC es solo para respuestas'],ok:1},
+{preg:'¿Qué servicio de correo gratuito recomienda este curso?',opts:['Yahoo Mail','Hotmail','Gmail','Protonmail'],ok:2},
+{preg:'¿Qué es la verificación en dos pasos (2FA)?',opts:['Una contraseña muy larga','Una capa de seguridad extra que pide un código del móvil además de la contraseña','Un tipo de spam','Un antivirus'],ok:1},
+{preg:'¿Qué datos NUNCA debes enviar por correo electrónico?',opts:['Tu nombre','Tu dirección postal','Número de tarjeta bancaria completo y contraseñas','Tu número de teléfono'],ok:2}
+]}
+]},
+{id:3,titulo:'Word: crear y editar documentos',duracion:'70 min',temas:[
+{id:'I3.1',titulo:'Primeros pasos con Word',duracion:'35 min',
+contenido:`<h3>Microsoft Word: el procesador de texto más usado del mundo</h3>
+<p>Microsoft Word es el programa para crear y editar documentos de texto más utilizado en oficinas, hogares y administraciones de todo el mundo. Con Word puedes crear desde una lista de la compra hasta un informe profesional, pasando por cartas, currículums, instancias a la administración o apuntes de estudio. Si no tienes Word instalado, puedes usar alternativas gratuitas: Google Docs (online, en docs.google.com), LibreOffice Writer (gratuito, descargable) o el propio Word Online (versión gratuita básica en office.com).</p>
+<h4>La interfaz de Word</h4>
+<p>Al abrir Word aparece una pantalla con varias zonas: la <strong>Cinta de opciones</strong> en la parte superior con todas las herramientas organizadas en pestañas (Inicio, Insertar, Diseño, Diseño de página, etc.), el <strong>área de trabajo</strong> donde escribes el documento, y la <strong>barra de estado</strong> en la parte inferior que muestra el número de páginas, palabras y el idioma del corrector.</p>
+<h4>Operaciones básicas</h4>
+<p><strong>Crear un documento nuevo:</strong> Ctrl+N o desde Archivo > Nuevo. <strong>Guardar:</strong> Ctrl+S (la primera vez preguntará dónde guardar y con qué nombre). <strong>Guardar como:</strong> Ctrl+Mayús+S para guardar una copia con nombre o ubicación diferente. <strong>Abrir un documento existente:</strong> Ctrl+O. <strong>Imprimir:</strong> Ctrl+P.</p>
+<p><strong>Formato de texto básico:</strong> selecciona el texto y usa Ctrl+N (negrita), Ctrl+K (cursiva), Ctrl+S (subrayado). Cambia el tamaño y el tipo de fuente desde la pestaña "Inicio". Usa los botones de alineación para centrar el texto, justificarlo o alinearlo a la izquierda o derecha.</p>
+<p><strong>Tipos de archivo:</strong> Word guarda por defecto en formato .docx. Si necesitas que alguien sin Word pueda leer el documento, guárdalo como PDF desde Archivo > Guardar como > PDF. Un PDF no se puede editar fácilmente pero se ve igual en cualquier dispositivo.</p>
+<div class="lesson-tip">💡 <strong>Guarda siempre antes de cerrar:</strong> Word tiene autoguardado automático, pero no te confíes. Pulsa Ctrl+S frecuentemente mientras trabajas. Si el ordenador se apaga sin guardar, Word suele recuperar el documento la próxima vez que se abre, pero no siempre. El hábito de guardar con frecuencia evita perder horas de trabajo.</div>`,
+ejercicios:[
+{preg:'Crea un documento de Word (o Google Docs) con tu currículum simplificado: nombre, dirección, teléfono, correo, experiencia laboral y formación. Aplica al menos negrita, cursiva y alineación centrada para el encabezado.',tipo:'texto'},
+{preg:'Abre un documento existente, selecciona todo el texto con Ctrl+A, cámbialo a un tipo de letra diferente y guarda el documento como PDF. Describe el proceso.',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué atajo guarda el documento en Word?',opts:['Ctrl+A','Ctrl+G','Ctrl+S','Ctrl+P'],ok:2},
+{preg:'¿Qué hace Ctrl+N en Word (con texto seleccionado)?',opts:['Crea un documento nuevo','Pone el texto en negrita','Guarda el documento','Cierra el programa'],ok:1},
+{preg:'¿Para qué sirve guardar un documento como PDF?',opts:['Para editarlo más fácilmente','Para que se vea igual en cualquier dispositivo y no sea fácilmente editable','Para reducir el tamaño del archivo a cero','Para enviarlo solo por correo'],ok:1},
+{preg:'¿Dónde se encuentran las herramientas de formato en Word?',opts:['En la barra de estado','En la Cinta de opciones en la parte superior','En la barra de tareas de Windows','En el menú del clic derecho solamente'],ok:1},
+{preg:'¿Qué extensión tienen los documentos de Word por defecto?',opts:['.pdf','.txt','.docx','.xlsx'],ok:2}
+]},
+{id:'I3.2',titulo:'Funciones útiles de Word',duracion:'35 min',
+contenido:`<h3>Word: funciones que ahorran tiempo y evitan errores</h3>
+<p>Más allá de escribir texto y darle formato básico, Word tiene funciones muy útiles que la mayoría de usuarios no conoce o no usa. Aprenderlas te ahorrará tiempo y hará tus documentos más profesionales.</p>
+<h4>El corrector ortográfico</h4>
+<p>Word subraya en rojo las palabras con posibles faltas de ortografía y en azul los posibles errores gramaticales. Haz clic derecho sobre la palabra subrayada para ver las sugerencias de corrección. Para revisar todo el documento de una vez, pulsa F7 o ve a Revisar > Ortografía y gramática. Es una herramienta muy útil, pero no infalible: no detecta errores de contexto (escribir "halla" en vez de "haya" puede no detectarlo si ambas están escritas correctamente).</p>
+<h4>Buscar y reemplazar</h4>
+<p>Ctrl+H abre la herramienta de buscar y reemplazar: puedes cambiar automáticamente una palabra por otra en todo el documento. Por ejemplo, si has escrito "señor García" 50 veces y te das cuenta de que se llama "señor Gómez", usa buscar y reemplazar para corregirlo en un segundo.</p>
+<h4>Las tablas</h4>
+<p>Las tablas son muy útiles para organizar información en filas y columnas. Para insertar una: ve a Insertar > Tabla y selecciona el número de filas y columnas. Puedes fusionar celdas, cambiar el color de fondo, ajustar el ancho de las columnas y darle un estilo visual desde la pestaña "Diseño de tabla".</p>
+<h4>Encabezados y pie de página</h4>
+<p>El encabezado aparece en la parte superior de todas las páginas del documento (útil para poner el nombre de la empresa o el título del informe). El pie de página aparece en la parte inferior (útil para los números de página). Para añadirlos: Insertar > Encabezado o Pie de página. Para añadir numeración de páginas: Insertar > Número de página.</p>
+<h4>Plantillas de Word</h4>
+<p>Word incluye cientos de plantillas prediseñadas para currículums, cartas, facturas, calendarios, etc. Al abrir Word, en la pantalla de inicio verás las plantillas disponibles. Busca también plantillas online directamente desde Word (Archivo > Nuevo > buscar plantillas online). Usar una plantilla bien diseñada para un currículum o una carta formal hace que el resultado parezca mucho más profesional con muy poco esfuerzo.</p>
+<div class="lesson-tip">💡 <strong>Una instancia a la administración en Word:</strong> si necesitas presentar un escrito formal a cualquier administración (solicitud, reclamación, instancia), Word es la herramienta perfecta. Descarga una plantilla de instancia genérica (hay muchas gratuitas en la web), rellena los campos con tus datos y los motivos de tu solicitud, guárdala como PDF y preséntala en la sede electrónica o imprímela para presentarla en persona.</div>`,
+ejercicios:[
+{preg:'Crea una tabla en Word con 3 columnas (Fecha, Descripción, Importe) y 5 filas de datos inventados. Aplica un estilo de tabla con colores. Guarda el documento.',tipo:'texto'},
+{preg:'Usa la función buscar y reemplazar para cambiar todas las apariciones de una palabra en un documento. Describe el proceso y el resultado.',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué atajo abre la herramienta buscar y reemplazar en Word?',opts:['Ctrl+F','Ctrl+H','Ctrl+R','Ctrl+B'],ok:1},
+{preg:'¿Qué tecla inicia la revisión ortográfica completa del documento?',opts:['F5','F7','F9','F12'],ok:1},
+{preg:'¿Para qué sirve el encabezado en Word?',opts:['Para poner el texto en negrita','Para añadir texto que aparece en la parte superior de todas las páginas','Para crear una tabla','Para buscar texto'],ok:1},
+{preg:'¿Cómo se inserta una tabla en Word?',opts:['Ctrl+T','Insertar > Tabla','Clic derecho > Tabla','Solo con plantillas'],ok:1},
+{preg:'¿Qué ventaja tiene usar plantillas de Word?',opts:['Son más seguras','Permiten crear documentos profesionales con muy poco esfuerzo','Solo funcionan con internet','Son obligatorias para imprimir'],ok:1}
+]}
+]},
+{id:4,titulo:'Excel básico',duracion:'70 min',temas:[
+{id:'I4.1',titulo:'Introducción a Excel',duracion:'35 min',
+contenido:`<h3>Excel: las hojas de cálculo sin miedo</h3>
+<p>Excel es el programa de hojas de cálculo de Microsoft, y probablemente el software más utilizado en el mundo empresarial después del correo electrónico. Sirve para organizar datos en tablas, hacer cálculos automáticos, crear gráficos y analizar información. Muchas personas le tienen miedo a Excel porque piensan que es muy complicado, pero la realidad es que con conocer 10 funciones básicas puedes resolver el 90% de las situaciones cotidianas.</p>
+<h4>La estructura de Excel</h4>
+<p>Una hoja de cálculo de Excel es una cuadrícula formada por <strong>filas</strong> (numeradas: 1, 2, 3...) y <strong>columnas</strong> (con letras: A, B, C...). La intersección de una fila y una columna es una <strong>celda</strong>, identificada por su letra y número: A1, B3, C10. En las celdas introduces datos (texto, números, fechas) y fórmulas.</p>
+<p>Un archivo de Excel se llama <strong>libro de trabajo</strong> (.xlsx) y puede contener varias <strong>hojas</strong> (pestañas en la parte inferior). Puedes renombrar las hojas haciendo doble clic sobre su pestaña.</p>
+<h4>Introducir y editar datos</h4>
+<p>Haz clic en una celda y escribe. Pulsa Enter para confirmar e ir a la celda de abajo, o Tab para ir a la celda de la derecha. Para editar el contenido de una celda, haz doble clic o pulsa F2. Para borrar el contenido de una celda, selecciónala y pulsa Suprimir (borra el contenido pero no el formato).</p>
+<p>Para dar formato a las celdas (negrita, color, bordes, formato de número): selecciona las celdas y usa las herramientas de la pestaña "Inicio". Es importante dar formato de número correcto: si una columna tiene precios, selecciónala y aplica el formato "Moneda" para que aparezca el símbolo de € automáticamente.</p>
+<h4>Fórmulas básicas</h4>
+<p>La magia de Excel está en las fórmulas. Todas empiezan con el signo =. Las más básicas y útiles son:</p>
+<p><strong>=SUMA(A1:A10)</strong> — suma todos los valores del rango A1 hasta A10.</p>
+<p><strong>=PROMEDIO(B1:B10)</strong> — calcula la media de los valores del rango.</p>
+<p><strong>=MAX(C1:C10)</strong> y <strong>=MIN(C1:C10)</strong> — el valor más alto y más bajo del rango.</p>
+<p><strong>=CONTAR(D1:D10)</strong> — cuenta cuántas celdas del rango tienen números.</p>
+<p>Para referenciar una celda en una fórmula, escribe su dirección directamente: =A1+B1 suma el contenido de las celdas A1 y B1. =A1*B1 las multiplica. =A1/B1 las divide.</p>
+<div class="lesson-tip">💡 <strong>Seleccionar rangos rápido:</strong> para seleccionar un rango de celdas, haz clic en la primera celda y arrastra hasta la última, o haz clic en la primera y Mayús+clic en la última. Para seleccionar una columna entera, haz clic en la letra de la columna. Para seleccionar toda la hoja, haz clic en el triángulo de la esquina superior izquierda (donde se cruzan los encabezados de filas y columnas) o pulsa Ctrl+A.</div>`,
+ejercicios:[
+{preg:'Crea una hoja de Excel con los gastos de un mes inventado: fecha, descripción y importe de al menos 8 gastos. Añade una fila de TOTAL con la función SUMA. Aplica formato de moneda (€) a los importes.',tipo:'texto'},
+{preg:'En la misma hoja, calcula con fórmulas el gasto máximo, el mínimo y el promedio mensual. ¿Cuánto gastarías de media al mes con esos datos?',tipo:'texto'}
+],
+examen:[
+{preg:'¿Cómo se identifican las celdas en Excel?',opts:['Por colores','Por letra de columna y número de fila (ej: B3)','Por el número de orden','Por nombre del usuario'],ok:1},
+{preg:'¿Cómo empieza siempre una fórmula en Excel?',opts:['Con el signo #','Con el signo =','Con el signo +','Con el signo @'],ok:1},
+{preg:'¿Qué hace la función =SUMA(A1:A10)?',opts:['Suma solo A1 y A10','Suma todos los valores del rango de A1 hasta A10','Multiplica todos los valores','Cuenta las celdas con texto'],ok:1},
+{preg:'¿Qué extensión tienen los archivos de Excel?',opts:['.docx','.pptx','.xlsx','.csv'],ok:2},
+{preg:'¿Cómo editas el contenido de una celda?',opts:['Con clic derecho','Con doble clic o F2','Con Ctrl+E','Con la tecla Inicio'],ok:1}
+]},
+{id:'I4.2',titulo:'Excel: tablas y gráficos',duracion:'35 min',
+contenido:`<h3>Tablas y gráficos en Excel: visualiza tus datos</h3>
+<p>Una vez que dominas la entrada de datos y las fórmulas básicas, el siguiente paso es aprender a presentar esa información de forma visual y profesional. Excel tiene herramientas para convertir tus datos en gráficos atractivos y en tablas con formato profesional con muy pocos clics.</p>
+<h4>Tablas de Excel (formato tabla)</h4>
+<p>Convertir un rango de datos en una "Tabla" de Excel (no confundir con simplemente tener datos en filas y columnas) añade funcionalidades automáticas muy útiles: filtros en los encabezados, formato visual consistente, filas de totales automáticos y la capacidad de referenciar los datos por nombre en las fórmulas. Para crear una tabla: selecciona el rango con los datos (incluyendo los encabezados), ve a Insertar > Tabla, confirma el rango. Se aplicará automáticamente un formato visual y aparecerán flechas de filtro en los encabezados.</p>
+<h4>Filtros y ordenar</h4>
+<p>Los filtros permiten mostrar solo las filas que cumplen ciertos criterios. Haz clic en la flecha de filtro de un encabezado para ver las opciones: puedes filtrar por valor, por color, o usar filtros personalizados (mayor que, menor que, entre, etc.). Para ordenar los datos, haz clic en la flecha y selecciona "Ordenar de A a Z" o "Ordenar de Z a A" (o de menor a mayor / mayor a menor para números).</p>
+<h4>Crear un gráfico</h4>
+<p>Selecciona los datos que quieres representar (incluyendo los encabezados) y ve a Insertar > Gráficos. Elige el tipo de gráfico: columnas o barras para comparar cantidades, líneas para mostrar tendencias en el tiempo, circulares (de tarta) para mostrar proporciones. Excel genera el gráfico automáticamente y puedes personalizarlo: cambiar colores, añadir título, modificar la leyenda. Para mover el gráfico dentro de la hoja, arrástralo. Para cambiar su tamaño, arrastra las esquinas.</p>
+<h4>Uso práctico en el día a día</h4>
+<p>Excel es muy útil para: llevar el control de gastos del hogar (lista de gastos con fecha, categoría e importe), gestionar un pequeño inventario de la tienda o almacén, calcular presupuestos para reformas o proyectos, hacer un seguimiento de facturas emitidas o recibidas, o llevar un registro de citas o contactos. No necesitas nada complicado: una tabla sencilla con las columnas correctas y la función SUMA ya te ahorra mucho tiempo y reduce los errores de cálculo a cero.</p>
+<div class="lesson-tip">💡 <strong>Congelar filas y columnas:</strong> cuando trabajas con tablas largas, los encabezados desaparecen al hacer scroll y no sabes a qué columna corresponde cada dato. Solución: haz clic en la celda B2 (si tienes encabezados en la fila 1 y la columna A) y ve a Vista > Inmovilizar paneles > Inmovilizar paneles. Así los encabezados siempre serán visibles al desplazarte.</div>`,
+ejercicios:[
+{preg:'Añade a tu hoja de gastos del ejercicio anterior un gráfico de columnas que muestre los gastos por descripción. Pon un título al gráfico.',tipo:'texto'},
+{preg:'Activa los filtros en tu tabla de gastos y filtra para mostrar solo los gastos mayores de una cantidad que tú elijas. Describe el proceso.',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué ventaja tiene convertir datos en una Tabla de Excel?',opts:['Solo cambia el color','Añade filtros automáticos, formato visual y filas de totales','Bloquea los datos para no editarlos','Convierte el archivo en PDF'],ok:1},
+{preg:'¿Qué tipo de gráfico es más adecuado para mostrar la evolución de ventas a lo largo del tiempo?',opts:['Gráfico circular','Gráfico de dispersión','Gráfico de líneas','Gráfico de áreas 3D'],ok:2},
+{preg:'¿Cómo se crea un gráfico en Excel?',opts:['Solo con macros','Seleccionando los datos e Insertar > Gráficos','Botón derecho > Crear gráfico','Herramientas > Gráfico'],ok:1},
+{preg:'¿Para qué sirve la función de inmovilizar paneles?',opts:['Para proteger el documento con contraseña','Para que los encabezados sean siempre visibles al desplazarse','Para fusionar celdas','Para imprimir solo una parte'],ok:1},
+{preg:'¿Qué tipo de gráfico usarías para mostrar qué porcentaje del presupuesto va a cada categoría de gasto?',opts:['Gráfico de líneas','Gráfico de barras horizontal','Gráfico circular (tarta)','Gráfico de columnas'],ok:2}
+]}
+]},
+{id:5,titulo:'La nube: guarda y accede desde cualquier lugar',duracion:'60 min',temas:[
+{id:'I5.1',titulo:'Google Drive y almacenamiento en la nube',duracion:'30 min',
+contenido:`<h3>La nube: tu disco duro virtual accesible desde cualquier lugar</h3>
+<p>"La nube" es uno de los conceptos tecnológicos más mal entendidos y más fáciles de explicar: son servidores (ordenadores muy potentes) ubicados en grandes centros de datos de empresas como Google, Microsoft o Apple, donde puedes almacenar tus archivos de forma segura y acceder a ellos desde cualquier dispositivo con conexión a Internet. No tienes que saber dónde está físicamente ese servidor: simplemente guardas tus archivos ahí y los tienes disponibles siempre y en cualquier lugar.</p>
+<h4>Google Drive: 15 GB gratuitos para empezar</h4>
+<p>Google Drive es el servicio de almacenamiento en la nube de Google, y viene incluido con cualquier cuenta de Gmail. Ofrece 15 GB de almacenamiento gratuito (compartidos entre Gmail, Drive y Google Fotos), que es más que suficiente para documentos, PDFs y fotos de calidad media. Para acceder: drive.google.com o la app Google Drive en el móvil.</p>
+<p>En Google Drive puedes: subir archivos y carpetas desde tu ordenador (arrastrar y soltar o botón "Nuevo"), crear documentos de Google (Docs, Sheets, Slides: equivalentes gratuitos de Word, Excel y PowerPoint), compartir archivos con otras personas dándoles permiso de solo lectura o de edición, y acceder a tus archivos desde el móvil, la tablet o cualquier otro ordenador.</p>
+<h4>Microsoft OneDrive</h4>
+<p>OneDrive es el equivalente de Microsoft, integrado en Windows 10 y 11. Si tienes una cuenta de Microsoft (necesaria para activar Windows o para usar Outlook), tienes 5 GB gratuitos en OneDrive. La ventaja es que se sincroniza automáticamente con la carpeta OneDrive de tu ordenador: cualquier archivo que guardes ahí aparece automáticamente en la nube y viceversa.</p>
+<h4>Copias de seguridad: protege lo que es tuyo</h4>
+<p>Una copia de seguridad (backup) es una copia adicional de tus archivos importantes guardada en un lugar diferente al original. Si el ordenador se estropea, te lo roban o te lo tiras con agua, si tienes copia de seguridad no pierdes nada. La regla de oro del backup es la 3-2-1: 3 copias de los datos importantes, en 2 tipos de soporte diferentes (por ejemplo, disco duro externo y nube), con 1 copia fuera del hogar (la nube sirve perfectamente para esto). Para los documentos más importantes (DNI escaneado, contrato de arrendamiento, fotos de familia), guárdalos siempre en la nube.</p>
+<div class="lesson-tip">💡 <strong>Escanea tus documentos importantes:</strong> fotografía con el móvil o escanea tu DNI, pasaporte, certificados importantes, pólizas de seguro y contratos, y guárdalos en una carpeta de Google Drive llamada "Documentos importantes". Si alguna vez pierdes los originales o te los roban, tendrás una copia digital que facilita enormemente su recuperación o reposición.</div>`,
+ejercicios:[
+{preg:'Accede a Google Drive con tu cuenta de Gmail. Crea una carpeta llamada "Documentos importantes" y sube a ella un documento de prueba. Comparte ese documento con un amigo o familiar dándole acceso de solo lectura.',tipo:'texto'},
+{preg:'¿Cuáles son tus documentos más importantes que deberías tener escaneados en la nube? Haz una lista de al menos 5 y describe por qué cada uno es importante tener en digital.',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué es "la nube" en informática?',opts:['Una red WiFi muy rápida','Servidores remotos donde almacenar archivos accesibles desde cualquier dispositivo','Un tipo especial de disco duro','El sistema operativo de Google'],ok:1},
+{preg:'¿Cuánto almacenamiento gratuito ofrece Google Drive?',opts:['5 GB','10 GB','15 GB','50 GB'],ok:2},
+{preg:'¿Qué es la regla del backup 3-2-1?',opts:['3 contraseñas, 2 correos, 1 ordenador','3 copias, 2 tipos de soporte, 1 fuera del hogar','3 GB, 2 nubes, 1 disco duro','3 archivos, 2 carpetas, 1 copia'],ok:1},
+{preg:'¿Qué servicio de nube viene integrado en Windows 10 y 11?',opts:['Google Drive','Dropbox','iCloud','OneDrive'],ok:3},
+{preg:'¿Por qué es útil escanear los documentos importantes?',opts:['Para que pesen más','Para tener una copia digital accesible si se pierden o roban los originales','Para poder borrar los originales','Solo lo hacen las empresas'],ok:1}
+]},
+{id:'I5.2',titulo:'Seguridad básica y mantenimiento del ordenador',duracion:'30 min',
+contenido:`<h3>Mantén tu ordenador seguro y funcionando bien</h3>
+<p>Un ordenador bien mantenido y protegido dura más, va más rápido y protege tus datos personales de amenazas externas. El mantenimiento básico no requiere ser un experto: con unos pocos hábitos sencillos puedes mantener tu equipo en perfectas condiciones.</p>
+<h4>El antivirus</h4>
+<p>Windows 10 y 11 incluyen Windows Defender, un antivirus integrado que ofrece una protección básica bastante buena y completamente gratuita. No necesitas comprar un antivirus de pago para uso doméstico: Windows Defender es suficiente siempre que lo mantengas actualizado y tengas precaución al navegar. Lo más importante es no instalar programas de fuentes no oficiales, no abrir archivos adjuntos de correos sospechosos y no hacer clic en enlaces de páginas web poco fiables.</p>
+<h4>Actualizaciones del sistema</h4>
+<p>Las actualizaciones de Windows (y de cualquier sistema operativo) no son solo para añadir nuevas funciones: la mayoría son correcciones de seguridad que tapan agujeros que los ciberdelincuentes podrían aprovechar. Activa las actualizaciones automáticas en Configuración > Windows Update y deja que se instalen. Son molestas porque a veces obligan a reiniciar, pero son imprescindibles para la seguridad.</p>
+<h4>Limpieza y mantenimiento básico</h4>
+<p><strong>Disco duro lleno:</strong> cuando el disco duro se llena, el ordenador se vuelve muy lento. Comprueba el espacio libre en el Explorador de archivos: si tienes menos del 15-20% libre, es hora de limpiar. Vacía la Papelera de reciclaje, borra archivos que ya no necesitas (especialmente vídeos y fotos duplicadas), desinstala programas que no uses desde Configuración > Aplicaciones.</p>
+<p><strong>Programas de inicio:</strong> muchos programas se configuran para arrancar automáticamente con Windows, lo que hace que el ordenador tarde mucho en encenderse. Para ver y deshabilitar los programas de inicio: Ctrl+Mayús+Esc (abre el Administrador de tareas) > pestaña "Inicio". Deshabilita los que no necesitas que arranquen automáticamente (mantén el antivirus siempre activo).</p>
+<p><strong>Temperatura y ventilación:</strong> el calor es el enemigo del hardware. No cubras los orificios de ventilación del portátil. Coloca el portátil en superficies duras (no en la cama o el sofá). Si el ordenador se calienta mucho o hace ruido, considera limpiarlo por dentro de polvo cada 1-2 años (o llevarlo a un técnico).</p>
+<div class="lesson-tip">💡 <strong>Si el ordenador va lento:</strong> antes de comprar uno nuevo, prueba estas tres cosas: 1) reinicia el ordenador (no solo apaga y enciende la pantalla); 2) comprueba si el disco duro está casi lleno y libera espacio; 3) deshabilita los programas de inicio innecesarios. En la mayoría de los casos, estas tres acciones mejoran notablemente el rendimiento sin coste alguno.</div>`,
+ejercicios:[
+{preg:'Comprueba el espacio libre de tu disco duro y los programas configurados para arrancar con Windows. ¿Hay alguno que podrías deshabilitar? Describe lo que encuentras.',tipo:'texto'},
+{preg:'Comprueba si Windows Defender está activo en tu ordenador. ¿Cuándo fue la última actualización de Windows? Describe cómo lo has comprobado.',tipo:'texto'}
+],
+examen:[
+{preg:'¿Qué antivirus viene incluido en Windows 10 y 11?',opts:['Norton','Avast','Windows Defender','McAfee'],ok:2},
+{preg:'¿Para qué sirven principalmente las actualizaciones de Windows?',opts:['Solo para añadir nuevas funciones visuales','Para corregir agujeros de seguridad y mejorar el sistema','Para aumentar el precio del equipo','Para instalar más programas automáticamente'],ok:1},
+{preg:'¿Cómo abres el Administrador de tareas en Windows?',opts:['Ctrl+Alt+Supr y seleccionar Administrador de tareas','Clic derecho en el escritorio','Desde el Panel de control','Solo desde el menú inicio'],ok:0},
+{preg:'¿Qué puede causar que el ordenador vaya muy lento?',opts:['Tener el fondo de pantalla cambiado','El disco duro casi lleno y muchos programas en el inicio','Usar el modo oscuro','Tener muchos favoritos en el navegador'],ok:1},
+{preg:'¿Qué debes hacer si el portátil se calienta mucho?',opts:['Apagarlo y no volver a usarlo','Asegurarte de que los orificios de ventilación no están tapados y no usarlo sobre superficies blandas','Ponerlo en el congelador','Actualizar el fondo de pantalla'],ok:1}
+]}
+]},
+],
+examenFinal:[
+{preg:'¿Qué es el sistema operativo?',opts:['El disco duro','El programa que permite que todos los demás programas funcionen','Un antivirus','La marca del ordenador'],ok:1},
+{preg:'¿Qué pasa cuando borras un archivo con Suprimir?',opts:['Se borra definitivamente','Va a la Papelera de reciclaje y puede recuperarse','Se guarda en la nube','Se comprime automáticamente'],ok:1},
+{preg:'¿Qué hace Ctrl+Z?',opts:['Guardar','Cerrar el programa','Deshacer la última acción','Copiar el texto'],ok:2},
+{preg:'¿Qué indica el candado en la barra del navegador?',opts:['Que la página es oficial','Que la conexión es segura (https)','Que necesitas contraseña','Que es una web de pago'],ok:1},
+{preg:'¿Cuánto almacenamiento gratuito da Google Drive?',opts:['5 GB','10 GB','15 GB','100 GB'],ok:2},
+{preg:'¿Qué hace la función =SUMA(A1:A10) en Excel?',opts:['Multiplica los valores','Suma todos los valores del rango A1:A10','Cuenta las celdas con texto','Calcula el promedio'],ok:1},
+{preg:'¿Para qué sirve guardar un Word como PDF?',opts:['Para editarlo más fácil','Para que se vea igual en cualquier dispositivo','Para reducir el tamaño a cero','Para subirlo a la nube solo'],ok:1},
+{preg:'¿Qué es el phishing?',opts:['Un antivirus','Páginas o correos falsos que imitan webs legítimas para robar datos','Una actualización de Windows','Un tipo de wifi'],ok:1},
+{preg:'¿Qué es la regla del backup 3-2-1?',opts:['3 contraseñas, 2 correos, 1 ordenador','3 copias, 2 tipos de soporte, 1 fuera del hogar','3 archivos, 2 nubes, 1 copia','3 GB en 2 discos y 1 nube'],ok:1},
+{preg:'¿Cómo se crea una tabla con filtros en Excel?',opts:['Clic derecho > Tabla','Seleccionar datos e Insertar > Tabla','Solo con macros','Herramientas > Crear tabla'],ok:1}
+]
+}},
+{id:'idiomas',titulo:'Comunicación Profesional en Inglés',categoria:'Idiomas',cat:'pay',icono:'🗣️',colorBg:'linear-gradient(135deg,#063d33,#0e6655)',precio:'19 €',tipoPrecio:'pay',duracion:'15 h',modulos:8,nivel:'Principiante',desc:'Inglés funcional para el entorno laboral: correos, reuniones, vocabulario administrativo y atención al cliente.',activo:true},
+{id:'primeros-auxilios',titulo:'Primeros Auxilios Básicos',categoria:'Salud',cat:'pay',icono:'🩺',colorBg:'linear-gradient(135deg,#7b0f0f,#c0392b)',precio:'12 €',tipoPrecio:'pay',duracion:'6 h',modulos:4,nivel:'Principiante',desc:'RCP, atragantamiento, heridas, quemaduras y cómo actuar en emergencias. Formación que puede salvar vidas.',activo:true},
+{id:'bienestar',titulo:'Mindfulness y Bienestar Personal',categoria:'Bienestar',cat:'pay',icono:'🧘',colorBg:'linear-gradient(135deg,#3d1f4e,#6c3483)',precio:'15 €',tipoPrecio:'pay',duracion:'8 h',modulos:5,nivel:'Principiante',desc:'Técnicas de meditación, gestión del estrés, hábitos saludables y equilibrio personal y profesional.',activo:true}
 ];
 
 // ── STATE ──────────────────────────────────────────────────────────────────────
@@ -1053,8 +1608,22 @@ function renderCursos(f='todos'){
   const g=document.getElementById('cursosGrid');g.innerHTML='';
   CURSOS.filter(c=>f==='todos'||c.cat===f).forEach(c=>{
     const pct=getPct(c.id);
-    const bM={gratis:'<span class="badge b-free">Gratis</span>',pay:'<span class="badge b-pay">De pago</span>',fp:'<span class="badge b-fp">Curso Intensivo</span>',proximamente:'<span class="badge b-soon">Próximamente</span>'};
-    const btM={gratis:`<button class="btn-card btn-primary" onclick="openCurso('${c.id}')">Empezar gratis</button>`,pay:`<button class="btn-card btn-demo" onclick="openCurso('${c.id}')">Ver demo</button>`,fp:`<button class="btn-card btn-demo" onclick="openCurso('${c.id}')">Ver demo</button>`,proximamente:`<button class="btn-card btn-soon">Próximamente</button>`};
+    const bM={gratis:'<span class="badge b-free">Gratis</span>',pay:'<span class="badge b-pay">De pago</span>',fp:'<span class="badge b-fp">Curso Intensivo</span>',proximamente:'<span class="badge b-soon">Próximamente</span>',presencial:'<span class="badge b-presencial">📍 Presencial</span>'};
+    const waMsg=encodeURIComponent('Hola, me interesa el curso: '+c.titulo+' ('+c.precio+'). ¿Podéis darme más información?');
+    const waLink='https://wa.me/34611175080?text='+waMsg;
+    const emLink='mailto:roma.servicios.tramites@gmail.com?subject='+encodeURIComponent('Información curso: '+c.titulo)+'&body='+encodeURIComponent('Hola,\n\nMe interesa el curso '+c.titulo+' ('+c.precio+').\n\nPor favor, indíquenme cómo proceder para matricularme.\n\nGracias.');
+    const btnsContacto=`<div style="display:flex;gap:8px;flex:1;">
+      <a href="${waLink}" target="_blank" class="btn-card btn-wa" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;">📲 WhatsApp</a>
+      <a href="${emLink}" class="btn-card btn-em" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;">✉️ Email</a>
+    </div>`;
+    const btnGratis = `<button class="btn-card btn-primary" onclick="openCurso('${c.id}')">Acceder gratis</button>`;
+    // Cupo presencial
+    let cupoHtml = '';
+    if(c.cat==='presencial' && c.cupo){
+      const pct = Math.round((c.cupo/8)*100);
+      cupoHtml = `<div class="cupo-bar"><div class="cupo-fill" style="width:${pct}%"></div></div><div class="cupo-label">Plazas disponibles: ${c.cupo}/8 · Albacete</div>`;
+    }
+    const btM={gratis:btnGratis,pay:btnsContacto,fp:btnsContacto,tramites:btnsContacto,proximamente:btnsContacto,presencial:btnsContacto};
     const el=document.createElement('div');el.className='curso-card';
     el.innerHTML=`<div class="card-img" style="background:${c.colorBg};">
       ${!c.activo?'<div class="coming-overlay"><span class="coming-label">Próximamente</span></div>':''}
@@ -1067,7 +1636,7 @@ function renderCursos(f='todos'){
       <div class="card-desc">${c.desc}</div>
       <div class="card-meta"><span>⏱ ${c.duracion}</span><span>📦 ${c.modulos} módulos</span><span>📊 ${c.nivel}</span></div>
       ${pct>0?`<div class="prog-wrap"><div class="prog-fill" style="width:${pct}%"></div></div><div style="font-size:11px;color:var(--gris3);margin-bottom:10px;">Progreso: ${pct}%</div>`:''}
-      <div class="card-footer"><span class="card-precio ${c.tipoPrecio==='free'?'precio-free':'precio-pay'}">${c.precio}</span>${btM[c.cat]||''}</div>
+      ${cupoHtml}<div class="card-footer"><span class="card-precio ${c.tipoPrecio==='free'?'precio-free':'precio-pay'}">${c.precio}</span>${btM[c.cat]||''}</div>
     </div>`;
     g.appendChild(el);
   });
@@ -1079,7 +1648,7 @@ function openCurso(id){
   CC=CURSOS.find(c=>c.id===id);if(!CC)return;
   document.getElementById('modalHero').style.background=CC.colorBg;
   document.getElementById('modalIcon').textContent=CC.icono;
-  const bM={gratis:'<span class="badge b-free">Gratis</span>',pay:'<span class="badge b-pay">De pago</span>',fp:'<span class="badge b-fp">Curso Intensivo</span>'};
+  const bM={gratis:'<span class="badge b-free">Gratis</span>',pay:'<span class="badge b-pay">De pago</span>',fp:'<span class="badge b-fp">Curso Intensivo</span>',presencial:'<span class="badge b-presencial">📍 Presencial</span>'};
   document.getElementById('modalBadges').innerHTML=(bM[CC.cat]||'')+`<span class="badge" style="background:var(--crema2);color:var(--gris);">${CC.nivel}</span>`;
   document.getElementById('modalTitle').textContent=CC.titulo;
   document.getElementById('modalDesc').textContent=CC.desc;
@@ -1284,11 +1853,19 @@ function closeDipOut(e){if(e.target===document.getElementById('dip-modal'))close
 
 // ── DEMO ───────────────────────────────────────────────────────────────────────
 function renderDemo(){
-  const h=`<div style="background:var(--crema);border-radius:10px;padding:22px;text-align:center;">
-    <div style="font-size:44px;margin-bottom:10px;">${CC.icono}</div>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--noir);margin-bottom:7px;">Curso próximamente disponible</div>
-    <div style="font-size:14px;color:var(--gris2);margin-bottom:18px;">${CC.desc}</div>
-    <a href="https://romaserviciostramites-sketch.github.io/Roma-Servicios-Tramites/#contacto" target="_blank" style="display:inline-block;background:var(--noir);color:var(--crema);font-size:13px;font-weight:600;padding:12px 22px;border-radius:6px;text-decoration:none;">Notifícame cuando esté disponible →</a>
+  const waMsg=encodeURIComponent('Hola, me interesa el curso: '+CC.titulo+' ('+CC.precio+'). ¿Podéis darme más información?');
+  const waLink='https://wa.me/34611175080?text='+waMsg;
+  const emLink='mailto:roma.servicios.tramites@gmail.com?subject='+encodeURIComponent('Información curso: '+CC.titulo)+'&body='+encodeURIComponent('Hola,\n\nMe interesa el curso '+CC.titulo+' ('+CC.precio+').\n\nPor favor, indíquenme cómo proceder para matricularme.\n\nGracias.');
+  const h=`<div style="background:var(--crema);border-radius:10px;padding:28px;text-align:center;">
+    <div style="font-size:44px;margin-bottom:12px;">${CC.icono}</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--noir);margin-bottom:8px;">${CC.titulo}</div>
+    <div style="font-size:14px;color:var(--gris2);margin-bottom:8px;line-height:1.6;">${CC.desc}</div>
+    <div style="font-size:22px;font-weight:700;color:var(--oro2);margin-bottom:20px;">${CC.precio}</div>
+    <p style="font-size:13px;color:var(--gris2);margin-bottom:16px;">Contáctanos para matricularte. Te enviamos el material una vez confirmado el pago.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <a href="${waLink}" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#fff;font-size:13px;font-weight:700;padding:12px 22px;border-radius:6px;text-decoration:none;">📲 Contactar por WhatsApp</a>
+      <a href="${emLink}" style="display:inline-flex;align-items:center;gap:7px;background:var(--noir);color:var(--crema);font-size:13px;font-weight:600;padding:12px 22px;border-radius:6px;text-decoration:none;">✉️ Enviar email</a>
+    </div>
   </div>`;
   ['modulosCont','lessonCont','ejerciciosCont','exFinalCont','diplomaCont'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=h;});
 }
@@ -1315,12 +1892,27 @@ function openLegal(id){document.getElementById('legalCont').innerHTML=getLegal(i
 function closeLegal(){document.getElementById('legalModal').classList.remove('active');}
 function closeLegalOut(e){if(e.target===document.getElementById('legalModal'))closeLegal();}
 
-// ── INIT ───────────────────────────────────────────────────────────────────────
-renderCursos();
+// ── NAV MÓVIL ──────────────────────────────────────────────────────────────────
+function toggleNav(){
+  document.getElementById('navLinks').classList.toggle('open');
+  document.getElementById('navHam').classList.toggle('open');
+}
+function closeNav(){
+  document.getElementById('navLinks').classList.remove('open');
+  document.getElementById('navHam').classList.remove('open');
+}
+// Cerrar al hacer clic fuera
+document.addEventListener('click', function(e){
+  const nav = document.querySelector('nav');
+  if(!nav.contains(e.target)){
+    closeNav();
+  }
+});
 
+// ── INIT ───────────────────────────────────────────────────────────────────────
 // ── PACK 3×1 ─────────────────────────────────────────────────────────────────
 // ── PACK 3×1 LOGIC ────────────────────────────────────────────────────────────
-const packCursos = CURSOS.filter(c => c.id !== 'jardineria' && c.cat !== 'proximamente');
+const packCursos = CURSOS.filter(c => c.id !== 'jardineria' && c.cat !== 'proximamente' && c.cat !== 'presencial' && c.cat !== 'gratis');
 let seleccionados = [];
 
 function precioNum(str){
@@ -1336,20 +1928,20 @@ function renderPackCursos(){
     const disabled = !sel && seleccionados.length >= 3;
     return `<div onclick="${disabled?'':'togglePack(\'' + c.id + '\')'}" style="
       display:flex;align-items:center;gap:14px;padding:14px 16px;
-      background:${sel?'rgba(200,169,110,0.08)':'#111'};
-      border:1px solid ${sel?'var(--gold)':'#222'};
+      background:${sel?'rgba(200,169,110,0.10)':'#1c1c1c'};
+      border:1px solid ${sel?'var(--gold)':'#383838'};
       border-radius:6px;cursor:${disabled?'not-allowed':'pointer'};
       opacity:${disabled?'0.4':'1'};transition:all .2s;
     ">
       <div style="
         width:20px;height:20px;border-radius:4px;flex-shrink:0;
-        border:2px solid ${sel?'var(--gold)':'#444'};
+        border:2px solid ${sel?'var(--gold)':'#666'};
         background:${sel?'var(--gold)':'transparent'};
         display:flex;align-items:center;justify-content:center;
       ">${sel?'<svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4L4 7L10 1" stroke="#0f0f0f" stroke-width="2" stroke-linecap="round"/></svg>':''}</div>
       <div style="flex:1;min-width:0;">
-        <div style="color:${sel?'var(--cream)':'#aaa'};font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.titulo}</div>
-        <div style="color:${sel?'var(--gold)':'#555'};font-size:12px;margin-top:2px;">${c.precio}</div>
+        <div style="color:${sel?'var(--cream)':'#ccc'};font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.titulo}</div>
+        <div style="color:${sel?'var(--gold)':'#999'};font-size:12px;margin-top:2px;">${c.precio}</div>
       </div>
       ${sel?'<div style="color:var(--gold);font-size:18px;">✓</div>':''}
     </div>`;
@@ -1377,7 +1969,7 @@ function renderResumen(){
   box.innerHTML = cursos.map((c,i) => `
     <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #1e1e1e;">
       <span style="color:${i===0?'var(--cream)':'var(--muted)'};font-size:13px;flex:1;margin-right:8px;">${c.titulo}</span>
-      <span style="color:${i===0?'var(--gold)':'#555'};font-size:13px;white-space:nowrap;">${i===0?c.precio:'Incluido'}</span>
+      <span style="color:${i===0?'var(--gold)':'#999'};font-size:13px;white-space:nowrap;">${i===0?c.precio:'Incluido'}</span>
     </div>
   `).join('') + (cursos.length < 3 ? `<p style="color:var(--muted);font-size:12px;margin-top:12px;text-align:center;">${3-cursos.length} más por seleccionar</p>` : '');
 
@@ -1446,7 +2038,9 @@ window.enviarPackWA = function(){
   const {nombre, contacto, listaCursos, precio} = getPackMensaje();
   if(!nombre || !contacto){ alert('Por favor rellena tu nombre y teléfono o email.'); return; }
   const txt = `Hola, soy ${nombre}. Me interesa el Pack 3x1 de Roma Formación. Cursos elegidos: ${listaCursos}. Precio a pagar: ${precio}. Mi contacto: ${contacto}`;
-  window.open('https://wa.me/34611175080?text='+encodeURIComponent(txt),'_blank');
+  const waUrl='https://wa.me/34611175080?text='+encodeURIComponent(txt);
+  const waWin=window.open(waUrl,'_blank');
+  if(!waWin||waWin.closed)window.location.href=waUrl;
 };
 
 window.enviarPackEmail = function(){
@@ -1458,7 +2052,31 @@ window.enviarPackEmail = function(){
 };
 
 
-renderPackCursos();
+
+// ── NAV MÓVIL ──────────────────────────────────────────────────────────────────
+function toggleNav(){
+  document.getElementById('navLinks').classList.toggle('open');
+  document.getElementById('navHam').classList.toggle('open');
+}
+function closeNav(){
+  document.getElementById('navLinks').classList.remove('open');
+  document.getElementById('navHam').classList.remove('open');
+}
+// Cerrar al hacer clic fuera
+document.addEventListener('click', function(e){
+  const nav = document.querySelector('nav');
+  if(!nav.contains(e.target)){
+    closeNav();
+  }
+});
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', function(){ renderCursos(); renderPackCursos(); });
+} else {
+  renderCursos();
+  renderPackCursos();
+}
 </script>
 
 <!-- LEGAL CONTENT (hidden) -->
