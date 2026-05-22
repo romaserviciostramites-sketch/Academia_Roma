@@ -511,15 +511,15 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
 <section id="pack3x1" style="background:var(--noir);padding:80px 20px;">
   <div style="max-width:1100px;margin:0 auto;">
     <div style="text-align:center;margin-bottom:50px;">
-      <span style="display:inline-block;background:var(--oro);color:var(--noir);font-size:11px;font-weight:700;letter-spacing:2px;padding:6px 18px;border-radius:2px;margin-bottom:18px;text-transform:uppercase;">Oferta exclusiva</span>
-      <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(28px,4vw,48px);color:var(--crema);font-weight:600;margin:0 0 16px;">Pack 3×1 — Elige 3, paga 1</h2>
-      <p style="color:rgba(247,244,239,0.65);font-size:16px;max-width:580px;margin:0 auto;line-height:1.7;">Selecciona tres cursos de nuestro catálogo y paga únicamente el precio del más caro. Los otros dos, completamente incluidos sin coste adicional.</p>
+      <span style="display:inline-block;background:var(--oro);color:var(--noir);font-size:11px;font-weight:700;letter-spacing:2px;padding:6px 18px;border-radius:2px;margin-bottom:18px;text-transform:uppercase;">20% descuento</span>
+      <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(28px,4vw,48px);color:var(--crema);font-weight:600;margin:0 0 16px;">Pack 3 cursos — 20% de descuento</h2>
+      <p style="color:rgba(247,244,239,0.65);font-size:16px;max-width:580px;margin:0 auto;line-height:1.7;">Selecciona tres cursos de nuestro catálogo y obtén un 20% de descuento sobre el precio total. Cuantos más cursos, más ahorras.</p>
     </div>
 
     <div style="display:grid;grid-template-columns:1fr 340px;gap:32px;align-items:start;" id="packGrid">
       <!-- Lista de cursos seleccionables -->
       <div>
-        <p style="color:var(--oro);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;margin-bottom:20px;">Selecciona exactamente 3 cursos</p>
+        <p style="color:var(--oro);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;margin-bottom:20px;">Selecciona 3 cursos y ahorra un 20%</p>
         <div id="packCursosList" style="display:grid;gap:10px;"></div>
       </div>
 
@@ -625,7 +625,7 @@ footer{background:var(--noir2);color:var(--crema);padding:60px 40px 28px;}
           <span style="color:var(--verde);font-size:16px;">✓</span> Solo disponible para alumnos de cursos Intensivos y Presenciales
         </div>
       </div>
-      <a href="https://wa.me/34611175080?text=${encodeURIComponent('Hola, me interesan las prácticas en Roma Servicios y Trámites. ¿Podéis darme más información?')}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;font-size:14px;font-weight:700;padding:13px 24px;border-radius:8px;text-decoration:none;">📲 Preguntar por las prácticas</a>
+      <a href="https://wa.me/34611175080?text=Hola%2C%20me%20interesan%20las%20pr%C3%A1cticas%20en%20Roma%20Servicios%20y%20Tr%C3%A1mites.%20%C2%BFPod%C3%A9is%20darme%20m%C3%A1s%20informaci%C3%B3n%3F" style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;font-size:14px;font-weight:700;padding:13px 24px;border-radius:8px;text-decoration:none;">📲 Preguntar por las prácticas</a>
     </div>
     <div style="background:var(--noir);border-radius:16px;padding:36px;color:var(--crema);">
       <div style="font-size:42px;margin-bottom:16px;">🏢</div>
@@ -1692,7 +1692,7 @@ function renderCursos(f='todos'){
     const waLink='https://wa.me/34611175080?text='+waMsg;
     const emLink='mailto:roma.servicios.tramites@gmail.com?subject='+encodeURIComponent('Información curso: '+c.titulo)+'&body='+encodeURIComponent('Hola,\n\nMe interesa el curso '+c.titulo+' ('+c.precio+').\n\nPor favor, indíquenme cómo proceder para matricularme.\n\nGracias.');
     const btnsContacto=`<div style="display:flex;gap:8px;flex:1;">
-      <a href="${waLink}" target="_blank" class="btn-card btn-wa" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;">📲 WhatsApp</a>
+      <a href="${waLink}" class="btn-card btn-wa" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;">📲 WhatsApp</a>
       <a href="${emLink}" class="btn-card btn-em" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;">✉️ Email</a>
     </div>`;
     const btnGratis = `<button class="btn-card btn-primary" onclick="openCurso('${c.id}')">Acceder gratis</button>`;
@@ -1918,7 +1918,7 @@ function renderDiplomaTab(){
       <p style="font-size:13px;color:var(--gris2);line-height:1.7;margin:0;">📜 Tu diploma acreditado por <strong>Roma Formación</strong> es completamente <strong>gratuito</strong>. Contáctanos por WhatsApp o email con tu nombre completo y te lo enviamos personalmente.</p>
     </div>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-      <a href="${waLink}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;font-size:14px;font-weight:700;padding:13px 22px;border-radius:8px;text-decoration:none;">📲 Pedir diploma por WhatsApp</a>
+      <button onclick="window.location.href='${waLink}'" style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;font-size:14px;font-weight:700;padding:13px 22px;border-radius:8px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;">📲 Pedir diploma por WhatsApp</button>
       <a href="${emLink}" style="display:inline-flex;align-items:center;gap:8px;background:var(--noir);color:var(--crema);font-size:14px;font-weight:600;padding:13px 22px;border-radius:8px;text-decoration:none;">✉️ Pedir diploma por Email</a>
     </div>
     <p style="font-size:11px;color:var(--gris3);margin-top:14px;">Te respondemos en menos de 24 horas · Diploma PDF acreditado y firmado</p>
@@ -1950,7 +1950,7 @@ function renderDemo(){
     <div style="font-size:22px;font-weight:700;color:var(--oro2);margin-bottom:20px;">${CC.precio}</div>
     <p style="font-size:13px;color:var(--gris2);margin-bottom:16px;">Contáctanos para matricularte. Te enviamos el material una vez confirmado el pago.</p>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-      <a href="${waLink}" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#fff;font-size:13px;font-weight:700;padding:12px 22px;border-radius:6px;text-decoration:none;">📲 Contactar por WhatsApp</a>
+      <button onclick="window.location.href='${waLink}'" style="display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#fff;font-size:13px;font-weight:700;padding:12px 22px;border-radius:6px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;">📲 Contactar por WhatsApp</button>
       <a href="${emLink}" style="display:inline-flex;align-items:center;gap:7px;background:var(--noir);color:var(--crema);font-size:13px;font-weight:600;padding:12px 22px;border-radius:6px;text-decoration:none;">✉️ Enviar email</a>
     </div>
   </div>`;
@@ -2165,19 +2165,19 @@ function renderResumen(){
 
   box.innerHTML = cursos.map((c,i) => `
     <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #1e1e1e;">
-      <span style="color:${i===0?'var(--crema)':'rgba(247,244,239,0.5)'};font-size:13px;flex:1;margin-right:8px;">${c.titulo}</span>
-      <span style="color:${i===0?'var(--oro)':'#aaa'};font-size:13px;white-space:nowrap;">${i===0?c.precio:'Incluido'}</span>
+      <span style="color:var(--crema);font-size:13px;flex:1;margin-right:8px;">${c.titulo}</span>
+      <span style="color:rgba(247,244,239,0.5);font-size:13px;white-space:nowrap;text-decoration:line-through;">${c.precio}</span>
     </div>
   `).join('') + (cursos.length < 3 ? `<p style="color:rgba(247,244,239,0.5);font-size:12px;margin-top:12px;text-align:center;">${3-cursos.length} más por seleccionar</p>` : '');
 
   if(cursos.length === 3){
-    const precios = cursos.map(c=>precioNum(c.precio)).sort((a,b)=>b-a);
+    const precios = cursos.map(c=>precioNum(c.precio));
     const total   = precios.reduce((s,p)=>s+p,0);
-    const pagar   = precios[0];
+    const pagar   = Math.round(total * 0.80);
     const ahorro  = total - pagar;
     if(pTot) pTot.textContent = total.toFixed(0)+' €';
     if(pFin) pFin.textContent = pagar.toFixed(0)+' €';
-    if(aho)  aho.textContent  = ahorro.toFixed(0)+' €';
+    if(aho)  aho.textContent  = ahorro.toFixed(0)+' € (20% descuento)';
     if(pBox) pBox.style.display='block';
     if(btn)  { btn.disabled=false; btn.style.opacity='1'; }
   } else {
@@ -2236,8 +2236,7 @@ window.enviarPackWA = function(){
   if(!nombre || !contacto){ alert('Por favor rellena tu nombre y teléfono o email.'); return; }
   const txt = `Hola, soy ${nombre}. Me interesa el Pack 3x1 de Roma Formación. Cursos elegidos: ${listaCursos}. Precio a pagar: ${precio}. Mi contacto: ${contacto}`;
   const waUrl='https://wa.me/34611175080?text='+encodeURIComponent(txt);
-  const waWin=window.open(waUrl,'_blank');
-  if(!waWin||waWin.closed)window.location.href=waUrl;
+  window.location.href=waUrl;
 };
 
 window.enviarPackEmail = function(){
