@@ -1695,7 +1695,9 @@ function renderCursos(f='todos'){
       <a href="${waLink}" class="btn-card btn-wa" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;">📲 WhatsApp</a>
       <a href="${emLink}" class="btn-card btn-em" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;">✉️ Email</a>
     </div>`;
-    const btnGratis = `<button class="btn-card btn-primary" onclick="openCurso('${c.id}')">Acceder gratis</button>`;
+    const btnGratis = (c.id === 'jardineria' || c.id === 'empadronamiento' || c.id === 'informatica')
+      ? btnsContacto
+      : `<button class="btn-card btn-primary" onclick="openCurso('${c.id}')">Acceder gratis</button>`;
     // Cupo presencial
     let cupoHtml = '';
     if(c.cat==='presencial' && c.cupo){
@@ -1736,7 +1738,8 @@ function openCurso(id){
   document.getElementById('progLabel').textContent=`Progreso: ${pct}% completado`;
   document.getElementById('alumnoNombre').value=localStorage.getItem('rf_nom_'+id)||'';
   switchTab('temario',document.querySelector('.tab-btn'));
-  if(CC.data){renderModulos();renderEjercicios();renderExFinal();renderDiplomaTab();}
+  const esGratisContacto = CC.id==='jardineria'||CC.id==='empadronamiento'||CC.id==='informatica';
+  if(CC.data && !esGratisContacto){renderModulos();renderEjercicios();renderExFinal();renderDiplomaTab();}
   else renderDemo();
   document.getElementById('courseModal').classList.add('active');
   document.body.style.overflow='hidden';
@@ -1948,7 +1951,7 @@ function renderDemo(){
     <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--noir);margin-bottom:8px;">${CC.titulo}</div>
     <div style="font-size:14px;color:var(--gris2);margin-bottom:8px;line-height:1.6;">${CC.desc}</div>
     <div style="font-size:22px;font-weight:700;color:var(--oro2);margin-bottom:20px;">${CC.precio}</div>
-    <p style="font-size:13px;color:var(--gris2);margin-bottom:16px;">Contáctanos para matricularte. Te enviamos el material una vez confirmado el pago.</p>
+    <p style="font-size:13px;color:var(--gris2);margin-bottom:16px;">${CC.precio==='Gratis'?'Contactanos y te enviamos el material completo gratuitamente. Sin registro, sin tarjeta.':'Contactanos para matricularte. Te enviamos el material una vez confirmado el pago.'}</p>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
       <button onclick="window.location.href='${waLink}'" style="display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#fff;font-size:13px;font-weight:700;padding:12px 22px;border-radius:6px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;">📲 Contactar por WhatsApp</button>
       <a href="${emLink}" style="display:inline-flex;align-items:center;gap:7px;background:var(--noir);color:var(--crema);font-size:13px;font-weight:600;padding:12px 22px;border-radius:6px;text-decoration:none;">✉️ Enviar email</a>
